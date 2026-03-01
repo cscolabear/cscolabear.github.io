@@ -41,28 +41,21 @@ features:
 
 
 
-<div class="post-list">
-<article class="post-item">
-  <h3 class="post-title"><a href="/posts/5">what's SEO</a></h3>
-  <div class="post-meta">
-    <time datetime="2026-03-01">更新時間: 2026/3/1</time>
-  </div>
-</article>
-<article class="post-item">
-  <h3 class="post-title"><a href="/posts/2">WIP 測試，這是一篇用於測試 blog 的標題 #1</a></h3>
-  <div class="post-meta">
-    <time datetime="2026-03-01">更新時間: 2026/3/1</time>
-    <span class="comments">💬 2 則留言</span>
-    <span class="labels"><span class="tag">bug</span></span>
-  </div>
-</article>
-<article class="post-item">
-  <h3 class="post-title"><a href="/posts/1">測試，這是一篇用於測試 blog 的標題</a></h3>
-  <div class="post-meta">
-    <time datetime="2026-03-01">更新時間: 2026/3/1</time>
-    <span class="comments">💬 1 則留言</span>
-  </div>
-</article>
-</div>
+
+
+## [what's SEO](/posts/5)
+
+**更新時間**: 2026/3/1
+
+
+## [WIP 測試，這是一篇用於測試 blog 的標題 #1](/posts/2)
+
+**更新時間**: 2026/3/1 | 💬 2 則留言 | **標籤**: `bug`
+
+
+## [測試，這是一篇用於測試 blog 的標題](/posts/1)
+
+**更新時間**: 2026/3/1 | 💬 1 則留言
+
 
 <p class="view-all"><a href="/posts/">查看所有文章 →</a></p>

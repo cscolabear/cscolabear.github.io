@@ -333,27 +333,12 @@ async function writeMarkdownFile(issue, syncLog) {
 }
 
 /**
- * 生成文章列表頁面
+ * 生成文章列表的 Markdown 內容（共用函數）
  */
-async function generatePostsList(issues) {
-  console.log('\n📝 正在生成文章列表頁面...');
+function generateArticleListMarkdown(issues, syncLog) {
+  let content = '';
   
-  // 讀取 sync-log 以取得留言數量
-  const syncLog = await readSyncLog();
-  
-  // 依更新時間排序（最新的在前）
-  const sortedIssues = [...issues].sort((a, b) => {
-    return new Date(b.updated_at) - new Date(a.updated_at);
-  });
-  
-  // 生成列表內容
-  let listContent = `# 文章列表
-
-共 ${issues.length} 篇文章
-
-`;
-  
-  sortedIssues.forEach((issue, index) => {
+  issues.forEach((issue, index) => {
     const date = new Date(issue.updated_at).toLocaleDateString('zh-TW');
     const labels = issue.labels
       .map(label => typeof label === 'string' ? label : label.name)
@@ -374,13 +359,40 @@ async function generatePostsList(issues) {
       metaParts.push(`**標籤**: ${labels}`);
     }
     
-    listContent += `
+    content += `
 ## [${issue.title}](/posts/${issue.number})
 
 ${metaParts.join(' | ')}
 
 `;
   });
+  
+  return content;
+}
+
+/**
+ * 生成文章列表頁面
+ */
+async function generatePostsList(issues) {
+  console.log('\n📝 正在生成文章列表頁面...');
+  
+  // 讀取 sync-log 以取得留言數量
+  const syncLog = await readSyncLog();
+  
+  // 依更新時間排序（最新的在前）
+  const sortedIssues = [...issues].sort((a, b) => {
+    return new Date(b.updated_at) - new Date(a.updated_at);
+  });
+  
+  // 生成列表內容
+  let listContent = `# 文章列表
+
+共 ${issues.length} 篇文章
+
+`;
+  
+  // 使用共用函數生成文章列表
+  listContent += generateArticleListMarkdown(sortedIssues, syncLog);
   
   try {
     await fs.writeFile(CONFIG.postsIndexPath, listContent, 'utf-8');
@@ -445,60 +457,23 @@ async function updateHomePage(issues) {
     if (latestIssues.length === 0) {
       articlesContent = '\n尚無文章，請建立第一篇 Issue 並添加 `blog` label！\n';
     } else {
-      // 使用 HTML 結構以獲得更好的 SEO
-      articlesContent += '\n<div class="post-list">\n';
-      
-      latestIssues.forEach(issue => {
-        const date = new Date(issue.updated_at).toLocaleDateString('zh-TW', {
-          year: 'numeric',
-          month: 'numeric',
-          day: 'numeric'
-        });
-        
-        const isoDate = new Date(issue.updated_at).toISOString().split('T')[0];
-        
-        const labels = issue.labels
-          .map(label => typeof label === 'string' ? label : label.name)
-          .filter(name => name.toLowerCase() !== 'blog')
-          .map(name => `<span class="tag">${name}</span>`)
-          .join('');
-        
-        // 取得留言數量
-        const issueKey = `issue-${issue.number}`;
-        const commentsCount = syncLog[issueKey]?.comments_count || 0;
-        
-        articlesContent += '<article class="post-item">\n';
-        articlesContent += `  <h3 class="post-title"><a href="/posts/${issue.number}">${issue.title}</a></h3>\n`;
-        articlesContent += '  <div class="post-meta">\n';
-        articlesContent += `    <time datetime="${isoDate}">更新時間: ${date}</time>\n`;
-        if (commentsCount > 0) {
-          articlesContent += `    <span class="comments">💬 ${commentsCount} 則留言</span>\n`;
-        }
-        if (labels) {
-          articlesContent += `    <span class="labels">${labels}</span>\n`;
-        }
-        articlesContent += '  </div>\n';
-        articlesContent += '</article>\n';
-      });
-      
-      articlesContent += '</div>\n\n';
-      articlesContent += `<p class="view-all"><a href="/posts/">查看所有文章 →</a></p>\n`;
+      // 使用共用函數生成 Markdown 格式的文章列表
+      articlesContent = '\n' + generateArticleListMarkdown(latestIssues, syncLog);
+      articlesContent += '\n<p class="view-all"><a href="/posts/">查看所有文章 →</a></p>\n';
     }
     
     // 替換「最新文章」區域的內容
-    // 使用更嚴格的正則，匹配 ## 最新文章 之後的所有內容直到檔案結尾
-    // 這樣可以避免重複附加
     const articlesSectionRegex = /(## 最新文章\s*\n)([\s\S]*)$/;
     
     if (articlesSectionRegex.test(homeContent)) {
       // 完全替換「最新文章」之後的所有內容
       homeContent = homeContent.replace(
         articlesSectionRegex,
-        `$1\n${articlesContent}`
+        `$1${articlesContent}`
       );
     } else {
       // 如果找不到「最新文章」標題，在文件末尾添加
-      homeContent += `\n## 最新文章\n\n${articlesContent}`;
+      homeContent += `\n## 最新文章\n${articlesContent}`;
     }
     
     // 寫入更新後的內容
