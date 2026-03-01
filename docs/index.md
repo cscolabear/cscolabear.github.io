@@ -2,9 +2,8 @@
 layout: home
 
 hero:
-  name: Cola's Blog
-  text: 技術筆記與分享
-  tagline: 透過 GitHub Issues 管理內容的個人 Blog
+  name: WorkxPlay 工作與玩樂
+  text: Cola 的技術筆記與分享
   actions:
     - theme: brand
       text: 查看文章
