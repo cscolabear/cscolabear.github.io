@@ -151,6 +151,11 @@ const features = frontmatter.value.features || []
   border-bottom: 2px solid var(--vp-c-divider);
 }
 
+/* 隱藏最新文章區塊的錨點符號 */
+.latest-posts-section .header-anchor {
+  display: none;
+}
+
 .latest-posts-section h3 {
   font-size: 20px;
   font-weight: 600;
