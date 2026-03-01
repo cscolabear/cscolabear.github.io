@@ -20,6 +20,7 @@
   "devDependencies": {
     "@octokit/rest": "^22.0.1",
     "sitemap": "^8.0.3",
+    "terser": "^5.46.0",
     "vitepress": "^1.6.4"
   }
 }
