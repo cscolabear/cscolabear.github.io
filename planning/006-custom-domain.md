@@ -17,52 +17,23 @@
 4. 啟用 HTTPS（自動）
 5. 測試網域解析與 HTTPS
 
-## 🎯 SSL/HTTPS 方案選擇
+## 🎯 SSL/HTTPS 方案
 
-### 方案 A：GitHub Pages HTTPS
+採用 **Cloudflare SSL**
 
-**DNS 設定**：CNAME | cola | cscolabear.github.io | DNS only (灰色雲朵 ⚪)
-
-**SSL 提供者**：GitHub Pages (Let's Encrypt)
-
-**優點**：
-- 簡單直接
-- GitHub 自動管理 SSL 憑證
-
-**缺點**：
-- 沒有 CDN 加速
-- 沒有 DDoS 防護
-- 需要等待 GitHub 申請憑證（可能 24 小時）
-
-### 方案 B：Cloudflare SSL ⭐ 推薦
-
-**DNS 設定**：CNAME | cola | cscolabear.github.io | Proxied (橘色雲朵 🟠)
+**DNS 設定**：CNAME | cola | cscolabear.github.io | Proxied 🟠
 
 **SSL 提供者**：Cloudflare Universal SSL
 
-**優點**：
-- ✨ CDN 加速（全球邊緣節點）
-- ✨ DDoS 防護
-- ✨ 自動 HTTPS（即時啟用，無需等待）
-- ✨ Cloudflare Analytics
-- ✨ HTTP/2、HTTP/3、Brotli 壓縮支援
-- ✨ Bot 防護、Firewall Rules
-
-**缺點**：
-- GitHub Pages Custom Domain 功能無法使用（但不影響網站運作）
+**優點**：CDN 加速、DDoS 防護、自動 HTTPS、HTTP/2/3、Brotli 壓縮
 
 **⚠️ 重要設定**：
-Cloudflare SSL/TLS 模式必須設為：
-- **Full** ✅（推薦）
-- **Full (strict)** ✅（更嚴格驗證）
-
-❌ 不要使用：
-- Flexible（會造成重定向迴圈）
-- Off（沒有加密）
+- SSL/TLS 模式：**Full** 或 **Full (strict)**
+- 不要使用：Flexible（會造成重定向迴圈）
 
 ---
 
-## 🚀 推薦設定步驟（使用 Cloudflare SSL）
+## 🚀 設定步驟
 
 #### ✅ Task 1: 建立 CNAME 檔案
 - **位置**：`docs/public/CNAME`
@@ -77,7 +48,7 @@ Cloudflare SSL/TLS 模式必須設為：
 - Git commit 並 push 到 GitHub
 - 觸發 GitHub Actions 重新部署
 
-### 👤 需要手動執行的任務（使用 Cloudflare SSL）
+### 👤 需要手動執行的任務
 
 #### ⏳ Task 1: Cloudflare DNS 設定（需手動）
 
