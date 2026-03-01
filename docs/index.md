@@ -41,32 +41,13 @@ features:
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <div class="post-list">
+<article class="post-item">
+  <h3 class="post-title"><a href="/posts/5">what's SEO</a></h3>
+  <div class="post-meta">
+    <time datetime="2026-03-01">更新時間: 2026/3/1</time>
+  </div>
+</article>
 <article class="post-item">
   <h3 class="post-title"><a href="/posts/2">WIP 測試，這是一篇用於測試 blog 的標題 #1</a></h3>
   <div class="post-meta">

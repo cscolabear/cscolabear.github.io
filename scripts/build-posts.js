@@ -351,11 +351,9 @@ async function generatePostsList(issues) {
 
 共 ${issues.length} 篇文章
 
----
-
 `;
   
-  sortedIssues.forEach(issue => {
+  sortedIssues.forEach((issue, index) => {
     const date = new Date(issue.updated_at).toLocaleDateString('zh-TW');
     const labels = issue.labels
       .map(label => typeof label === 'string' ? label : label.name)
@@ -381,7 +379,6 @@ async function generatePostsList(issues) {
 
 ${metaParts.join(' | ')}
 
----
 `;
   });
   

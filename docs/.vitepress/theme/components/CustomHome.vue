@@ -7,8 +7,8 @@
           <h1 class="name">{{ heroName }}</h1>
           <p class="text">{{ heroText }}</p>
           <div class="actions" v-if="heroActions.length">
-            <a 
-              v-for="(action, i) in heroActions" 
+            <a
+              v-for="(action, i) in heroActions"
               :key="i"
               :href="action.link"
               :class="['action-button', `action-${action.theme}`]"
@@ -19,23 +19,24 @@
         </div>
       </div>
     </div>
-    
+
     <!-- 最新文章區塊 -->
-    <div class="latest-posts-section">
+    <div class="latest-posts-section vp-doc">
       <div class="container">
         <Content />
       </div>
     </div>
-    
+
     <!-- 分隔線 -->
     <div class="section-divider"></div>
-    
+
     <!-- 網站特色區塊 -->
     <div class="features-section">
       <div class="container">
+        <h2>網站特色</h2>
         <div class="features-grid">
-          <div 
-            v-for="(feature, i) in features" 
+          <div
+            v-for="(feature, i) in features"
             :key="i"
             class="feature-item"
           >
@@ -143,11 +144,25 @@ const features = frontmatter.value.features || []
   padding: 0 0 48px;
 }
 
-.latest-posts-section h2 {
-  font-size: 20px;
-  font-weight: 600;
+/* 確保使用 VitePress 預設樣式 */
+.latest-posts-section.vp-doc h2 {
   margin: 20px 0;
-  color: var(--vp-c-text-1);
+  font-size: 28px;
+  font-weight: 600;
+  border-top: none;
+  padding-top: 0;
+}
+
+/* 最新文章區塊的 H2 連結樣式 - 確保藍色 */
+.latest-posts-section.vp-doc h2 a {
+  color: var(--vp-c-brand-1) !important;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.25s;
+}
+
+.latest-posts-section.vp-doc h2 a:hover {
+  border-bottom-color: var(--vp-c-brand-1);
 }
 
 /* 隱藏最新文章區塊的錨點符號 */
@@ -155,107 +170,27 @@ const features = frontmatter.value.features || []
   display: none !important;
 }
 
-/* 文章列表容器 */
-.latest-posts-section .post-list {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
+/* 查看所有文章連結 */
+.latest-posts-section .view-all {
+  margin-top: 16px;
+  text-align: left;
 }
 
-/* 單篇文章項目 */
-.latest-posts-section .post-item {
-  padding-bottom: 24px;
-  border-bottom: 1px solid var(--vp-c-divider-light);
-}
-
-.latest-posts-section .post-item:last-child {
-  border-bottom: none;
-  padding-bottom: 0;
-}
-
-/* 文章標題 */
-.latest-posts-section .post-title {
-  font-size: 20px;
-  font-weight: 600;
-  margin: 0 0 8px;
-  line-height: 1.4;
-}
-
-/* 隱藏文章標題的錨點 */
-.latest-posts-section .post-title .header-anchor {
-  display: none !important;
-}
-
-.latest-posts-section .post-title a {
+.latest-posts-section .view-all a {
   color: var(--vp-c-brand-1);
   text-decoration: none;
   transition: color 0.25s;
 }
 
-.latest-posts-section .post-title a:hover {
-  color: var(--vp-c-brand-2);
-}
-
-/* 文章 meta 資訊 */
-.latest-posts-section .post-meta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  align-items: center;
-  font-size: 14px;
-  color: var(--vp-c-text-2);
-}
-
-.latest-posts-section .post-meta time {
-  color: var(--vp-c-text-2);
-}
-
-.latest-posts-section .post-meta .comments {
-  color: var(--vp-c-text-2);
-}
-
-.latest-posts-section .post-meta .labels {
-  display: flex;
-  gap: 6px;
-}
-
-.latest-posts-section .post-meta .tag {
-  display: inline-block;
-  padding: 2px 8px;
-  font-size: 12px;
-  border-radius: 3px;
-  background-color: var(--vp-c-bg-soft);
-  color: var(--vp-c-brand-1);
-  font-weight: 500;
-}
-
-/* 查看所有文章連結 */
-.latest-posts-section .view-all {
-  margin-top: 32px;
-  text-align: left;
-}
-
-.latest-posts-section .view-all a {
-  display: inline-flex;
-  align-items: center;
-  color: var(--vp-c-brand-1);
-  font-weight: 500;
-  font-size: 15px;
-  text-decoration: none;
-  transition: all 0.25s;
-}
-
 .latest-posts-section .view-all a:hover {
   color: var(--vp-c-brand-2);
-  transform: translateX(4px);
 }
 
 /* 響應式設計 */
 @media (max-width: 768px) {
-  .latest-posts-section .post-meta {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 6px;
+  .latest-posts-section.vp-doc h2 {
+    margin: 16px 0;
+    font-size: 24px;
   }
 }
 
@@ -315,11 +250,11 @@ const features = frontmatter.value.features || []
   .name {
     font-size: 36px;
   }
-  
+
   .text {
     font-size: 18px;
   }
-  
+
   .features-grid {
     grid-template-columns: 1fr;
   }
