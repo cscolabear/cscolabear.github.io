@@ -17,9 +17,52 @@
 4. 啟用 HTTPS（自動）
 5. 測試網域解析與 HTTPS
 
-## 📝 任務拆解
+## 🎯 SSL/HTTPS 方案選擇
 
-### 🤖 自動執行任務（系統可完成）
+### 方案 A：GitHub Pages HTTPS
+
+**DNS 設定**：CNAME | cola | cscolabear.github.io | DNS only (灰色雲朵 ⚪)
+
+**SSL 提供者**：GitHub Pages (Let's Encrypt)
+
+**優點**：
+- 簡單直接
+- GitHub 自動管理 SSL 憑證
+
+**缺點**：
+- 沒有 CDN 加速
+- 沒有 DDoS 防護
+- 需要等待 GitHub 申請憑證（可能 24 小時）
+
+### 方案 B：Cloudflare SSL ⭐ 推薦
+
+**DNS 設定**：CNAME | cola | cscolabear.github.io | Proxied (橘色雲朵 🟠)
+
+**SSL 提供者**：Cloudflare Universal SSL
+
+**優點**：
+- ✨ CDN 加速（全球邊緣節點）
+- ✨ DDoS 防護
+- ✨ 自動 HTTPS（即時啟用，無需等待）
+- ✨ Cloudflare Analytics
+- ✨ HTTP/2、HTTP/3、Brotli 壓縮支援
+- ✨ Bot 防護、Firewall Rules
+
+**缺點**：
+- GitHub Pages Custom Domain 功能無法使用（但不影響網站運作）
+
+**⚠️ 重要設定**：
+Cloudflare SSL/TLS 模式必須設為：
+- **Full** ✅（推薦）
+- **Full (strict)** ✅（更嚴格驗證）
+
+❌ 不要使用：
+- Flexible（會造成重定向迴圈）
+- Off（沒有加密）
+
+---
+
+## 🚀 推薦設定步驟（使用 Cloudflare SSL）
 
 #### ✅ Task 1: 建立 CNAME 檔案
 - **位置**：`docs/public/CNAME`
@@ -34,9 +77,104 @@
 - Git commit 並 push 到 GitHub
 - 觸發 GitHub Actions 重新部署
 
-### 👤 需要手動執行的任務
+### 👤 需要手動執行的任務（使用 Cloudflare SSL）
 
-#### ⏳ Task 4: DNS 設定（需手動）
+#### ⏳ Task 1: Cloudflare DNS 設定（需手動）
+
+**在 Cloudflare DNS 管理介面設定**：
+
+| 類型 | 名稱 | 值 | 代理狀態 | TTL |
+|------|------|-----|----------|-----|
+| CNAME | cola | cscolabear.github.io | Proxied 🟠 | Auto |
+
+**重點**：
+- 類型：CNAME（不是 A）
+- 代理狀態：**Proxied**（橘色雲朵 🟠，不是灰色）
+- 值：cscolabear.github.io（可以不加結尾的點）
+
+**驗證方式**：
+```bash
+# DNS 解析應該返回 Cloudflare IP
+dig cola.workxplay.net +short
+# 預期結果：172.x.x.x 或 104.x.x.x (Cloudflare IP)
+```
+
+#### ⏳ Task 2: Cloudflare SSL/TLS 設定（需手動）
+
+**步驟**：
+
+1. 前往 Cloudflare Dashboard
+   - 選擇 workxplay.net 網域
+
+2. 前往 SSL/TLS → Overview
+
+3. 選擇加密模式：
+   - **Full** ✅（推薦）
+   - Full (strict) ✅（如果 cscolabear.github.io 有有效憑證）
+
+4. （可選）啟用額外功能：
+   - SSL/TLS → Edge Certificates → Always Use HTTPS（強制 HTTPS）
+   - SSL/TLS → Edge Certificates → Automatic HTTPS Rewrites（自動重寫）
+
+**注意事項**：
+- ❌ 不要選擇 "Flexible"（會造成重定向迴圈）
+- GitHub Pages 有預設的 HTTPS，所以 Full 模式可正常運作
+
+#### ⏳ Task 3: GitHub Pages 設定（需手動）
+
+**重要**：使用 Cloudflare SSL 時，**不需要**在 GitHub Settings 設定 Custom Domain
+
+原因：
+- Cloudflare 代理會隱藏真實訪客 IP
+- GitHub 看到的都是 Cloudflare 的請求
+- Custom Domain 驗證會失敗（這是正常的）
+
+**如果您已經設定了 Custom Domain**：
+- 可以保留（不影響）
+- 或者移除也沒關係
+
+#### ⏳ Task 4: 測試驗證（需手動）
+
+**測試項目**：
+
+1. **HTTPS 訪問測試**
+   ```
+   https://cola.workxplay.net
+   ```
+   - ✅ 使用 HTTPS 連線
+   - ✅ 瀏覽器顯示綠色鎖頭
+   - ✅ 網站正常顯示
+
+2. **檢查 SSL 憑證**
+   - 點擊瀏覽器網址列的鎖頭圖示
+   - 查看憑證資訊
+   - ✅ 簽發者應該是 "Cloudflare"
+
+3. **檢查 Cloudflare**
+   ```bash
+   curl -I https://cola.workxplay.net
+   ```
+   - ✅ 應該看到 "cf-ray" header
+   - ✅ 應該看到 "server: cloudflare"
+
+4. **功能測試**
+   - ✅ 首頁顯示正常
+   - ✅ 文章列表可訪問
+   - ✅ 單篇文章可開啟
+   - ✅ 留言顯示正常
+   - ✅ GitHub 討論連結正確
+
+5. **效能測試**（可選）
+   - 使用 https://www.webpagetest.org/
+   - 應該能看到 Cloudflare CDN 加速效果
+
+---
+
+## 📋 替代方案：使用 GitHub Pages HTTPS
+
+如果您不想使用 Cloudflare，可以使用原本的 GitHub Pages HTTPS：
+
+### 👤 需要手動執行的任務（使用 GitHub Pages HTTPS）
 
 **DNS 提供商**：workxplay.net 的 DNS 管理介面
 
