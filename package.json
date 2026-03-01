@@ -10,12 +10,16 @@
     "fetch:issues": "node scripts/build-posts.js",
     "build": "npm run fetch:issues && npm run docs:build"
   },
-  "keywords": ["blog", "vitepress", "github-issues"],
+  "keywords": [
+    "blog",
+    "vitepress",
+    "github-issues"
+  ],
   "author": "Cola",
   "license": "MIT",
   "devDependencies": {
     "@octokit/rest": "^22.0.1",
+    "sitemap": "^8.0.3",
     "vitepress": "^1.6.4"
   }
 }
-

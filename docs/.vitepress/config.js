@@ -10,13 +10,33 @@ export default defineConfig({
   // 語言設定
   lang: 'zh-TW',
   
-  // Head 設定
+  // 清理 URL（移除 .html 後綴）
+  cleanUrls: true,
+  
+  // Head 設定（SEO 優化）
   head: [
+    // Favicon
     ['link', { rel: 'icon', href: '/favicon.ico' }],
+    
+    // 主題顏色
     ['meta', { name: 'theme-color', content: '#3c8772' }],
+    
+    // Open Graph（社群分享）
     ['meta', { property: 'og:type', content: 'website' }],
     ['meta', { property: 'og:locale', content: 'zh_TW' }],
-    ['meta', { property: 'og:site_name', content: "Cola's Blog" }]
+    ['meta', { property: 'og:site_name', content: "Cola's Blog" }],
+    ['meta', { property: 'og:image', content: 'https://cscolabear.github.io/og-image.png' }],
+    
+    // Twitter Card
+    ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
+    ['meta', { name: 'twitter:title', content: "Cola's Blog" }],
+    ['meta', { name: 'twitter:description', content: '透過 GitHub Issues 管理的個人技術 Blog' }],
+    
+    // 移動裝置優化
+    ['meta', { name: 'viewport', content: 'width=device-width, initial-scale=1.0, maximum-scale=5.0' }],
+    
+    // Google Search Console（需要時取消註解並替換 content）
+    // ['meta', { name: 'google-site-verification', content: 'your-verification-code' }],
   ],
   
   // Markdown 配置
@@ -25,6 +45,12 @@ export default defineConfig({
     theme: {
       light: 'github-light',
       dark: 'github-dark'
+    },
+    // 自訂標題錨點
+    anchor: {
+      permalink: true,
+      permalinkBefore: false,
+      permalinkSymbol: '#'
     }
   },
   
@@ -51,15 +77,26 @@ export default defineConfig({
       copyright: 'Copyright © 2026 Cola'
     },
     
-    // 搜尋功能
+    // 本地搜尋功能
     search: {
-      provider: 'local'
-    },
-    
-    // 編輯連結
-    editLink: {
-      pattern: 'https://github.com/cscolabear/cscolabear.github.io/issues/:path',
-      text: '在 GitHub 上編輯此頁'
+      provider: 'local',
+      options: {
+        translations: {
+          button: {
+            buttonText: '搜尋文章',
+            buttonAriaLabel: '搜尋文章'
+          },
+          modal: {
+            noResultsText: '找不到相關結果',
+            resetButtonTitle: '清除查詢條件',
+            footer: {
+              selectText: '選擇',
+              navigateText: '切換',
+              closeText: '關閉'
+            }
+          }
+        }
+      }
     },
     
     // 最後更新時間
@@ -67,7 +104,8 @@ export default defineConfig({
       text: '最後更新',
       formatOptions: {
         dateStyle: 'medium',
-        timeStyle: 'short'
+        timeStyle: 'short',
+        timeZone: 'Asia/Taipei'
       }
     },
     
@@ -86,11 +124,28 @@ export default defineConfig({
     // 返回頂部
     returnToTopLabel: '返回頂部',
     sidebarMenuLabel: '選單',
-    darkModeSwitchLabel: '深色模式'
+    darkModeSwitchLabel: '深色模式',
+    lightModeSwitchTitle: '切換至淺色模式',
+    darkModeSwitchTitle: '切換至深色模式'
   },
   
-  // Sitemap 配置
+  // Sitemap 配置（SEO 重要）
   sitemap: {
     hostname: 'https://cscolabear.github.io'
+  },
+  
+  // 建置優化
+  vite: {
+    build: {
+      // 移除 console
+      minify: 'terser',
+      terserOptions: {
+        compress: {
+          drop_console: true,
+          drop_debugger: true
+        }
+      }
+    }
   }
 })
+
