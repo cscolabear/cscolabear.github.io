@@ -176,6 +176,57 @@ DNS check failed. cola.workxplay.net does not resolve to any GitHub Pages IP
 
 **錯誤訊息**：
 ```
+Enforce HTTPS — Unavailable for your site because your domain is not properly configured to support HTTPS
+```
+
+**可能原因**：
+1. **使用了 Cloudflare 代理（最常見）**
+2. DNS 記錄尚未完全傳播
+3. GitHub 正在申請憑證（需要時間）
+4. 使用了 A 記錄而非 CNAME
+
+**解決方式**：
+
+**方案 A：關閉 Cloudflare 代理（推薦）**
+1. 登入 Cloudflare DNS 管理介面
+2. 找到 `cola` 的 CNAME 記錄
+3. 點擊橘色雲朵 🟠 變成灰色雲朵 ⚪（DNS only）
+4. 等待 DNS 傳播（5-30 分鐘）
+5. 驗證：`dig cola.workxplay.net CNAME +short` 應該返回 `cscolabear.github.io.`
+6. 回到 GitHub Settings 重新儲存自訂網域
+
+**方案 B：使用 A 記錄（不推薦）**
+如果必須使用 A 記錄，請設定為 GitHub Pages IP：
+```
+185.199.108.153
+185.199.109.153
+185.199.110.153
+185.199.111.153
+```
+
+**診斷指令**：
+```bash
+# 檢查 DNS 解析
+dig cola.workxplay.net +short
+
+# 檢查 CNAME 記錄
+dig cola.workxplay.net CNAME +short
+
+# 預期結果（CNAME）
+cscolabear.github.io.
+
+# 如果返回 IP（如 172.67.xxx.xxx）
+# → 表示使用了 Cloudflare 代理或 A 記錄
+```
+
+**線上檢查工具**：
+- https://www.whatsmydns.net/#CNAME/cola.workxplay.net
+- https://dnschecker.org/#CNAME/cola.workxplay.net
+
+### 問題 3：Certificate not yet created
+
+**錯誤訊息**：
+```
 Certificate not yet created
 ```
 
