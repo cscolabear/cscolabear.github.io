@@ -144,9 +144,9 @@ const features = frontmatter.value.features || []
 }
 
 .latest-posts-section h2 {
-  font-size: 28px;
+  font-size: 20px;
   font-weight: 600;
-  margin: 0 0 32px;
+  margin: 20px 0;
   color: var(--vp-c-text-1);
 }
 
@@ -175,7 +175,7 @@ const features = frontmatter.value.features || []
 
 /* 文章標題 */
 .latest-posts-section .post-title {
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 600;
   margin: 0 0 8px;
   line-height: 1.4;
