@@ -120,3 +120,9 @@
   background: var(--vp-c-brand-dark);
   transform: translateY(-2px);
 }
+
+/* 查看所有文章連結樣式 */
+.view-all {
+  text-align: right;
+  margin-top: 2rem;
+}

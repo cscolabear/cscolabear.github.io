@@ -173,7 +173,19 @@ const features = frontmatter.value.features || []
 /* 查看所有文章連結 */
 .latest-posts-section .view-all {
   margin-top: 16px;
-  text-align: left;
+  text-align: right !important;
+}
+
+.latest-posts-section.vp-doc .view-all {
+  text-align: right !important;
+}
+
+.latest-posts-section.vp-doc p.view-all {
+  text-align: right !important;
+}
+
+.latest-posts-section .container .view-all {
+  text-align: right !important;
 }
 
 .latest-posts-section .view-all a {
