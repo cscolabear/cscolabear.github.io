@@ -1,5 +1,5 @@
 ---
-layout: home
+layout: custom-home
 
 hero:
   name: WorkxPlay 工作與玩樂
@@ -28,6 +28,10 @@ features:
 ---
 
 ## 最新文章
+
+
+
+
 
 
 
