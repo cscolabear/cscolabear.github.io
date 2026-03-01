@@ -366,12 +366,20 @@ async function generatePostsList(issues) {
     // 取得留言數量
     const issueKey = `issue-${issue.number}`;
     const commentsCount = syncLog[issueKey]?.comments_count || 0;
-    const commentsInfo = commentsCount > 0 ? `💬 ${commentsCount} 則留言` : '';
+    
+    // 建立 meta 資訊陣列（合併為一行）
+    const metaParts = [`**更新時間**: ${date}`];
+    if (commentsCount > 0) {
+      metaParts.push(`💬 ${commentsCount} 則留言`);
+    }
+    if (labels) {
+      metaParts.push(`**標籤**: ${labels}`);
+    }
     
     listContent += `
 ## [${issue.title}](/posts/${issue.number})
 
-${labels ? `**標籤**: ${labels}\n\n` : ''}${commentsInfo ? `${commentsInfo}\n\n` : ''}**更新時間**: ${date}
+${metaParts.join(' | ')}
 
 ---
 `;
