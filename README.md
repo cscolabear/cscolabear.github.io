@@ -98,11 +98,34 @@ npm run docs:preview
 │   ├── usage-guide.md        # 使用說明
 │   ├── workflow-guide.md     # Workflow 說明
 │   └── seo-guide.md          # SEO 指南
+├── planning/                  # 開發計劃與記錄（詳見下方說明）
+│   ├── README.md             # 計劃文件系統說明
+│   ├── 000-*.md              # 各階段開發計劃
+│   └── archive/              # 歷史文件
 ├── scripts/
 │   └── build-posts.js        # Issue 轉換腳本
 ├── package.json              # 專案配置
 └── README.md                 # 本文件
 ```
+
+### 📋 開發計劃文件 (`planning/`)
+
+`planning/` 資料夾存放專案的開發計劃、執行記錄與技術決策文件：
+
+- **目的**：記錄開發歷程、提供上下文資訊、協助 AI 助手理解專案
+- **內容**：問題陳述、需求分析、技術方案、實作記錄、測試驗證
+- **命名**：`{編號}-{功能描述}.md`（如 `001-node-upgrade.md`）
+- **狀態**：✅ 已完成、🚧 進行中、⏸️ 暫停、❌ 已取消
+
+**現有計劃文件**：
+- 000-initial-setup.md - 專案初始化與技術架構
+- 001-node-upgrade.md - Node.js 24 升級記錄
+- 002-homepage-article-list.md - 首頁文章列表實作
+- 003-issue-comments-integration.md - Issue 留言整合功能
+- 004-comments-newline-fix.md - 留言換行格式修復
+- 005-article-list-enhancement.md - 文章列表功能增強
+
+詳細說明請參考：[planning/README.md](./planning/README.md)
 
 ## ✨ 主要功能
 
