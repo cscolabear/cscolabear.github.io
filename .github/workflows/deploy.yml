@@ -1,0 +1,75 @@
+name: 建置並部署至 GitHub Pages
+
+on:
+  # 每日定時執行（UTC 時間 00:00，台灣時間 08:00）
+  schedule:
+    - cron: '0 0 * * *'
+  
+  # 支援手動觸發
+  workflow_dispatch:
+  
+  # 當 main 分支有 push 時觸發（可選）
+  push:
+    branches:
+      - main
+
+# 設定 GITHUB_TOKEN 的權限
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+# 只允許一個並發部署
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: ✅ Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: 📦 設定 Node.js 環境
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      
+      - name: 📥 安裝依賴
+        run: npm ci
+      
+      - name: 🔄 擷取 GitHub Issues 並轉換為文章
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: node scripts/build-posts.js
+      
+      - name: 🏗️ 建置 VitePress 網站
+        run: npm run docs:build
+      
+      - name: 📋 顯示建置結果
+        run: |
+          echo "建置完成！"
+          echo "文章數量："
+          ls -1 docs/posts/*.md | grep -v index.md | wc -l || echo "0"
+          echo "輸出檔案："
+          ls -lh docs/.vitepress/dist/
+      
+      - name: 🚀 部署至 GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: docs/.vitepress/dist
+          publish_branch: gh-pages
+          user_name: 'github-actions[bot]'
+          user_email: 'github-actions[bot]@users.noreply.github.com'
+          commit_message: 'docs: 更新 Blog 內容 (自動部署)'
+          force_orphan: true
+      
+      - name: 📊 顯示部署資訊
+        run: |
+          echo "✅ 部署完成！"
+          echo "🌐 網站 URL: https://${{ github.repository_owner }}.github.io"
+          echo "📝 查看 Issues: https://github.com/${{ github.repository }}/issues?q=label:blog+is:closed"
