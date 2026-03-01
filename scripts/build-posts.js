@@ -252,7 +252,10 @@ labels: ${JSON.stringify(labelNames)}
     comments_data.forEach(comment => {
       const authorName = comment.user?.login || '匿名使用者';
       const commentDate = formatCommentDate(comment.updated_at);
-      const commentBody = comment.body || '';
+      
+      // 處理換行：將單個 \n 轉換為 <br>（保持 GitHub 風格）
+      // 這樣可以保留留言中的換行，與 GitHub Issue 頁面顯示一致
+      const commentBody = (comment.body || '').replace(/\n/g, '<br>\n');
       
       // 使用純 Markdown + 簡單的 HTML，確保留言內容格式正確渲染
       commentsSection += `
