@@ -1,0 +1,52 @@
+/* 自定義樣式 */
+
+:root {
+  --vp-c-brand: #3c8772;
+  --vp-c-brand-light: #52a788;
+  --vp-c-brand-lighter: #68c79e;
+  --vp-c-brand-dark: #2d6858;
+  --vp-c-brand-darker: #1e4941;
+}
+
+/* 文章元數據樣式 */
+.post-meta {
+  display: flex;
+  gap: 1rem;
+  color: var(--vp-c-text-2);
+  font-size: 0.9em;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--vp-c-divider);
+}
+
+.post-meta time {
+  display: flex;
+  align-items: center;
+}
+
+/* GitHub 討論連結樣式 */
+.github-discussion {
+  margin-top: 3rem;
+  padding: 1.5rem;
+  background: var(--vp-c-bg-soft);
+  border-radius: 8px;
+  text-align: center;
+}
+
+.github-discussion a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background: var(--vp-c-brand);
+  color: white;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s;
+}
+
+.github-discussion a:hover {
+  background: var(--vp-c-brand-dark);
+  transform: translateY(-2px);
+}
