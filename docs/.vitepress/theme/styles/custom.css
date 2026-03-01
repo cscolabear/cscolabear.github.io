@@ -25,17 +25,10 @@
 }
 
 /* 留言區塊樣式 */
-.comments-section {
-  margin: 2rem 0;
-  padding: 1.5rem;
-  background-color: var(--vp-c-bg-soft);
-  border-radius: 8px;
-}
-
 .comment-card {
   margin-bottom: 1.5rem;
   padding: 1rem;
-  background-color: var(--vp-c-bg);
+  background-color: var(--vp-c-bg-soft);
   border: 1px solid var(--vp-c-divider);
   border-radius: 6px;
   transition: all 0.2s;
@@ -69,26 +62,27 @@
   color: var(--vp-c-text-2);
 }
 
-.comment-body {
-  font-size: 0.95rem;
-  line-height: 1.6;
-  color: var(--vp-c-text-1);
-}
-
-.comment-body p:first-child {
+/* 留言內容區域樣式 */
+.comment-card > p:first-of-type {
   margin-top: 0;
 }
 
-.comment-body p:last-child {
+.comment-card > p:last-of-type {
   margin-bottom: 0;
+}
+
+.comment-card ul,
+.comment-card ol {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.comment-card pre {
+  margin: 0.75rem 0;
 }
 
 /* 響應式設計 */
 @media (max-width: 768px) {
-  .comments-section {
-    padding: 1rem;
-  }
-  
   .comment-card {
     padding: 0.75rem;
   }

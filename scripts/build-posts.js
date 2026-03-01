@@ -247,8 +247,6 @@ labels: ${JSON.stringify(labelNames)}
 
 ## 💬 留言討論 (${comments_data.length} 則)
 
-<div class="comments-section">
-
 `;
     
     comments_data.forEach(comment => {
@@ -256,23 +254,20 @@ labels: ${JSON.stringify(labelNames)}
       const commentDate = formatCommentDate(comment.updated_at);
       const commentBody = comment.body || '';
       
-      commentsSection += `<div class="comment-card">
+      // 使用純 Markdown + 簡單的 HTML，確保留言內容格式正確渲染
+      commentsSection += `
+<div class="comment-card">
 <div class="comment-header">
-  <strong>@${authorName}</strong>
-  <span class="comment-date">${commentDate}</span>
+<strong>@${authorName}</strong>
+<span class="comment-date">${commentDate}</span>
 </div>
-<div class="comment-body">
 
 ${commentBody}
 
 </div>
-</div>
 
 `;
     });
-    
-    commentsSection += `</div>
-`;
   }
   
   // 添加 GitHub 討論連結
