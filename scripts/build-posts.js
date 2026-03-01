@@ -336,17 +336,19 @@ async function updateHomePage(issues) {
     }
     
     // 替換「最新文章」區域的內容
-    // 尋找 ## 最新文章 到下一個 ## 或檔案結尾之間的內容
-    const articlesSectionRegex = /(## 最新文章\n\n)([\s\S]*?)(\n##|$)/;
+    // 使用更嚴格的正則，匹配 ## 最新文章 之後的所有內容直到檔案結尾
+    // 這樣可以避免重複附加
+    const articlesSectionRegex = /(## 最新文章\s*\n)([\s\S]*)$/;
     
     if (articlesSectionRegex.test(homeContent)) {
+      // 完全替換「最新文章」之後的所有內容
       homeContent = homeContent.replace(
         articlesSectionRegex,
-        `$1${articlesContent}$3`
+        `$1\n${articlesContent}`
       );
     } else {
       // 如果找不到「最新文章」標題，在文件末尾添加
-      homeContent += `\n## 最新文章\n${articlesContent}\n`;
+      homeContent += `\n## 最新文章\n\n${articlesContent}`;
     }
     
     // 寫入更新後的內容
