@@ -456,11 +456,18 @@ async function updateHomePage(issues) {
         // 取得留言數量
         const issueKey = `issue-${issue.number}`;
         const commentsCount = syncLog[issueKey]?.comments_count || 0;
-        const commentsPart = commentsCount > 0 ? ` | 💬 ${commentsCount} 則留言` : '';
-        const labelsPart = labels ? ` | **標籤**: ${labels}` : '';
+        const commentsPart = commentsCount > 0 ? `💬 ${commentsCount} 則留言` : '';
+        const labelsPart = labels ? `標籤: ${labels}` : '';
         
-        articlesContent += `\n### [${issue.title}](/posts/${issue.number})\n`;
-        articlesContent += `**更新時間**: ${date}${commentsPart}${labelsPart}\n`;
+        // 使用 div 結構而非 h3
+        articlesContent += `\n**[${issue.title}](/posts/${issue.number})**\n\n`;
+        
+        // 建立 meta 資訊陣列
+        const metaParts = [`更新時間: ${date}`];
+        if (commentsPart) metaParts.push(commentsPart);
+        if (labelsPart) metaParts.push(labelsPart);
+        
+        articlesContent += `${metaParts.join(' | ')}\n`;
       });
       
       articlesContent += `\n[查看所有文章 →](/posts/)\n`;

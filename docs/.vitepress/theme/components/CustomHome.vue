@@ -144,63 +144,65 @@ const features = frontmatter.value.features || []
 }
 
 .latest-posts-section h2 {
-  font-size: 32px;
+  font-size: 28px;
   font-weight: 600;
-  margin: 0 0 24px;
-  padding-bottom: 12px;
-  border-bottom: 2px solid var(--vp-c-divider);
+  margin: 0 0 32px;
+  color: var(--vp-c-text-1);
 }
 
 /* 隱藏最新文章區塊的錨點符號 */
 .latest-posts-section .header-anchor {
-  display: none;
+  display: none !important;
 }
 
-.latest-posts-section h3 {
-  font-size: 20px;
+/* 文章列表項目 */
+.latest-posts-section p {
+  margin: 0 0 24px;
+  line-height: 1.6;
+}
+
+/* 文章標題連結 */
+.latest-posts-section p strong a {
+  font-size: 18px;
   font-weight: 600;
-  margin: 24px 0 8px;
-}
-
-.latest-posts-section h3 a {
   color: var(--vp-c-brand-1);
   text-decoration: none;
-  transition: color 0.3s;
+  transition: color 0.25s;
 }
 
-.latest-posts-section h3 a:hover {
+.latest-posts-section p strong a:hover {
   color: var(--vp-c-brand-2);
 }
 
-.latest-posts-section p {
-  color: var(--vp-c-text-2);
+/* 文章 meta 資訊（更新時間、留言、標籤） */
+.latest-posts-section p:not(:has(strong)) {
   font-size: 14px;
-  margin: 0 0 16px;
-}
-
-.latest-posts-section p strong {
-  color: var(--vp-c-text-1);
-  font-weight: 500;
+  color: var(--vp-c-text-2);
+  margin-top: -16px;
+  margin-bottom: 28px;
 }
 
 .latest-posts-section p code {
-  font-size: 13px;
+  font-size: 12px;
   padding: 2px 6px;
   border-radius: 3px;
   background-color: var(--vp-c-bg-soft);
   color: var(--vp-c-brand-1);
+  font-weight: 500;
 }
 
-.latest-posts-section > .container > div > div > p:last-child a {
+/* 查看所有文章連結 */
+.latest-posts-section p:last-child a {
   display: inline-flex;
   align-items: center;
   color: var(--vp-c-brand-1);
   font-weight: 500;
+  font-size: 15px;
   text-decoration: none;
-  transition: all 0.3s;
+  transition: all 0.25s;
 }
 
-.latest-posts-section > .container > div > div > p:last-child a:hover {
+.latest-posts-section p:last-child a:hover {
   color: var(--vp-c-brand-2);
   transform: translateX(4px);
 }
