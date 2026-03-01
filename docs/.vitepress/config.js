@@ -1,7 +1,7 @@
 import { defineConfig } from 'vitepress'
 
 export default defineConfig({
-  title: "Cola's Blog",
+  title: "WorkxPlay 工作與玩樂實驗室",
   description: '透過 GitHub Issues 管理的個人技術 Blog',
   
   // GitHub Pages 配置
@@ -24,12 +24,12 @@ export default defineConfig({
     // Open Graph（社群分享）
     ['meta', { property: 'og:type', content: 'website' }],
     ['meta', { property: 'og:locale', content: 'zh_TW' }],
-    ['meta', { property: 'og:site_name', content: "Cola's Blog" }],
+    ['meta', { property: 'og:site_name', content: "WorkxPlay 工作與玩樂實驗室" }],
     ['meta', { property: 'og:image', content: 'https://cscolabear.github.io/og-image.png' }],
     
     // Twitter Card
     ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
-    ['meta', { name: 'twitter:title', content: "Cola's Blog" }],
+    ['meta', { name: 'twitter:title', content: "WorkxPlay 工作與玩樂實驗室" }],
     ['meta', { name: 'twitter:description', content: '透過 GitHub Issues 管理的個人技術 Blog' }],
     
     // 移動裝置優化
