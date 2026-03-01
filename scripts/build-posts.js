@@ -291,6 +291,75 @@ async function cleanDeletedPosts(currentIssues) {
 }
 
 /**
+ * 更新首頁的文章列表（最新 5 篇）
+ */
+async function updateHomePage(issues) {
+  console.log('\n🏠 正在更新首頁文章列表...');
+  
+  const homePagePath = path.join(__dirname, '../docs/index.md');
+  
+  try {
+    // 讀取首頁內容
+    let homeContent = await fs.readFile(homePagePath, 'utf-8');
+    
+    // 依更新時間排序（最新的在前），取前 5 篇
+    const latestIssues = [...issues]
+      .sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at))
+      .slice(0, 5);
+    
+    // 生成文章列表內容
+    let articlesContent = '';
+    
+    if (latestIssues.length === 0) {
+      articlesContent = '\n尚無文章，請建立第一篇 Issue 並添加 `blog` label！\n';
+    } else {
+      latestIssues.forEach(issue => {
+        const date = new Date(issue.updated_at).toLocaleDateString('zh-TW', {
+          year: 'numeric',
+          month: 'numeric',
+          day: 'numeric'
+        });
+        
+        const labels = issue.labels
+          .map(label => typeof label === 'string' ? label : label.name)
+          .filter(name => name !== 'blog')
+          .map(name => `\`${name}\``)
+          .join(' ');
+        
+        const labelsPart = labels ? ` | **標籤**: ${labels}` : '';
+        
+        articlesContent += `\n### [${issue.title}](/posts/${issue.number})\n`;
+        articlesContent += `**更新時間**: ${date}${labelsPart}\n`;
+      });
+      
+      articlesContent += `\n[查看所有文章 →](/posts/)\n`;
+    }
+    
+    // 替換「最新文章」區域的內容
+    // 尋找 ## 最新文章 到下一個 ## 或檔案結尾之間的內容
+    const articlesSectionRegex = /(## 最新文章\n\n)([\s\S]*?)(\n##|$)/;
+    
+    if (articlesSectionRegex.test(homeContent)) {
+      homeContent = homeContent.replace(
+        articlesSectionRegex,
+        `$1${articlesContent}$3`
+      );
+    } else {
+      // 如果找不到「最新文章」標題，在文件末尾添加
+      homeContent += `\n## 最新文章\n${articlesContent}\n`;
+    }
+    
+    // 寫入更新後的內容
+    await fs.writeFile(homePagePath, homeContent, 'utf-8');
+    console.log(`✅ 首頁已更新（顯示 ${latestIssues.length} 篇文章）\n`);
+    
+  } catch (error) {
+    console.error('❌ 首頁更新失敗:', error.message);
+    throw error;
+  }
+}
+
+/**
  * 主函數
  */
 async function main() {
@@ -342,6 +411,9 @@ async function main() {
     
     // 生成文章列表
     await generatePostsList(issues);
+    
+    // 更新首頁文章列表
+    await updateHomePage(issues);
     
     console.log('🎉 建置完成！\n');
     
