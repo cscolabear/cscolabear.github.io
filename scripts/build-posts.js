@@ -24,13 +24,54 @@ const CONFIG = {
   label: 'blog',
   state: 'closed',
   postsDir: path.join(__dirname, '../docs/posts'),
-  postsIndexPath: path.join(__dirname, '../docs/posts/index.md')
+  postsIndexPath: path.join(__dirname, '../docs/posts/index.md'),
+  syncLogPath: path.join(__dirname, '../docs/.vitepress/sync-log.json')
 };
 
 // 初始化 Octokit
 const octokit = new Octokit({
   auth: process.env.GITHUB_TOKEN || process.env.GH_TOKEN
 });
+
+/**
+ * 讀取同步日誌
+ */
+async function readSyncLog() {
+  try {
+    const content = await fs.readFile(CONFIG.syncLogPath, 'utf-8');
+    return JSON.parse(content);
+  } catch (error) {
+    return {}; // 如果檔案不存在，返回空物件
+  }
+}
+
+/**
+ * 寫入同步日誌
+ */
+async function writeSyncLog(log) {
+  try {
+    await fs.writeFile(CONFIG.syncLogPath, JSON.stringify(log, null, 2), 'utf-8');
+  } catch (error) {
+    console.error('⚠️  同步日誌寫入失敗:', error.message);
+  }
+}
+
+/**
+ * 檢查 issue 是否需要更新
+ */
+function needsUpdate(issue, syncLog) {
+  const issueKey = `issue-${issue.number}`;
+  const lastSync = syncLog[issueKey];
+  
+  if (!lastSync) {
+    return true; // 新文章，需要建立
+  }
+  
+  const issueUpdatedAt = new Date(issue.updated_at).getTime();
+  const lastSyncTime = new Date(lastSync.updated_at).getTime();
+  
+  return issueUpdatedAt > lastSyncTime; // Issue 更新時間晚於上次同步
+}
 
 /**
  * 擷取所有符合條件的 GitHub Issues
@@ -143,18 +184,33 @@ labels: ${JSON.stringify(labelNames)}
 /**
  * 將 Markdown 內容寫入檔案
  */
-async function writeMarkdownFile(issue) {
+async function writeMarkdownFile(issue, syncLog) {
   const filename = `${issue.number}.md`;
   const filepath = path.join(CONFIG.postsDir, filename);
+  
+  // 檢查是否需要更新
+  if (!needsUpdate(issue, syncLog)) {
+    console.log(`   ⏭️  ${filename} - 無需更新`);
+    return 'skipped';
+  }
+  
   const content = convertIssueToMarkdown(issue);
   
   try {
     await fs.writeFile(filepath, content, 'utf-8');
     console.log(`   ✓ ${filename} - ${issue.title}`);
-    return true;
+    
+    // 更新同步日誌
+    syncLog[`issue-${issue.number}`] = {
+      title: issue.title,
+      updated_at: issue.updated_at,
+      synced_at: new Date().toISOString()
+    };
+    
+    return 'success';
   } catch (error) {
     console.error(`   ✗ ${filename} 寫入失敗:`, error.message);
-    return false;
+    return 'failed';
   }
 }
 
@@ -207,22 +263,28 @@ ${labels ? `**標籤**: ${labels}` : ''}
 }
 
 /**
- * 清理舊的文章檔案（保留 index.md）
+ * 清理已刪除的 issue 對應的文章檔案
  */
-async function cleanOldPosts() {
-  console.log('🧹 正在清理舊文章...');
+async function cleanDeletedPosts(currentIssues) {
+  console.log('🧹 正在清理已刪除的文章...');
   
   try {
     const files = await fs.readdir(CONFIG.postsDir);
+    const currentIssueNumbers = new Set(currentIssues.map(issue => `${issue.number}.md`));
     
+    let cleanedCount = 0;
     for (const file of files) {
-      if (file !== 'index.md' && file.endsWith('.md')) {
+      if (file !== 'index.md' && file.endsWith('.md') && !currentIssueNumbers.has(file)) {
         await fs.unlink(path.join(CONFIG.postsDir, file));
-        console.log(`   ✓ 已刪除 ${file}`);
+        console.log(`   ✓ 已刪除 ${file}（對應的 issue 已不符合條件）`);
+        cleanedCount++;
       }
     }
     
-    console.log('✅ 清理完成\n');
+    if (cleanedCount === 0) {
+      console.log('   ✓ 無需清理');
+    }
+    console.log('');
   } catch (error) {
     console.error('❌ 清理失敗:', error.message);
   }
@@ -237,9 +299,11 @@ async function main() {
   try {
     // 確保目錄存在
     await fs.mkdir(CONFIG.postsDir, { recursive: true });
+    await fs.mkdir(path.dirname(CONFIG.syncLogPath), { recursive: true });
     
-    // 清理舊文章
-    await cleanOldPosts();
+    // 讀取同步日誌
+    const syncLog = await readSyncLog();
+    console.log(`📋 已載入同步日誌（${Object.keys(syncLog).length} 筆記錄）\n`);
     
     // 擷取 Issues
     const issues = await fetchIssues();
@@ -252,13 +316,29 @@ async function main() {
     // 轉換並寫入文章
     console.log('📝 正在轉換文章...');
     let successCount = 0;
+    let skippedCount = 0;
+    let failedCount = 0;
     
     for (const issue of issues) {
-      const success = await writeMarkdownFile(issue);
-      if (success) successCount++;
+      const result = await writeMarkdownFile(issue, syncLog);
+      if (result === 'success') successCount++;
+      else if (result === 'skipped') skippedCount++;
+      else failedCount++;
     }
     
-    console.log(`✅ 成功轉換 ${successCount}/${issues.length} 篇文章\n`);
+    console.log(`\n📊 轉換結果：`);
+    console.log(`   ✅ 成功: ${successCount} 篇`);
+    console.log(`   ⏭️  跳過: ${skippedCount} 篇（無需更新）`);
+    if (failedCount > 0) {
+      console.log(`   ❌ 失敗: ${failedCount} 篇`);
+    }
+    console.log('');
+    
+    // 寫入同步日誌
+    await writeSyncLog(syncLog);
+    
+    // 清理已刪除的 issues 對應的檔案
+    await cleanDeletedPosts(issues);
     
     // 生成文章列表
     await generatePostsList(issues);
