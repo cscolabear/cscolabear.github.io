@@ -28,7 +28,18 @@
 
 ## 🛠️ 本地開發
 
+**環境需求**
+- Node.js 24.x (建議使用 [NVM](https://github.com/nvm-sh/nvm) 管理版本)
+- npm 11.x（隨 Node.js 24 自動安裝）
+
 ```bash
+# 使用 NVM 安裝並切換 Node 版本
+nvm install 24
+nvm use 24
+
+# 或直接使用專案的 .nvmrc
+nvm use
+
 # 安裝依賴
 npm install
 
@@ -51,8 +62,9 @@ npm run docs:preview
 - **內容來源**: GitHub Issues API (Octokit)
 - **部署平台**: GitHub Pages
 - **自動化**: GitHub Actions (每日定時 + 手動觸發)
-- **程式語言**: JavaScript (Node.js 20+)
+- **程式語言**: JavaScript (Node.js 24+)
 - **樣式**: 內建主題 + 自訂 CSS
+- **環境管理**: NVM (.nvmrc)
 
 ## 📁 專案結構
 
