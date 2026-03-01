@@ -6,12 +6,16 @@
   },
   "issue-1": {
     "title": "測試，這是一篇用於測試 blog 的標題",
-    "updated_at": "2026-03-01T06:05:26Z",
-    "synced_at": "2026-03-01T06:57:31.122Z"
+    "updated_at": "2026-03-01T08:38:36Z",
+    "comments_updated_at": "2026-03-01T08:38:36.000Z",
+    "comments_count": 1,
+    "synced_at": "2026-03-01T08:38:44.117Z"
   },
   "issue-2": {
     "title": "WIP 測試，這是一篇用於測試 blog 的標題 #1",
-    "updated_at": "2026-03-01T07:43:43Z",
-    "synced_at": "2026-03-01T08:06:39.479Z"
+    "updated_at": "2026-03-01T08:31:14Z",
+    "comments_updated_at": "2026-03-01T08:31:14.000Z",
+    "comments_count": 2,
+    "synced_at": "2026-03-01T08:38:44.118Z"
   }
 }

@@ -57,7 +57,7 @@ async function writeSyncLog(log) {
 }
 
 /**
- * 檢查 issue 是否需要更新
+ * 檢查 issue 是否需要更新（包含留言變動檢查）
  */
 function needsUpdate(issue, syncLog) {
   const issueKey = `issue-${issue.number}`;
@@ -67,14 +67,60 @@ function needsUpdate(issue, syncLog) {
     return true; // 新文章，需要建立
   }
   
+  // 檢查 issue 本身是否有更新
   const issueUpdatedAt = new Date(issue.updated_at).getTime();
   const lastSyncTime = new Date(lastSync.updated_at).getTime();
   
-  return issueUpdatedAt > lastSyncTime; // Issue 更新時間晚於上次同步
+  if (issueUpdatedAt > lastSyncTime) {
+    return true; // Issue 更新時間晚於上次同步
+  }
+  
+  // 檢查留言是否有更新
+  if (issue.comments_data && issue.comments_data.length > 0) {
+    // 取得最新留言的更新時間
+    const latestCommentUpdatedAt = Math.max(
+      ...issue.comments_data.map(c => new Date(c.updated_at).getTime())
+    );
+    
+    // 如果之前沒有記錄留言時間，或留言有更新，則需要重新生成
+    if (!lastSync.comments_updated_at) {
+      return true;
+    }
+    
+    const lastCommentsSync = new Date(lastSync.comments_updated_at).getTime();
+    if (latestCommentUpdatedAt > lastCommentsSync) {
+      return true; // 留言有更新
+    }
+  }
+  
+  return false; // 無需更新
 }
 
 /**
- * 擷取所有符合條件的 GitHub Issues
+ * 擷取指定 issue 的最新留言（最多 10 則）
+ */
+async function fetchIssueComments(issueNumber) {
+  try {
+    const { data: comments } = await octokit.rest.issues.listComments({
+      owner: CONFIG.owner,
+      repo: CONFIG.repo,
+      issue_number: issueNumber,
+      per_page: 100,
+      sort: 'created',
+      direction: 'desc' // 最新的在前
+    });
+    
+    // 只取最新 10 則
+    return comments.slice(0, 10);
+    
+  } catch (error) {
+    console.warn(`⚠️  擷取 Issue #${issueNumber} 留言失敗:`, error.message);
+    return []; // 失敗時返回空陣列，不中斷流程
+  }
+}
+
+/**
+ * 擷取所有符合條件的 GitHub Issues（包含留言）
  */
 async function fetchIssues() {
   console.log('📥 正在擷取 GitHub Issues...');
@@ -105,7 +151,20 @@ async function fetchIssues() {
       console.log(`   ✓ 已擷取第 ${page - 1} 頁，共 ${response.data.length} 篇`);
     }
     
-    console.log(`✅ 共擷取 ${issues.length} 篇文章\n`);
+    console.log(`✅ 共擷取 ${issues.length} 篇文章`);
+    
+    // 為每個 issue 取得留言
+    console.log('📥 正在擷取留言...');
+    for (const issue of issues) {
+      const comments = await fetchIssueComments(issue.number);
+      issue.comments_data = comments; // 附加留言資料到 issue 物件
+      
+      if (comments.length > 0) {
+        console.log(`   ✓ Issue #${issue.number}: ${comments.length} 則留言`);
+      }
+    }
+    
+    console.log(`✅ 留言擷取完成\n`);
     return issues;
     
   } catch (error) {
@@ -115,7 +174,7 @@ async function fetchIssues() {
 }
 
 /**
- * 將 issue 轉換為 Markdown frontmatter + body
+ * 將 issue 轉換為 Markdown frontmatter + body + comments
  */
 function convertIssueToMarkdown(issue) {
   const {
@@ -125,7 +184,8 @@ function convertIssueToMarkdown(issue) {
     created_at,
     updated_at,
     html_url,
-    labels
+    labels,
+    comments_data
   } = issue;
   
   // 生成描述（取前 150 字元）
@@ -141,6 +201,18 @@ function convertIssueToMarkdown(issue) {
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     return date.toISOString().split('T')[0];
+  };
+  
+  // 格式化留言時間（繁體中文格式）
+  const formatCommentDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('zh-TW', {
+      year: 'numeric',
+      month: 'numeric',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    });
   };
   
   // 提取標籤名稱
@@ -166,6 +238,43 @@ labels: ${JSON.stringify(labelNames)}
   
   // GitHub 圖片連結通常已經是完整的 URL，不需要特別處理
   
+  // 生成留言區塊（如果有留言）
+  let commentsSection = '';
+  if (comments_data && comments_data.length > 0) {
+    commentsSection = `
+
+---
+
+## 💬 留言討論 (${comments_data.length} 則)
+
+<div class="comments-section">
+
+`;
+    
+    comments_data.forEach(comment => {
+      const authorName = comment.user?.login || '匿名使用者';
+      const commentDate = formatCommentDate(comment.updated_at);
+      const commentBody = comment.body || '';
+      
+      commentsSection += `<div class="comment-card">
+<div class="comment-header">
+  <strong>@${authorName}</strong>
+  <span class="comment-date">${commentDate}</span>
+</div>
+<div class="comment-body">
+
+${commentBody}
+
+</div>
+</div>
+
+`;
+    });
+    
+    commentsSection += `</div>
+`;
+  }
+  
   // 添加 GitHub 討論連結
   const discussionLink = `
 
@@ -178,7 +287,7 @@ labels: ${JSON.stringify(labelNames)}
 </div>
 `;
   
-  return frontmatter + processedBody + discussionLink;
+  return frontmatter + processedBody + commentsSection + discussionLink;
 }
 
 /**
@@ -200,10 +309,21 @@ async function writeMarkdownFile(issue, syncLog) {
     await fs.writeFile(filepath, content, 'utf-8');
     console.log(`   ✓ ${filename} - ${issue.title}`);
     
+    // 計算留言的最後更新時間
+    let commentsUpdatedAt = null;
+    if (issue.comments_data && issue.comments_data.length > 0) {
+      const latestCommentDate = Math.max(
+        ...issue.comments_data.map(c => new Date(c.updated_at).getTime())
+      );
+      commentsUpdatedAt = new Date(latestCommentDate).toISOString();
+    }
+    
     // 更新同步日誌
     syncLog[`issue-${issue.number}`] = {
       title: issue.title,
       updated_at: issue.updated_at,
+      comments_updated_at: commentsUpdatedAt,
+      comments_count: issue.comments_data?.length || 0,
       synced_at: new Date().toISOString()
     };
     

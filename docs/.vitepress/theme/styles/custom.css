@@ -24,6 +24,82 @@
   align-items: center;
 }
 
+/* 留言區塊樣式 */
+.comments-section {
+  margin: 2rem 0;
+  padding: 1.5rem;
+  background-color: var(--vp-c-bg-soft);
+  border-radius: 8px;
+}
+
+.comment-card {
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  background-color: var(--vp-c-bg);
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 6px;
+  transition: all 0.2s;
+}
+
+.comment-card:hover {
+  border-color: var(--vp-c-brand-lighter);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.comment-card:last-child {
+  margin-bottom: 0;
+}
+
+.comment-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--vp-c-divider);
+}
+
+.comment-header strong {
+  color: var(--vp-c-brand);
+  font-size: 0.95rem;
+}
+
+.comment-date {
+  font-size: 0.85rem;
+  color: var(--vp-c-text-2);
+}
+
+.comment-body {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--vp-c-text-1);
+}
+
+.comment-body p:first-child {
+  margin-top: 0;
+}
+
+.comment-body p:last-child {
+  margin-bottom: 0;
+}
+
+/* 響應式設計 */
+@media (max-width: 768px) {
+  .comments-section {
+    padding: 1rem;
+  }
+  
+  .comment-card {
+    padding: 0.75rem;
+  }
+  
+  .comment-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+  }
+}
+
 /* GitHub 討論連結樣式 */
 .github-discussion {
   margin-top: 3rem;

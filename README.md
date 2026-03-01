@@ -8,6 +8,7 @@
 - ✅ 基於 **VitePress** 建置，簡約現代的閱讀體驗
 - ✅ **GitHub Actions** 自動同步與部署
 - ✅ **增量更新機制**，只同步有變更的文章
+- ✅ **留言自動同步**，Issue 留言整合至文章頁面
 - ✅ 支援 **SEO 優化**（sitemap、meta tags、Open Graph）
 - ✅ 讀者可透過 GitHub Issues 留言討論
 - ✅ 完整的**繁體中文介面**
@@ -25,6 +26,13 @@
 5. GitHub Actions 會自動將文章同步到網站（每日 08:00 或手動觸發）
 
 詳細說明請參考：[使用說明](./docs/usage-guide.md)
+
+## 💬 留言功能
+
+- 讀者可在 GitHub Issue 下方留言討論
+- 系統會**自動同步最新 10 則留言**到文章頁面
+- 留言包含：留言者名稱、更新時間、完整內容
+- 支援 Markdown 格式，可插入程式碼、圖片等
 
 ## 🛠️ 本地開發
 
@@ -46,7 +54,7 @@ npm install
 # 啟動開發伺服器
 npm run docs:dev
 
-# 擷取 Issues 並轉換為文章
+# 擷取 Issues 並轉換為文章（包含留言）
 npm run fetch:issues
 
 # 完整建置（擷取 + 建置）
@@ -75,7 +83,7 @@ npm run docs:preview
 ├── docs/                       # VitePress 文檔目錄
 │   ├── .vitepress/
 │   │   ├── config.js          # VitePress 配置
-│   │   ├── sync-log.json      # 同步日誌（自動生成）
+│   │   ├── sync-log.json      # 同步日誌（記錄文章與留言更新時間）
 │   │   └── theme/             # 自訂主題
 │   │       ├── index.js       # 主題進入點
 │   │       └── styles/        # 自訂樣式
