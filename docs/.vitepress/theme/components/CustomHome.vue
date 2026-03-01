@@ -163,13 +163,13 @@ const features = frontmatter.value.features || []
 }
 
 .latest-posts-section h3 a {
-  color: var(--vp-c-text-1);
+  color: var(--vp-c-brand-1);
   text-decoration: none;
   transition: color 0.3s;
 }
 
 .latest-posts-section h3 a:hover {
-  color: var(--vp-c-brand-1);
+  color: var(--vp-c-brand-2);
 }
 
 .latest-posts-section p {
