@@ -338,6 +338,9 @@ async function writeMarkdownFile(issue, syncLog) {
 async function generatePostsList(issues) {
   console.log('\n📝 正在生成文章列表頁面...');
   
+  // 讀取 sync-log 以取得留言數量
+  const syncLog = await readSyncLog();
+  
   // 依更新時間排序（最新的在前）
   const sortedIssues = [...issues].sort((a, b) => {
     return new Date(b.updated_at) - new Date(a.updated_at);
@@ -356,16 +359,19 @@ async function generatePostsList(issues) {
     const date = new Date(issue.updated_at).toLocaleDateString('zh-TW');
     const labels = issue.labels
       .map(label => typeof label === 'string' ? label : label.name)
-      .filter(name => name !== 'blog')
+      .filter(name => name.toLowerCase() !== 'blog')
       .map(name => `\`${name}\``)
       .join(' ');
+    
+    // 取得留言數量
+    const issueKey = `issue-${issue.number}`;
+    const commentsCount = syncLog[issueKey]?.comments_count || 0;
+    const commentsInfo = commentsCount > 0 ? `💬 ${commentsCount} 則留言` : '';
     
     listContent += `
 ## [${issue.title}](/posts/${issue.number})
 
-${labels ? `**標籤**: ${labels}` : ''}
-
-**更新時間**: ${date}
+${labels ? `**標籤**: ${labels}\n\n` : ''}${commentsInfo ? `${commentsInfo}\n\n` : ''}**更新時間**: ${date}
 
 ---
 `;
@@ -420,6 +426,9 @@ async function updateHomePage(issues) {
     // 讀取首頁內容
     let homeContent = await fs.readFile(homePagePath, 'utf-8');
     
+    // 讀取 sync-log 以取得留言數量
+    const syncLog = await readSyncLog();
+    
     // 依更新時間排序（最新的在前），取前 5 篇
     const latestIssues = [...issues]
       .sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at))
@@ -440,14 +449,18 @@ async function updateHomePage(issues) {
         
         const labels = issue.labels
           .map(label => typeof label === 'string' ? label : label.name)
-          .filter(name => name !== 'blog')
+          .filter(name => name.toLowerCase() !== 'blog')
           .map(name => `\`${name}\``)
           .join(' ');
         
+        // 取得留言數量
+        const issueKey = `issue-${issue.number}`;
+        const commentsCount = syncLog[issueKey]?.comments_count || 0;
+        const commentsPart = commentsCount > 0 ? ` | 💬 ${commentsCount} 則留言` : '';
         const labelsPart = labels ? ` | **標籤**: ${labels}` : '';
         
         articlesContent += `\n### [${issue.title}](/posts/${issue.number})\n`;
-        articlesContent += `**更新時間**: ${date}${labelsPart}\n`;
+        articlesContent += `**更新時間**: ${date}${commentsPart}${labelsPart}\n`;
       });
       
       articlesContent += `\n[查看所有文章 →](/posts/)\n`;

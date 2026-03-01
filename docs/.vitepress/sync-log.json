@@ -1,10 +1,10 @@
 {
   "issue-2": {
     "title": "WIP 測試，這是一篇用於測試 blog 的標題 #1",
-    "updated_at": "2026-03-01T08:43:47Z",
+    "updated_at": "2026-03-01T08:59:28Z",
     "comments_updated_at": "2026-03-01T08:43:47.000Z",
     "comments_count": 2,
-    "synced_at": "2026-03-01T08:52:16.281Z"
+    "synced_at": "2026-03-01T09:05:02.998Z"
   },
   "issue-1": {
     "title": "測試，這是一篇用於測試 blog 的標題",
