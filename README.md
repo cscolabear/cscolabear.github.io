@@ -15,7 +15,7 @@
 
 ## 🌐 線上網站
 
-訪問：https://cscolabear.github.io
+訪問：https://cola.workxplay.net （或 https://cscolabear.github.io）
 
 ## 📝 如何發佈文章
 
