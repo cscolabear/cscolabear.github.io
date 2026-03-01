@@ -273,6 +273,9 @@ ${commentBody}
     });
   }
   
+  // 添加 h1 標題（SEO 優化）
+  const h1Title = `# ${title}\n\n`;
+  
   // 添加 GitHub 討論連結
   const discussionLink = `
 
@@ -285,7 +288,7 @@ ${commentBody}
 </div>
 `;
   
-  return frontmatter + processedBody + commentsSection + discussionLink;
+  return frontmatter + h1Title + processedBody + commentsSection + discussionLink;
 }
 
 /**
