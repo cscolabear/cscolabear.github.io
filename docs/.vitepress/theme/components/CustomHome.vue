@@ -27,6 +27,9 @@
       </div>
     </div>
     
+    <!-- 分隔線 -->
+    <div class="section-divider"></div>
+    
     <!-- 網站特色區塊 -->
     <div class="features-section">
       <div class="container">
@@ -135,9 +138,73 @@ const features = frontmatter.value.features || []
   color: var(--vp-c-brand-1);
 }
 
-/* 最新文章區塊 */
+/* 最新文章區塊樣式 */
 .latest-posts-section {
   padding: 0 0 48px;
+}
+
+.latest-posts-section h2 {
+  font-size: 32px;
+  font-weight: 600;
+  margin: 0 0 24px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid var(--vp-c-divider);
+}
+
+.latest-posts-section h3 {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 24px 0 8px;
+}
+
+.latest-posts-section h3 a {
+  color: var(--vp-c-text-1);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.latest-posts-section h3 a:hover {
+  color: var(--vp-c-brand-1);
+}
+
+.latest-posts-section p {
+  color: var(--vp-c-text-2);
+  font-size: 14px;
+  margin: 0 0 16px;
+}
+
+.latest-posts-section p strong {
+  color: var(--vp-c-text-1);
+  font-weight: 500;
+}
+
+.latest-posts-section p code {
+  font-size: 13px;
+  padding: 2px 6px;
+  border-radius: 3px;
+  background-color: var(--vp-c-bg-soft);
+  color: var(--vp-c-brand-1);
+}
+
+.latest-posts-section > .container > div > div > p:last-child a {
+  display: inline-flex;
+  align-items: center;
+  color: var(--vp-c-brand-1);
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.3s;
+}
+
+.latest-posts-section > .container > div > div > p:last-child a:hover {
+  color: var(--vp-c-brand-2);
+  transform: translateX(4px);
+}
+
+/* 分隔線樣式 */
+.section-divider {
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--vp-c-divider) 20%, var(--vp-c-divider) 80%, transparent);
+  margin: 48px 0;
 }
 
 /* 網站特色區塊 - 降低視覺強度 */
