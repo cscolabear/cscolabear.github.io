@@ -440,6 +440,9 @@ async function updateHomePage(issues) {
     if (latestIssues.length === 0) {
       articlesContent = '\n尚無文章，請建立第一篇 Issue 並添加 `blog` label！\n';
     } else {
+      // 使用 HTML 結構以獲得更好的 SEO
+      articlesContent += '\n<div class="post-list">\n';
+      
       latestIssues.forEach(issue => {
         const date = new Date(issue.updated_at).toLocaleDateString('zh-TW', {
           year: 'numeric',
@@ -447,30 +450,34 @@ async function updateHomePage(issues) {
           day: 'numeric'
         });
         
+        const isoDate = new Date(issue.updated_at).toISOString().split('T')[0];
+        
         const labels = issue.labels
           .map(label => typeof label === 'string' ? label : label.name)
           .filter(name => name.toLowerCase() !== 'blog')
-          .map(name => `\`${name}\``)
-          .join(' ');
+          .map(name => `<span class="tag">${name}</span>`)
+          .join('');
         
         // 取得留言數量
         const issueKey = `issue-${issue.number}`;
         const commentsCount = syncLog[issueKey]?.comments_count || 0;
-        const commentsPart = commentsCount > 0 ? `💬 ${commentsCount} 則留言` : '';
-        const labelsPart = labels ? `標籤: ${labels}` : '';
         
-        // 使用 div 結構而非 h3
-        articlesContent += `\n**[${issue.title}](/posts/${issue.number})**\n\n`;
-        
-        // 建立 meta 資訊陣列
-        const metaParts = [`更新時間: ${date}`];
-        if (commentsPart) metaParts.push(commentsPart);
-        if (labelsPart) metaParts.push(labelsPart);
-        
-        articlesContent += `${metaParts.join(' | ')}\n`;
+        articlesContent += '<article class="post-item">\n';
+        articlesContent += `  <h3 class="post-title"><a href="/posts/${issue.number}">${issue.title}</a></h3>\n`;
+        articlesContent += '  <div class="post-meta">\n';
+        articlesContent += `    <time datetime="${isoDate}">更新時間: ${date}</time>\n`;
+        if (commentsCount > 0) {
+          articlesContent += `    <span class="comments">💬 ${commentsCount} 則留言</span>\n`;
+        }
+        if (labels) {
+          articlesContent += `    <span class="labels">${labels}</span>\n`;
+        }
+        articlesContent += '  </div>\n';
+        articlesContent += '</article>\n';
       });
       
-      articlesContent += `\n[查看所有文章 →](/posts/)\n`;
+      articlesContent += '</div>\n\n';
+      articlesContent += `<p class="view-all"><a href="/posts/">查看所有文章 →</a></p>\n`;
     }
     
     // 替換「最新文章」區域的內容

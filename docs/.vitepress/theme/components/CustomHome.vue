@@ -155,36 +155,74 @@ const features = frontmatter.value.features || []
   display: none !important;
 }
 
-/* 文章列表項目 */
-.latest-posts-section p {
-  margin: 0 0 24px;
-  line-height: 1.6;
+/* 文章列表容器 */
+.latest-posts-section .post-list {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
 }
 
-/* 文章標題連結 */
-.latest-posts-section p strong a {
+/* 單篇文章項目 */
+.latest-posts-section .post-item {
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--vp-c-divider-light);
+}
+
+.latest-posts-section .post-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+/* 文章標題 */
+.latest-posts-section .post-title {
   font-size: 18px;
   font-weight: 600;
+  margin: 0 0 8px;
+  line-height: 1.4;
+}
+
+/* 隱藏文章標題的錨點 */
+.latest-posts-section .post-title .header-anchor {
+  display: none !important;
+}
+
+.latest-posts-section .post-title a {
   color: var(--vp-c-brand-1);
   text-decoration: none;
   transition: color 0.25s;
 }
 
-.latest-posts-section p strong a:hover {
+.latest-posts-section .post-title a:hover {
   color: var(--vp-c-brand-2);
 }
 
-/* 文章 meta 資訊（更新時間、留言、標籤） */
-.latest-posts-section p:not(:has(strong)) {
+/* 文章 meta 資訊 */
+.latest-posts-section .post-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
   font-size: 14px;
   color: var(--vp-c-text-2);
-  margin-top: -16px;
-  margin-bottom: 28px;
 }
 
-.latest-posts-section p code {
+.latest-posts-section .post-meta time {
+  color: var(--vp-c-text-2);
+}
+
+.latest-posts-section .post-meta .comments {
+  color: var(--vp-c-text-2);
+}
+
+.latest-posts-section .post-meta .labels {
+  display: flex;
+  gap: 6px;
+}
+
+.latest-posts-section .post-meta .tag {
+  display: inline-block;
+  padding: 2px 8px;
   font-size: 12px;
-  padding: 2px 6px;
   border-radius: 3px;
   background-color: var(--vp-c-bg-soft);
   color: var(--vp-c-brand-1);
@@ -192,7 +230,12 @@ const features = frontmatter.value.features || []
 }
 
 /* 查看所有文章連結 */
-.latest-posts-section p:last-child a {
+.latest-posts-section .view-all {
+  margin-top: 32px;
+  text-align: left;
+}
+
+.latest-posts-section .view-all a {
   display: inline-flex;
   align-items: center;
   color: var(--vp-c-brand-1);
@@ -202,9 +245,18 @@ const features = frontmatter.value.features || []
   transition: all 0.25s;
 }
 
-.latest-posts-section p:last-child a:hover {
+.latest-posts-section .view-all a:hover {
   color: var(--vp-c-brand-2);
   transform: translateX(4px);
+}
+
+/* 響應式設計 */
+@media (max-width: 768px) {
+  .latest-posts-section .post-meta {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
 }
 
 /* 分隔線樣式 */
