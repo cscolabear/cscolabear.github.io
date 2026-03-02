@@ -90,7 +90,7 @@ export default defineConfig({
     ],
 
     footer: {
-      message: '基於 VitePress 建置，內容來自 GitHub Issues',
+      message: '',
       copyright: site.copyright
     },
 
