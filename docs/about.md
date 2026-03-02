@@ -1,10 +1,11 @@
 ---
-description: "關於 WorkxPlay 部落格：使用 VitePress 建置的技術 Blog，採用 GitHub Issues 作為內容管理系統。支援 Markdown 撰寫、自動部署、讀者互動與 SEO 優化。"
+description: "關於 WorkxPlay 工作與玩樂實驗室，Cola 的技術筆記與分享，使用 VitePress 建置的技術 Blog，採用 GitHub Issues 作為內容管理系統。支援 Markdown 撰寫、自動部署、讀者互動與 SEO 優化。"
 ---
 
 # 關於這個 Blog
 
 這是一個使用 VitePress 建置的個人技術 Blog，內容管理系統採用 GitHub Issues。
+完全使用 AI GithubCopilot CLI 建置，進行網站建置與維護。
 
 ## 特色
 
