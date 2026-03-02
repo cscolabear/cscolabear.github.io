@@ -613,11 +613,11 @@ async function updateHomePage(issues) {
     let articlesContent = '';
     
     if (latestIssues.length === 0) {
-      articlesContent = '\n尚無文章，請建立第一篇 Issue 並添加 `blog` label！\n';
+      articlesContent = '\n尚無文章，請建立第一篇 Issue 並添加 `Publishing` label！\n';
     } else {
       // 使用共用函數生成 Markdown 格式的文章列表
       articlesContent = '\n' + generateArticleListMarkdown(latestIssues, syncLog);
-      articlesContent += '\n<p class="view-all"><a href="/posts/">查看所有文章 →</a></p>\n';
+      articlesContent += '\n<p class="view-all"><a href="/articles">查看所有文章 →</a></p>\n';
     }
     
     // 替換「最新文章」區域的內容

@@ -7,7 +7,7 @@ hero:
   actions:
     - theme: brand
       text: 查看文章
-      link: /posts/
+      link: /articles
     - theme: alt
       text: 關於我
       link: /about
@@ -91,9 +91,13 @@ features:
 
 
 
+
+
+
+
 ## [what's SEO](/whats-seo)
 
 **更新時間**: 2026/3/2 | **標籤**: `Publishing` `SEO`
 
 
-<p class="view-all"><a href="/posts/">查看所有文章 →</a></p>
+<p class="view-all"><a href="/articles">查看所有文章 →</a></p>

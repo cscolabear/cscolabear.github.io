@@ -21,7 +21,8 @@
 
 ### 4. URL 結構
 - ✅ 清理 URL（移除 .html 後綴）
-- ✅ 語意化 URL（/posts/1, /posts/2）
+- ✅ 語意化 URL（/{slug}，例如：/whats-seo）
+- ✅ 支援自訂 URL slug
 
 ### 5. 內容優化
 - ✅ 語意化 HTML5 標籤

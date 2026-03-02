@@ -6,7 +6,7 @@ export default createContentLoader('posts/*.md', {
   excerpt: false,
   transform(rawData) {
     return rawData
-      .filter(page => !page.url.endsWith('/posts/')) // 排除 index 頁面
+      .filter(page => page.frontmatter.issueId) // 只包含文章（有 issueId）
       .map(page => ({
         title: page.frontmatter.title,
         url: page.url,
