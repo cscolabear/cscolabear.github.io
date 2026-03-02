@@ -488,7 +488,7 @@ function generateArticleListMarkdown(issues, syncLog) {
     const date = new Date(issue.updated_at).toLocaleDateString('zh-TW');
     const labels = issue.labels
       .map(label => typeof label === 'string' ? label : label.name)
-      .filter(name => name.toLowerCase() !== 'blog')
+      .filter(name => name.toLowerCase() !== CONFIG.publishLabel.toLowerCase())
       .map(name => `\`${name}\``)
       .join(' ');
     
@@ -505,7 +505,7 @@ function generateArticleListMarkdown(issues, syncLog) {
     if (commentsCount > 0) {
       metaParts.push(`💬 ${commentsCount} 則留言`);
     }
-    if (labels) {
+    if (labels && labels.trim()) {
       metaParts.push(`**標籤**: ${labels}`);
     }
     
