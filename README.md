@@ -21,7 +21,7 @@
 
 1. 在此 repository [建立新的 Issue](https://github.com/cscolabear/cscolabear.github.io/issues/new)
 2. 使用 Markdown 格式撰寫內容
-3. 添加 `blog` label
+3. 添加 `Publishing` label
 4. 完成後將 Issue 設為 `closed` 狀態
 5. GitHub Actions 會自動將文章同步到網站（每日 08:00 或手動觸發）
 

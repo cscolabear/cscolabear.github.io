@@ -50,7 +50,7 @@ export default {
   github: {
     owner: 'cscolabear',
     repo: 'cscolabear.github.io',
-    label: 'blog',
+    publishLabel: 'Publishing',
     state: 'closed'
   },
 

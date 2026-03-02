@@ -28,7 +28,7 @@
    ↓
 3. 安裝 npm 依賴
    ↓
-4. 擷取 GitHub Issues（label: blog, state: closed）
+4. 擷取 GitHub Issues（label: Publishing, state: closed）
    ↓
 5. 轉換為 Markdown 文章 (docs/posts/*.md)
    ↓

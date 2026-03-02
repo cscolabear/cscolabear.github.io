@@ -4,7 +4,7 @@
  * GitHub Issues 轉 VitePress Markdown 腳本
  * 
  * 功能：
- * 1. 從 GitHub API 擷取符合條件的 issues（label: blog, state: closed）
+ * 1. 從 GitHub API 擷取符合條件的 issues（label: Publishing, state: closed）
  * 2. 將 issue 內容轉換為 VitePress markdown 格式
  * 3. 生成文章列表頁面
  */
@@ -26,7 +26,7 @@ const seoConfig = (await import(seoConfigPath)).default;
 const CONFIG = {
   owner: seoConfig.github.owner,
   repo: seoConfig.github.repo,
-  label: seoConfig.github.label,
+  publishLabel: seoConfig.github.publishLabel,
   state: seoConfig.github.state,
   siteUrl: seoConfig.site.url,
   postsDir: path.join(__dirname, '../docs/posts'),
@@ -141,7 +141,7 @@ async function fetchIssues() {
         owner: CONFIG.owner,
         repo: CONFIG.repo,
         state: CONFIG.state,
-        labels: CONFIG.label,
+        labels: CONFIG.publishLabel,
         sort: 'updated',
         direction: 'desc',
         per_page: 100,
@@ -255,10 +255,10 @@ function convertIssueToMarkdown(issue) {
     });
   };
   
-  // 提取標籤名稱
+  // 提取標籤名稱（排除發佈用 label，使用不區分大小寫比對）
   const labelNames = labels
     .map(label => typeof label === 'string' ? label : label.name)
-    .filter(name => name !== 'blog'); // 排除 'blog' label
+    .filter(name => name.toLowerCase() !== CONFIG.publishLabel.toLowerCase());
   
   // 提取關鍵字（包含標籤 + SEO 預設關鍵字）
   const keywords = [...new Set([
@@ -566,7 +566,7 @@ async function main() {
     const issues = await fetchIssues();
     
     if (issues.length === 0) {
-      console.log('⚠️  沒有找到符合條件的文章（label: blog, state: closed）');
+      console.log(`⚠️  沒有找到符合條件的文章（label: ${CONFIG.publishLabel}, state: ${CONFIG.state}）`);
       return;
     }
     

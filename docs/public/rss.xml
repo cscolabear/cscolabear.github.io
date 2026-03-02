@@ -3,118 +3,12 @@
     <channel>
         <title>WorkxPlay 工作與玩樂實驗室</title>
         <link>https://cola.workxplay.net</link>
-        <description>透過 GitHub Issues 管理的個人技術 Blog</description>
+        <description>Cola 的技術筆記與分享</description>
         <lastBuildDate>Sun, 01 Mar 2026 00:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>zh-TW</language>
         <copyright>Copyright © 2026 [object Object]</copyright>
-        <item>
-            <title><![CDATA[測試，這是一篇用於測試 blog 的標題]]></title>
-            <link>https://cola.workxplay.net/posts/1.html</link>
-            <guid isPermaLink="false">https://cola.workxplay.net/posts/1.html</guid>
-            <pubDate>Sun, 01 Mar 2026 00:00:00 GMT</pubDate>
-            <description><![CDATA[測試內容小標 測試內文 測試內容小標 2 測試內文 測試內文]]></description>
-            <content:encoded><![CDATA[# 測試，這是一篇用於測試 blog 的標題
-
-# 測試內容小標
-測試內文
-
-# 測試內容小標 2
-測試內文
-測試內文
-
----
-
-## 💬 留言討論 (1 則)
-
-
-<div class="comment-card">
-<div class="comment-header">
-<strong>@cscolabear</strong>
-<span class="comment-date">2026/3/1 下午04:38</span>
-</div>
-
-這是一則測試留言，用於驗證留言功能是否正常運作。<br>
-<br>
-- 測試項目 1: 留言內容顯示<br>
-- 測試項目 2: 使用者名稱顯示<br>
-- 測試項目 3: 時間格式化<br>
-<br>
-感謝！🎉
-
-</div>
-
-
-
----
-
-<div class="github-discussion">
-  <a href="https://github.com/cscolabear/cscolabear.github.io/issues/1" target="_blank" rel="noopener noreferrer">
-    💬 在 GitHub 上討論這篇文章
-  </a>
-</div>]]></content:encoded>
-            <author>Cola</author>
-            <category>Blog</category>
-            <enclosure url="https://cola.workxplay.net/og-image.png" length="0" type="image/png"/>
-        </item>
-        <item>
-            <title><![CDATA[WIP 測試，這是一篇用於測試 blog 的標題 #1]]></title>
-            <link>https://cola.workxplay.net/posts/2.html</link>
-            <guid isPermaLink="false">https://cola.workxplay.net/posts/2.html</guid>
-            <pubDate>Sun, 01 Mar 2026 00:00:00 GMT</pubDate>
-            <description><![CDATA[wip 測試內容小標 wip 測試內文 wip 測試內容小標 2 wip 測試內文 wip 測試內文]]></description>
-            <content:encoded><![CDATA[# WIP 測試，這是一篇用於測試 blog 的標題 #1
-
-# wip 測試內容小標
-wip 測試內文
-
-# wip 測試內容小標 2
-wip 測試內文
-wip 測試內文
-
----
-
-## 💬 留言討論 (2 則)
-
-
-<div class="comment-card">
-<div class="comment-header">
-<strong>@cscolabear-dev</strong>
-<span class="comment-date">2026/3/1 下午04:31</span>
-</div>
-
-測試留言<br>
-編輯~
-
-</div>
-
-
-<div class="comment-card">
-<div class="comment-header">
-<strong>@cscolabear-dev</strong>
-<span class="comment-date">2026/3/1 下午04:43</span>
-</div>
-
-我編輯留言試試<br>
-留言第二則~
-
-</div>
-
-
-
----
-
-<div class="github-discussion">
-  <a href="https://github.com/cscolabear/cscolabear.github.io/issues/2" target="_blank" rel="noopener noreferrer">
-    💬 在 GitHub 上討論這篇文章
-  </a>
-</div>]]></content:encoded>
-            <author>Cola</author>
-            <category>bug</category>
-            <category>Blog</category>
-            <enclosure url="https://cola.workxplay.net/og-image.png" length="0" type="image/png"/>
-        </item>
         <item>
             <title><![CDATA[what's SEO]]></title>
             <link>https://cola.workxplay.net/posts/5.html</link>
