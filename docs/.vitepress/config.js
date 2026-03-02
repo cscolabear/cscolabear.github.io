@@ -38,7 +38,6 @@ export default defineConfig({
     // Twitter Card
     ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
     ['meta', { name: 'twitter:title', content: site.name }],
-    ['meta', { name: 'twitter:description', content: site.description }],
     ['meta', { name: 'twitter:image', content: `${site.url}${seo.defaultOgImage}` }],
     ...(social.twitter ? [['meta', { name: 'twitter:site', content: social.twitter }]] : []),
     ...(social.twitter ? [['meta', { name: 'twitter:creator', content: social.twitter }]] : []),
@@ -167,23 +166,17 @@ export default defineConfig({
     // 為文章頁面添加特定的 meta 標籤（透過 frontmatter.issueId 判斷）
     const { frontmatter } = pageData
     
-    // 為所有有 frontmatter.description 的頁面覆蓋 description
-    if (frontmatter.description && !frontmatter.issueId) {
-      head.push(['meta', { name: 'description', content: frontmatter.description }])
-      head.push(['meta', { property: 'og:description', content: frontmatter.description }])
-      head.push(['meta', { name: 'twitter:description', content: frontmatter.description }])
-    }
+    // 統一處理所有頁面的 description（確保三個 description tags 一致）
+    const description = frontmatter.description || site.description
+    head.push(['meta', { name: 'description', content: description }])
+    head.push(['meta', { property: 'og:description', content: description }])
+    head.push(['meta', { name: 'twitter:description', content: description }])
     
     if (frontmatter.issueId) {
       // 文章專屬 OG 標籤
       if (frontmatter.title) {
         head.push(['meta', { property: 'og:title', content: frontmatter.title }])
         head.push(['meta', { property: 'og:url', content: canonicalUrl }])
-      }
-
-      if (frontmatter.description) {
-        head.push(['meta', { property: 'og:description', content: frontmatter.description }])
-        head.push(['meta', { name: 'description', content: frontmatter.description }])
       }
 
       // Keywords meta 標籤
@@ -194,9 +187,6 @@ export default defineConfig({
       // Twitter Card 文章專屬標籤
       if (frontmatter.title) {
         head.push(['meta', { name: 'twitter:title', content: frontmatter.title }])
-      }
-      if (frontmatter.description) {
-        head.push(['meta', { name: 'twitter:description', content: frontmatter.description }])
       }
       head.push(['meta', { name: 'twitter:image', content: `${site.url}${seo.defaultOgImage}` }])
 
