@@ -69,9 +69,25 @@ features:
 
 
 
-## [what's SEO](/posts/5)
 
-**更新時間**: 2026/3/1 | **標籤**: `Publishing`
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## [what's SEO](/posts/whats-seo)
+
+**更新時間**: 2026/3/2 | **標籤**: `Publishing` `SEO`
 
 
 <p class="view-all"><a href="/posts/">查看所有文章 →</a></p>

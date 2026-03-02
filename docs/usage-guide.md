@@ -160,6 +160,57 @@ function hello() {
 - 文章列表依更新時間排序（最新的在前面）
 - 修改 Issue 內容會更新「最後更新時間」
 
+### 5. 自訂文章 URL
+
+預設情況下，文章的 URL 使用 Issue 編號（例如：`/posts/123`）。您可以在 Issue 內容開頭使用特殊標記來自訂 URL：
+
+**使用方式：**
+
+在 Issue 內容的**第一行**（或最開頭）添加：
+
+```markdown
+url: my-custom-article-slug
+
+# 文章標題
+
+文章內容...
+```
+
+**範例：**
+
+```markdown
+url: whats-seo
+
+# What's SEO
+
+這是一篇關於 SEO 的文章...
+```
+
+這會將文章 URL 從 `/posts/5` 改為 `/posts/whats-seo`。
+
+**URL 格式規範：**
+
+- ✅ 建議使用英文、數字、連字符（kebab-case）
+- ✅ 範例：`my-article-2024`、`javascript-tips`、`react-hooks-guide`
+- ⚠️ 中文、空格、特殊字符會自動轉為連字符
+- ⚠️ 自動轉換為小寫
+
+**注意事項：**
+
+1. **`url:` 標記不會顯示在文章中**：系統會自動移除
+2. **URL 變更影響 SEO**：修改 URL 會使舊連結失效，建議設定後不要更改
+3. **避免 URL 衝突**：不同 Issue 使用相同 URL 會導致覆蓋（系統會發出警告）
+4. **無標記時使用 Issue ID**：未設定 `url:` 時會自動使用 Issue 編號
+
+**範例對比：**
+
+| 設定 | 產生的 URL |
+|------|-----------|
+| 無 `url:` 標記 | `/posts/123` |
+| `url: my-article` | `/posts/my-article` |
+| `url: My Article!` | `/posts/my-article` （自動清理） |
+| `url: SEO 優化指南` | `/posts/seo` （中文移除） |
+
 ## 🔧 本地開發
 
 如果想在本地預覽網站：

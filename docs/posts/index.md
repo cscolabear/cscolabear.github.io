@@ -3,7 +3,7 @@
 共 1 篇文章
 
 
-## [what's SEO](/posts/5)
+## [what's SEO](/posts/whats-seo)
 
-**更新時間**: 2026/3/1 | **標籤**: `Publishing`
+**更新時間**: 2026/3/2 | **標籤**: `Publishing` `SEO`
 

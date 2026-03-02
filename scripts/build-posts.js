@@ -220,6 +220,48 @@ function generateExcerpt(body, maxLength = 160) {
 }
 
 /**
+ * 從 issue body 中提取自訂 URL
+ * @param {string} body - Issue 內容
+ * @returns {string|null} - 清理後的自訂 URL，若無則返回 null
+ */
+function extractCustomUrl(body) {
+  if (!body) return null;
+  
+  // 匹配開頭的 url: 標記（忽略前面的空白行）
+  const urlMatch = body.trim().match(/^url:\s*(.+)$/m);
+  
+  if (!urlMatch) return null;
+  
+  // 提取並清理 URL
+  const customUrl = urlMatch[1].trim();
+  
+  if (!customUrl) return null;
+  
+  // 驗證格式：僅允許英數字、連字符、底線
+  // 自動轉換為小寫，將不合法字符轉為連字符
+  const sanitized = customUrl
+    .toLowerCase()
+    .replace(/[^a-z0-9-_]/g, '-')  // 非法字符轉為連字符
+    .replace(/-+/g, '-')            // 多個連字符合併為一個
+    .replace(/^-|-$/g, '');         // 移除開頭和結尾的連字符
+  
+  // 防止清理後變成空字符串
+  return sanitized || null;
+}
+
+/**
+ * 從 issue body 中移除 url: 標記
+ * @param {string} body - Issue 內容
+ * @returns {string} - 移除標記後的內容
+ */
+function removeUrlTag(body) {
+  if (!body) return '';
+  
+  // 移除 url: 標記行（包含換行符）
+  return body.replace(/^url:\s*.+(\r?\n)?/m, '').trim();
+}
+
+/**
  * 將 issue 轉換為 Markdown frontmatter + body + comments
  */
 function convertIssueToMarkdown(issue) {
@@ -234,8 +276,11 @@ function convertIssueToMarkdown(issue) {
     comments_data
   } = issue;
   
-  // 生成描述（使用智慧摘要）
-  const description = generateExcerpt(body, seoConfig.posts.metaDescriptionLength);
+  // 先移除 URL 標記，再用於其他處理
+  const cleanBody = removeUrlTag(body);
+  
+  // 生成描述（使用移除標記後的內容）
+  const description = generateExcerpt(cleanBody, seoConfig.posts.metaDescriptionLength);
   
   // 格式化日期
   const formatDate = (dateString) => {
@@ -269,8 +314,13 @@ function convertIssueToMarkdown(issue) {
   // 判斷文章分類（可以根據 labels 或其他邏輯決定）
   const category = labelNames.length > 0 ? labelNames[0] : seoConfig.posts.defaultCategory;
   
-  // 計算閱讀時間
-  const stats = readingTime(body || '');
+  // 計算閱讀時間（使用原始 body，因為 readingTime 需要完整文章）
+  const stats = readingTime(cleanBody || '');
+  
+  // 提取自訂 URL（如果有）
+  const customUrl = extractCustomUrl(body);
+  const slug = customUrl || number.toString();
+  const permalink = `/posts/${slug}`;
   
   // 生成 frontmatter
   const frontmatter = `---
@@ -284,6 +334,8 @@ tags: ${JSON.stringify(labelNames)}
 keywords: ${JSON.stringify(keywords)}
 readingTime: "${stats.text}"
 readingMinutes: ${Math.ceil(stats.minutes)}
+permalink: "${permalink}"
+slug: "${slug}"
 issueId: ${number}
 githubUrl: "${html_url}"
 labels: ${JSON.stringify(labelNames)}
@@ -291,8 +343,8 @@ labels: ${JSON.stringify(labelNames)}
 
 `;
   
-  // 處理圖片連結（確保 GitHub 上傳的圖片連結正常）
-  let processedBody = body || '';
+  // 使用已清理的 body（已在前面移除 URL 標記）
+  let processedBody = cleanBody;
   
   // GitHub 圖片連結通常已經是完整的 URL，不需要特別處理
   
@@ -353,11 +405,42 @@ ${commentBody}
  * 將 Markdown 內容寫入檔案
  */
 async function writeMarkdownFile(issue, syncLog) {
-  const filename = `${issue.number}.md`;
+  // 提取自訂 URL 決定檔名
+  const customUrl = extractCustomUrl(issue.body);
+  const slug = customUrl || issue.number.toString();
+  const filename = `${slug}.md`;
   const filepath = path.join(CONFIG.postsDir, filename);
   
-  // 檢查是否需要更新
-  if (!needsUpdate(issue, syncLog)) {
+  // 檢查 slug 是否變更，如果變更則刪除舊檔案
+  const issueKey = `issue-${issue.number}`;
+  const oldSlug = syncLog[issueKey]?.slug;
+  const slugChanged = oldSlug && oldSlug !== slug;
+  
+  if (slugChanged) {
+    const oldFilename = `${oldSlug}.md`;
+    const oldFilepath = path.join(CONFIG.postsDir, oldFilename);
+    try {
+      await fs.unlink(oldFilepath);
+      console.log(`   🗑️  已刪除舊檔案: ${oldFilename} (slug 變更: ${oldSlug} → ${slug})`);
+    } catch (error) {
+      // 舊檔案可能已不存在，忽略錯誤
+      if (error.code !== 'ENOENT') {
+        console.warn(`   ⚠️  刪除舊檔案失敗: ${oldFilename}`, error.message);
+      }
+    }
+  }
+  
+  // 檢查檔案是否存在
+  let fileExists = false;
+  try {
+    await fs.access(filepath);
+    fileExists = true;
+  } catch {
+    fileExists = false;
+  }
+  
+  // 檢查是否需要更新（slug 變更或檔案不存在時強制更新）
+  if (!slugChanged && fileExists && !needsUpdate(issue, syncLog)) {
     console.log(`   ⏭️  ${filename} - 無需更新`);
     return 'skipped';
   }
@@ -377,12 +460,14 @@ async function writeMarkdownFile(issue, syncLog) {
       commentsUpdatedAt = new Date(latestCommentDate).toISOString();
     }
     
-    // 更新同步日誌
+    // 更新同步日誌（記錄 slug 和 filename 用於追蹤變更）
     syncLog[`issue-${issue.number}`] = {
       title: issue.title,
       updated_at: issue.updated_at,
       comments_updated_at: commentsUpdatedAt,
       comments_count: issue.comments_data?.length || 0,
+      slug: slug,
+      filename: filename,
       synced_at: new Date().toISOString()
     };
     
@@ -411,6 +496,10 @@ function generateArticleListMarkdown(issues, syncLog) {
     const issueKey = `issue-${issue.number}`;
     const commentsCount = syncLog[issueKey]?.comments_count || 0;
     
+    // 提取自訂 URL 生成連結
+    const customUrl = extractCustomUrl(issue.body);
+    const slug = customUrl || issue.number.toString();
+    
     // 建立 meta 資訊陣列（合併為一行）
     const metaParts = [`**更新時間**: ${date}`];
     if (commentsCount > 0) {
@@ -421,7 +510,7 @@ function generateArticleListMarkdown(issues, syncLog) {
     }
     
     content += `
-## [${issue.title}](/posts/${issue.number})
+## [${issue.title}](/posts/${slug})
 
 ${metaParts.join(' | ')}
 
@@ -472,11 +561,19 @@ async function cleanDeletedPosts(currentIssues) {
   
   try {
     const files = await fs.readdir(CONFIG.postsDir);
-    const currentIssueNumbers = new Set(currentIssues.map(issue => `${issue.number}.md`));
+    
+    // 建立當前有效的檔名集合（使用 slug）
+    const currentFilenames = new Set(
+      currentIssues.map(issue => {
+        const customUrl = extractCustomUrl(issue.body);
+        const slug = customUrl || issue.number.toString();
+        return `${slug}.md`;
+      })
+    );
     
     let cleanedCount = 0;
     for (const file of files) {
-      if (file !== 'index.md' && file.endsWith('.md') && !currentIssueNumbers.has(file)) {
+      if (file !== 'index.md' && file.endsWith('.md') && !currentFilenames.has(file)) {
         await fs.unlink(path.join(CONFIG.postsDir, file));
         console.log(`   ✓ 已刪除 ${file}（對應的 issue 已不符合條件）`);
         cleanedCount++;
@@ -568,6 +665,35 @@ async function main() {
     if (issues.length === 0) {
       console.log(`⚠️  沒有找到符合條件的文章（label: ${CONFIG.publishLabel}, state: ${CONFIG.state}）`);
       return;
+    }
+    
+    // 檢測 slug 衝突
+    console.log('🔍 檢查 slug 衝突...');
+    const slugMap = new Map();
+    const conflicts = [];
+    
+    for (const issue of issues) {
+      const customUrl = extractCustomUrl(issue.body);
+      const slug = customUrl || issue.number.toString();
+      
+      if (slugMap.has(slug)) {
+        conflicts.push({
+          slug,
+          issues: [slugMap.get(slug), issue.number]
+        });
+      } else {
+        slugMap.set(slug, issue.number);
+      }
+    }
+    
+    if (conflicts.length > 0) {
+      console.log('⚠️  偵測到 slug 衝突：');
+      conflicts.forEach(c => {
+        console.log(`   - slug "${c.slug}" 被 issue #${c.issues.join(' 和 #')} 使用`);
+      });
+      console.log('   提示：後處理的 issue 會覆蓋前者的檔案\n');
+    } else {
+      console.log('   ✓ 無衝突\n');
     }
     
     // 轉換並寫入文章
