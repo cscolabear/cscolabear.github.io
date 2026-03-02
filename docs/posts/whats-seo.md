@@ -9,7 +9,7 @@ tags: ["SEO"]
 keywords: ["SEO","php","seo"]
 readingTime: "7 min read"
 readingMinutes: 7
-permalink: "/posts/whats-seo"
+permalink: "/whats-seo"
 slug: "whats-seo"
 issueId: 5
 githubUrl: "https://github.com/cscolabear/cscolabear.github.io/issues/5"

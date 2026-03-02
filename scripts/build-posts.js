@@ -30,7 +30,7 @@ const CONFIG = {
   state: seoConfig.github.state,
   siteUrl: seoConfig.site.url,
   postsDir: path.join(__dirname, '../docs/posts'),
-  postsIndexPath: path.join(__dirname, '../docs/posts/index.md'),
+  postsIndexPath: path.join(__dirname, '../docs/articles.md'),
   syncLogPath: path.join(__dirname, '../docs/.vitepress/sync-log.json')
 };
 
@@ -320,7 +320,7 @@ function convertIssueToMarkdown(issue) {
   // 提取自訂 URL（如果有）
   const customUrl = extractCustomUrl(body);
   const slug = customUrl || number.toString();
-  const permalink = `/posts/${slug}`;
+  const permalink = `/${slug}`;
   
   // 生成 frontmatter
   const frontmatter = `---
@@ -510,7 +510,7 @@ function generateArticleListMarkdown(issues, syncLog) {
     }
     
     content += `
-## [${issue.title}](/posts/${slug})
+## [${issue.title}](/${slug})
 
 ${metaParts.join(' | ')}
 

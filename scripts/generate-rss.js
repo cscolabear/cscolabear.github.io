@@ -95,7 +95,7 @@ async function getAllPosts() {
       ...frontmatter,
       content: postContent,
       slug,
-      url: `${seoConfig.site.url}/posts/${slug}.html`
+      url: `${seoConfig.site.url}/${slug}.html`
     });
   }
   

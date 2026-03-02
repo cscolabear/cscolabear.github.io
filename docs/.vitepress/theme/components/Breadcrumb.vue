@@ -15,30 +15,25 @@ const getBreadcrumbItems = () => {
   ]
   
   const path = page.value.relativePath.replace(/\.md$/, '')
-  const segments = path.split('/').filter(Boolean)
   
-  if (segments.length > 0) {
-    // 如果在 posts 目錄下
-    if (segments[0] === 'posts') {
-      items.push({
-        name: '文章列表',
-        url: `${site.url}/posts/`
-      })
-      
-      // 如果是具體文章頁面
-      if (segments.length > 1 && segments[1] !== 'index') {
-        items.push({
-          name: frontmatter.value.title || page.value.title,
-          url: `${site.url}/${path}`
-        })
-      }
-    } else if (path !== 'index') {
-      // 其他頁面
-      items.push({
-        name: frontmatter.value.title || page.value.title,
-        url: `${site.url}/${path}`
-      })
-    }
+  // 透過 frontmatter.issueId 判斷是否為文章頁面
+  if (frontmatter.value.issueId) {
+    // 文章頁面
+    items.push({
+      name: '文章列表',
+      url: `${site.url}/articles`
+    })
+    
+    items.push({
+      name: frontmatter.value.title || page.value.title,
+      url: `${site.url}/${frontmatter.value.slug || path}`
+    })
+  } else if (path !== 'index') {
+    // 其他頁面
+    items.push({
+      name: frontmatter.value.title || page.value.title,
+      url: `${site.url}/${path}`
+    })
   }
   
   return items

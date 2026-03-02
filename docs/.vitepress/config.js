@@ -16,6 +16,11 @@ export default defineConfig({
   // 清理 URL（移除 .html 後綴）
   cleanUrls: true,
 
+  // URL 重寫規則（文章路徑）
+  rewrites: {
+    'posts/:slug.md': ':slug.md'
+  },
+
   // Head 設定（SEO 優化）
   head: [
     // Favicon
@@ -77,7 +82,7 @@ export default defineConfig({
 
     nav: [
       { text: '首頁', link: '/' },
-      { text: '文章列表', link: '/posts/' },
+      { text: '文章列表', link: '/articles' },
       { text: '關於', link: '/about' },
       {
         text: 'GitHub',
@@ -159,10 +164,9 @@ export default defineConfig({
     const canonicalUrl = `${site.url}/${pageData.relativePath.replace(/\.md$/, '').replace(/index$/, '')}`
     head.push(['link', { rel: 'canonical', href: canonicalUrl }])
 
-    // 為文章頁面添加特定的 meta 標籤
-    if (pageData.relativePath.startsWith('posts/') && !pageData.relativePath.endsWith('index.md')) {
-      const { frontmatter } = pageData
-
+    // 為文章頁面添加特定的 meta 標籤（透過 frontmatter.issueId 判斷）
+    const { frontmatter } = pageData
+    if (frontmatter.issueId) {
       // 文章專屬 OG 標籤
       if (frontmatter.title) {
         head.push(['meta', { property: 'og:title', content: frontmatter.title }])

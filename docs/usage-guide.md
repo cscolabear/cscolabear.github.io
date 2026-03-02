@@ -162,7 +162,7 @@ function hello() {
 
 ### 5. 自訂文章 URL
 
-預設情況下，文章的 URL 使用 Issue 編號（例如：`/posts/123`）。您可以在 Issue 內容開頭使用特殊標記來自訂 URL：
+預設情況下，文章的 URL 使用 Issue 編號（例如：`/123`）。您可以在 Issue 內容開頭使用特殊標記來自訂 URL：
 
 **使用方式：**
 
@@ -186,7 +186,7 @@ url: whats-seo
 這是一篇關於 SEO 的文章...
 ```
 
-這會將文章 URL 從 `/posts/5` 改為 `/posts/whats-seo`。
+這會將文章 URL 從 `/5` 改為 `/whats-seo`。
 
 **URL 格式規範：**
 
@@ -206,10 +206,12 @@ url: whats-seo
 
 | 設定 | 產生的 URL |
 |------|-----------|
-| 無 `url:` 標記 | `/posts/123` |
-| `url: my-article` | `/posts/my-article` |
-| `url: My Article!` | `/posts/my-article` （自動清理） |
-| `url: SEO 優化指南` | `/posts/seo` （中文移除） |
+| 無 `url:` 標記 | `/123` |
+| `url: my-article` | `/my-article` |
+| `url: My Article!` | `/my-article` （自動清理） |
+| `url: SEO 優化指南` | `/seo` （中文移除） |
+
+**文章列表**：所有文章的列表頁面位於 `/articles`
 
 ## 🔧 本地開發
 
