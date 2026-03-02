@@ -126,3 +126,11 @@
   text-align: right;
   margin-top: 2rem;
 }
+
+/* 文章列表描述樣式 */
+.article-description {
+  color: var(--vp-c-text-2);
+  font-size: 0.95em;
+  line-height: 1.6;
+  margin: 0.5rem 0 0.75rem 0;
+}

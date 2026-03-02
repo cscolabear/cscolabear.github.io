@@ -503,6 +503,10 @@ function generateArticleListMarkdown(issues, syncLog) {
     const customUrl = extractCustomUrl(issue.body);
     const slug = customUrl || issue.number.toString();
     
+    // 生成文章描述（使用與 frontmatter 相同的方式）
+    const cleanBody = removeUrlTag(issue.body);
+    const description = generateExcerpt(cleanBody, seoConfig.posts.metaDescriptionLength);
+    
     // 建立 meta 資訊陣列（合併為一行）
     const metaParts = [`**更新時間**: ${date}`];
     if (commentsCount > 0) {
@@ -514,6 +518,8 @@ function generateArticleListMarkdown(issues, syncLog) {
     
     content += `
 ## [${issue.title}](/${slug})
+
+<p class="article-description">${description}</p>
 
 ${metaParts.join(' | ')}
 
