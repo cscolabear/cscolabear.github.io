@@ -185,7 +185,7 @@ async function fetchIssues() {
 function generateExcerpt(body, maxLength = 160) {
   if (!body) return '';
   
-  // 移除 Markdown 語法
+  // 移除 Markdown 語法和 HTML 標籤
   let text = body
     .replace(/^#+\s+/gm, '') // 移除標題符號
     .replace(/\*\*([^*]+)\*\*/g, '$1') // 移除粗體
@@ -193,7 +193,9 @@ function generateExcerpt(body, maxLength = 160) {
     .replace(/`([^`]+)`/g, '$1') // 移除行內程式碼
     .replace(/```[\s\S]*?```/g, '') // 移除程式碼區塊
     .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1') // 移除連結，保留文字
-    .replace(/!\[([^\]]*)\]\([^)]+\)/g, '') // 移除圖片
+    .replace(/!\[([^\]]*)\]\([^)]+\)/g, '') // 移除 Markdown 圖片
+    .replace(/<img[^>]*>/gi, '') // 移除 HTML img 標籤
+    .replace(/<[^>]+>/g, '') // 移除所有其他 HTML 標籤
     .replace(/>\s+/g, '') // 移除引用符號
     .replace(/\n+/g, ' ') // 將換行轉為空格
     .replace(/\s+/g, ' ') // 合併多個空格

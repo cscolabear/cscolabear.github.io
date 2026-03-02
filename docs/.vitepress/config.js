@@ -219,6 +219,11 @@ export default defineConfig({
     return head
   },
 
+  // transformHtml - 在建置時處理 HTML（移除 generator meta tag）
+  transformHtml: (html) => {
+    return html.replace(/<meta name="generator" content="VitePress[^>]*>/g, '')
+  },
+
   // 建置優化
   vite: {
     build: {

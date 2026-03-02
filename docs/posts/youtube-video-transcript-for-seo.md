@@ -2,7 +2,7 @@
 title: "Youtube 影片的 SEO，展開影片建立逐字稿"
 date: 2026-03-02
 updated: 2026-03-02
-description: "<img width=\"393\" height=\"249\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/e39bec5b-e45d-4af6-a7aa-ce8bc9c3e881\" /影片該怎麼做好 SEO 呢?"
+description: "影片該怎麼做好 SEO 呢? 除了設定好 Youtube 影片設定與基本資訊之外，還有個特別的方法增加影片的曝光度。 其實方法很簡單... 而且這個方式也不侷限在 Youtube, Vimeo 這類型的影音平台，主要目的在於影片的再利用! Youtube SEO 其實講 Youtube 影片的 SEO 有點言過其實。"
 author: "Cola"
 category: "技術文章"
 tags: []
