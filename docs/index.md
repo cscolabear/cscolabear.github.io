@@ -1,5 +1,6 @@
 ---
 layout: custom-home
+description: "WorkxPlay - Cola 的技術筆記部落格，分享 SEO、網站開發等技術內容。使用 GitHub Issues 管理文章，支援留言討論。"
 
 hero:
   name: WorkxPlay 工作與玩樂實驗室
@@ -28,6 +29,16 @@ features:
 ---
 
 ## 最新文章
+
+
+
+
+
+
+
+
+
+
 
 
 

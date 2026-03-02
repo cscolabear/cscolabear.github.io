@@ -166,6 +166,14 @@ export default defineConfig({
 
     // 為文章頁面添加特定的 meta 標籤（透過 frontmatter.issueId 判斷）
     const { frontmatter } = pageData
+    
+    // 為所有有 frontmatter.description 的頁面覆蓋 description
+    if (frontmatter.description && !frontmatter.issueId) {
+      head.push(['meta', { name: 'description', content: frontmatter.description }])
+      head.push(['meta', { property: 'og:description', content: frontmatter.description }])
+      head.push(['meta', { name: 'twitter:description', content: frontmatter.description }])
+    }
+    
     if (frontmatter.issueId) {
       // 文章專屬 OG 標籤
       if (frontmatter.title) {

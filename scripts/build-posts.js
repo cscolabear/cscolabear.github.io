@@ -538,7 +538,11 @@ async function generatePostsList(issues) {
   });
   
   // 生成列表內容
-  let listContent = `# 文章列表
+  let listContent = `---
+description: "文章列表 - 瀏覽所有技術文章。涵蓋 SEO、網站開發等主題，定期更新。"
+---
+
+# 文章列表
 
 共 ${issues.length} 篇文章
 
