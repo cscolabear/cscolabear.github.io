@@ -1,5 +1,38 @@
 # https://www.robotstxt.org/robotstxt.html
+# WorkxPlay 個人技術 Blog - robots.txt
+
+# 允許所有主要搜尋引擎爬蟲
 User-agent: *
 Allow: /
+Disallow: /api/
+Disallow: /.vitepress/
+Crawl-delay: 1
 
-Sitemap: https://cscolabear.github.io/sitemap.xml
+# Google 爬蟲（優先）
+User-agent: Googlebot
+Allow: /
+Disallow: /api/
+Crawl-delay: 0
+
+# Google 圖片爬蟲
+User-agent: Googlebot-Image
+Allow: /
+
+# Bing 爬蟲
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+# 禁止惡意爬蟲
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
+
+# Sitemap 位置
+Sitemap: https://cola.workxplay.net/sitemap.xml
+Sitemap: https://cola.workxplay.net/rss.xml

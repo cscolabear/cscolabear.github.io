@@ -8,7 +8,9 @@
     "docs:build": "vitepress build docs",
     "docs:preview": "vitepress preview docs",
     "fetch:issues": "node scripts/build-posts.js",
-    "build": "npm run fetch:issues && npm run docs:build"
+    "generate:robots": "node scripts/generate-robots.js",
+    "generate:rss": "node scripts/generate-rss.js",
+    "build": "npm run generate:robots && npm run fetch:issues && npm run generate:rss && npm run docs:build"
   },
   "keywords": [
     "blog",
@@ -19,6 +21,8 @@
   "license": "MIT",
   "devDependencies": {
     "@octokit/rest": "^22.0.1",
+    "feed": "^5.2.0",
+    "reading-time": "^1.5.0",
     "sitemap": "^9.0.1",
     "terser": "^5.46.0",
     "vitepress": "^1.6.4"

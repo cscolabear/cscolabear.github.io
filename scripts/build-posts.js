@@ -13,16 +13,22 @@ import { Octokit } from '@octokit/rest';
 import fs from 'fs/promises';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import readingTime from 'reading-time';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// 配置
+// 動態載入 SEO 配置檔
+const seoConfigPath = path.join(__dirname, '../seo.config.js');
+const seoConfig = (await import(seoConfigPath)).default;
+
+// 配置（從 seo.config.js 讀取）
 const CONFIG = {
-  owner: 'cscolabear',
-  repo: 'cscolabear.github.io',
-  label: 'blog',
-  state: 'closed',
+  owner: seoConfig.github.owner,
+  repo: seoConfig.github.repo,
+  label: seoConfig.github.label,
+  state: seoConfig.github.state,
+  siteUrl: seoConfig.site.url,
   postsDir: path.join(__dirname, '../docs/posts'),
   postsIndexPath: path.join(__dirname, '../docs/posts/index.md'),
   syncLogPath: path.join(__dirname, '../docs/.vitepress/sync-log.json')
@@ -174,6 +180,46 @@ async function fetchIssues() {
 }
 
 /**
+ * 生成文章摘要（用於 meta description）
+ */
+function generateExcerpt(body, maxLength = 160) {
+  if (!body) return '';
+  
+  // 移除 Markdown 語法
+  let text = body
+    .replace(/^#+\s+/gm, '') // 移除標題符號
+    .replace(/\*\*([^*]+)\*\*/g, '$1') // 移除粗體
+    .replace(/\*([^*]+)\*/g, '$1') // 移除斜體
+    .replace(/`([^`]+)`/g, '$1') // 移除行內程式碼
+    .replace(/```[\s\S]*?```/g, '') // 移除程式碼區塊
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1') // 移除連結，保留文字
+    .replace(/!\[([^\]]*)\]\([^)]+\)/g, '') // 移除圖片
+    .replace(/>\s+/g, '') // 移除引用符號
+    .replace(/\n+/g, ' ') // 將換行轉為空格
+    .replace(/\s+/g, ' ') // 合併多個空格
+    .trim();
+  
+  // 截取指定長度
+  if (text.length <= maxLength) {
+    return text;
+  }
+  
+  // 嘗試在句號、問號、驚嘆號處截斷
+  const sentenceEnd = text.substring(0, maxLength).match(/[。！？.!?](?=[^。！？.!?]*$)/);
+  if (sentenceEnd) {
+    return text.substring(0, sentenceEnd.index + 1);
+  }
+  
+  // 否則在最後一個空格處截斷
+  const lastSpace = text.substring(0, maxLength).lastIndexOf(' ');
+  if (lastSpace > maxLength * 0.8) {
+    return text.substring(0, lastSpace) + '...';
+  }
+  
+  return text.substring(0, maxLength) + '...';
+}
+
+/**
  * 將 issue 轉換為 Markdown frontmatter + body + comments
  */
 function convertIssueToMarkdown(issue) {
@@ -188,14 +234,8 @@ function convertIssueToMarkdown(issue) {
     comments_data
   } = issue;
   
-  // 生成描述（取前 150 字元）
-  const description = body
-    ? body
-        .replace(/[#*`\[\]]/g, '') // 移除 Markdown 特殊字元
-        .replace(/\n+/g, ' ')      // 移除換行
-        .trim()
-        .substring(0, 150)
-    : '';
+  // 生成描述（使用智慧摘要）
+  const description = generateExcerpt(body, seoConfig.posts.metaDescriptionLength);
   
   // 格式化日期
   const formatDate = (dateString) => {
@@ -220,12 +260,30 @@ function convertIssueToMarkdown(issue) {
     .map(label => typeof label === 'string' ? label : label.name)
     .filter(name => name !== 'blog'); // 排除 'blog' label
   
+  // 提取關鍵字（包含標籤 + SEO 預設關鍵字）
+  const keywords = [...new Set([
+    ...labelNames,
+    ...seoConfig.seo.keywords.slice(0, 2) // 添加前兩個網站預設關鍵字
+  ])];
+  
+  // 判斷文章分類（可以根據 labels 或其他邏輯決定）
+  const category = labelNames.length > 0 ? labelNames[0] : seoConfig.posts.defaultCategory;
+  
+  // 計算閱讀時間
+  const stats = readingTime(body || '');
+  
   // 生成 frontmatter
   const frontmatter = `---
 title: "${title.replace(/"/g, '\\"')}"
 date: ${formatDate(created_at)}
 updated: ${formatDate(updated_at)}
 description: "${description.replace(/"/g, '\\"')}"
+author: "${seoConfig.posts.defaultAuthor}"
+category: "${category}"
+tags: ${JSON.stringify(labelNames)}
+keywords: ${JSON.stringify(keywords)}
+readingTime: "${stats.text}"
+readingMinutes: ${Math.ceil(stats.minutes)}
 issueId: ${number}
 githubUrl: "${html_url}"
 labels: ${JSON.stringify(labelNames)}
