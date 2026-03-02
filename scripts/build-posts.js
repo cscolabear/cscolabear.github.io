@@ -192,8 +192,9 @@ function generateExcerpt(body, maxLength = 160) {
     .replace(/\*([^*]+)\*/g, '$1') // 移除斜體
     .replace(/`([^`]+)`/g, '$1') // 移除行內程式碼
     .replace(/```[\s\S]*?```/g, '') // 移除程式碼區塊
+    .replace(/!\[.*?\]\([^)]+\)/g, '') // 移除 Markdown 圖片（必須在連結之前）
+    .replace(/!\[[^\]]*$/gm, '') // 移除不完整的圖片語法（行尾）
     .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1') // 移除連結，保留文字
-    .replace(/!\[([^\]]*)\]\([^)]+\)/g, '') // 移除 Markdown 圖片
     .replace(/<img[^>]*>/gi, '') // 移除 HTML img 標籤
     .replace(/<[^>]+>/g, '') // 移除所有其他 HTML 標籤
     .replace(/>\s+/g, '') // 移除引用符號

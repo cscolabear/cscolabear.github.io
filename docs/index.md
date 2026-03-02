@@ -107,14 +107,20 @@ features:
 
 
 
-## [Youtube 影片的 SEO，展開影片建立逐字稿](/youtube-video-transcript-for-seo)
 
-**更新時間**: 2026/3/2
+
+
+
 
 
 ## [what's SEO](/whats-seo)
 
-**更新時間**: 2026/3/2 | **標籤**: `SEO`
+**更新時間**: 2026/3/2 | 💬 1 則留言 | **標籤**: `SEO`
+
+
+## [Youtube 影片的 SEO，展開影片建立逐字稿](/youtube-video-transcript-for-seo)
+
+**更新時間**: 2026/3/2
 
 
 <p class="view-all"><a href="/articles">查看所有文章 →</a></p>
