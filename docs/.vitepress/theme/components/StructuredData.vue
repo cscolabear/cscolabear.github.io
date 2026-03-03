@@ -42,9 +42,6 @@ const getStructuredData = () => {
           ? frontmatter.value.keywords.join(', ')
           : frontmatter.value.keywords
       }),
-      ...(frontmatter.value.category && {
-        articleSection: frontmatter.value.category
-      }),
       ...(frontmatter.value.readingTime && {
         timeRequired: `PT${frontmatter.value.readingMinutes || 1}M`
       }),

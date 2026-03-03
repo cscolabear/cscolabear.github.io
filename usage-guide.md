@@ -148,9 +148,9 @@ function hello() {
 - 建立 Issue 但保持 Open 狀態 = 草稿
 - 只有 Closed 的 Issue 會被發佈
 
-### 2. 文章分類
-- 除了 `blog` 標籤外，可以添加其他標籤（如 `JavaScript`、`Vue`）
-- 這些標籤會顯示在文章列表中
+### 2. 文章標籤
+- 除了 `Publishing` 標籤外，可以添加其他標籤（如 `JavaScript`、`Vue`、`SEO`）
+- 這些標籤會顯示在文章頁面和文章列表中
 
 ### 3. 討論功能
 - 每篇文章底部都有「在 GitHub 上討論」按鈕

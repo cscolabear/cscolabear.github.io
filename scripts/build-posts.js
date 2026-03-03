@@ -333,9 +333,6 @@ function convertIssueToMarkdown(issue) {
     ...seoConfig.seo.keywords.slice(0, 2) // 添加前兩個網站預設關鍵字
   ])];
   
-  // 判斷文章分類（可以根據 labels 或其他邏輯決定）
-  const category = labelNames.length > 0 ? labelNames[0] : seoConfig.posts.defaultCategory;
-  
   // 計算閱讀時間（使用原始 body，因為 readingTime 需要完整文章）
   const stats = readingTime(cleanBody || '');
   
@@ -351,7 +348,6 @@ date: ${formatDate(created_at)}
 updated: ${formatDate(updated_at)}
 description: "${description.replace(/"/g, '\\"')}"
 author: "${seoConfig.posts.defaultAuthor}"
-category: "${category}"
 tags: ${JSON.stringify(labelNames)}
 keywords: ${JSON.stringify(keywords)}
 readingTime: "${stats.text}"
