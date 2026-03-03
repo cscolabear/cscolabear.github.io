@@ -75,7 +75,7 @@ const features = frontmatter.value.features || []
 
 /* Hero 區塊 */
 .hero-section {
-  padding: 48px 0 64px;
+  padding: 48px 0 0;
 }
 
 .hero-content {
