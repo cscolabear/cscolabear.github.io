@@ -1,8 +1,8 @@
 # 首頁文章列表實作
 
-**編號**：002  
-**建立日期**：2026-03-01  
-**狀態**：✅ 已完成  
+**編號**：002
+**建立日期**：2026-03-01
+**狀態**：✅ 已完成
 **完成日期**：2026-03-01
 
 ## 📋 問題陳述
@@ -49,7 +49,7 @@ const latestIssues = [...issues]
 ```javascript
 const labels = issue.labels
   .map(label => typeof label === 'string' ? label : label.name)
-  .filter(name => name !== 'blog')  // 過濾掉預設的 blog label
+  .filter(name => name !== 'Publishing')  // 過濾掉預設的 Publishing label
   .map(name => `\`${name}\``)
   .join(' ');
 ```
@@ -172,7 +172,7 @@ $ node scripts/build-posts.js
 - ✅ 排序正確（最新的在前）
 - ✅ 標題連結正確
 - ✅ 日期格式正確（中文）
-- ✅ Label 顯示正確（過濾 blog）
+- ✅ Label 顯示正確（過濾 Publishing）
 - ✅ 無重複文章
 
 ## 💡 技術決策
@@ -183,9 +183,9 @@ $ node scripts/build-posts.js
 - 5 篇足以展示最新內容
 - 使用者可點擊「查看所有文章」查看完整列表
 
-### 為什麼過濾 "blog" label？
+### 為什麼過濾 "Publishing" label？
 
-- 所有文章都有 "blog" label（篩選條件）
+- 所有文章都有 "Publishing" label（篩選條件）
 - 顯示此 label 無意義
 - 只顯示額外的、有意義的 label
 
@@ -220,5 +220,5 @@ $ node scripts/build-posts.js
 
 ---
 
-**實作者**：Cola + GitHub Copilot CLI  
+**實作者**：Cola + GitHub Copilot CLI
 **Git Commit**：feat: 首頁自動顯示最新 5 篇文章

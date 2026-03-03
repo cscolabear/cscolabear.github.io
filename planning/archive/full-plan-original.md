@@ -11,7 +11,7 @@
 - **若留言數為 0，則不顯示此資訊**
 - 資料來源：sync-log.json 中的 `comments_count` 欄位
 
-### 2. Label 顯示優化  
+### 2. Label 顯示優化
 - 過濾掉預設的 "blog" label（所有文章都有，顯示無意義）
 - 其他 label 正常顯示
 - ✅ 目前程式碼已實作（build-posts.js 359行、443行）
@@ -23,12 +23,12 @@
 1. **首頁 (docs/index.md)** - "最新文章" 區塊
    - 顯示：最新 5 篇
    - 函數：`updateHomePage()` (414-477行)
-   - 狀態：✅ 已過濾 blog / ❌ 缺留言數
+   - 狀態：✅ 已過濾 Publishing / ❌ 缺留言數
 
 2. **文章列表頁 (docs/posts/index.md)** - 完整清單
    - 顯示：所有文章（依更新時間排序）
    - 函數：`generatePostsList()` (336-381行)
-   - 狀態：✅ 已過濾 blog / ❌ 缺留言數
+   - 狀態：✅ 已過濾  / ❌ 缺留言數
 
 ## 實作任務
 
@@ -108,7 +108,7 @@ npm run build
 
 ## 技術架構
 - **前端框架**: VitePress (Vue 生態，簡約現代)
-- **內容來源**: GitHub Issues (label: blog, status: closed)
+- **內容來源**: GitHub Issues (label: Publishing, status: closed)
 - **部署平台**: GitHub Pages
 - **自動化**: GitHub Actions
 - **URL 結構**: `https://cscolabear.github.io/{issue_id}`
@@ -230,7 +230,7 @@ npm run build
   - 驗證文章列表與內容顯示
 
 - **deploy-test**: 部署測試
-  - 建立測試 issue（label: blog, closed）
+  - 建立測試 issue（label: Publishing, closed）
   - 手動觸發 GitHub Actions
   - 驗證部署結果
   - 測試自定義 domain（如需要）
@@ -346,11 +346,11 @@ HTML + CSS + JS
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>我的第一篇文章 | Cola's Blog</title>
-  
+
   <!-- SEO Meta Tags -->
   <meta name="description" content="這是一段介紹文字，包含粗體和斜體。">
   <link rel="canonical" href="https://cscolabear.github.io/posts/1">
-  
+
   <!-- Open Graph (社群分享) -->
   <meta property="og:title" content="我的第一篇文章">
   <meta property="og:description" content="這是一段介紹文字...">
@@ -358,11 +358,11 @@ HTML + CSS + JS
   <meta property="og:type" content="article">
   <meta property="article:published_time" content="2026-03-01T00:00:00Z">
   <meta property="article:modified_time" content="2026-03-01T00:00:00Z">
-  
+
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="我的第一篇文章">
-  
+
   <!-- Structured Data (JSON-LD) -->
   <script type="application/ld+json">
   {
@@ -377,7 +377,7 @@ HTML + CSS + JS
     }
   }
   </script>
-  
+
   <!-- VitePress 樣式與腳本 -->
   <link rel="stylesheet" href="/assets/style.css">
 </head>
@@ -392,20 +392,20 @@ HTML + CSS + JS
               <time datetime="2026-03-01">發布於 2026-03-01</time>
               <time datetime="2026-03-01">更新於 2026-03-01</time>
             </div>
-            
+
             <!-- Markdown 轉換後的 HTML -->
             <h1 id="我的第一篇文章">
               我的第一篇文章
               <a class="header-anchor" href="#我的第一篇文章" aria-label="Permalink to &quot;我的第一篇文章&quot;">​</a>
             </h1>
-            
+
             <p>這是一段介紹文字，包含<strong>粗體</strong>和<em>斜體</em>。</p>
-            
+
             <h2 id="程式碼範例">
               程式碼範例
               <a class="header-anchor" href="#程式碼範例">​</a>
             </h2>
-            
+
             <div class="language-javascript vp-adaptive-theme">
               <button class="copy"></button>
               <span class="lang">javascript</span>
@@ -415,21 +415,21 @@ HTML + CSS + JS
                 <span class="line"><span style="color:#D4D4D4">}</span></span>
               </code></pre>
             </div>
-            
+
             <h2 id="圖片展示">圖片展示</h2>
             <p><img src="https://user-images.githubusercontent.com/123456/image.png" alt="示意圖" loading="lazy"></p>
-            
+
             <ul>
               <li>列表項目 1</li>
               <li>列表項目 2</li>
             </ul>
-            
+
             <hr>
-            
+
             <!-- GitHub 討論連結元件 -->
             <div class="github-discussion">
-              <a href="https://github.com/cscolabear/cscolabear.github.io/issues/1" 
-                 target="_blank" 
+              <a href="https://github.com/cscolabear/cscolabear.github.io/issues/1"
+                 target="_blank"
                  rel="noopener noreferrer">
                 💬 在 GitHub 上討論這篇文章
               </a>
@@ -439,7 +439,7 @@ HTML + CSS + JS
       </div>
     </div>
   </div>
-  
+
   <script type="module" src="/assets/app.js"></script>
 </body>
 </html>

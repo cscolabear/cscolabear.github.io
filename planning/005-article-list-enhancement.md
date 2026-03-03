@@ -1,8 +1,8 @@
 # 文章列表功能增強計劃
 
-**編號**：005  
-**建立日期**：2026-03-01  
-**狀態**：✅ 已完成  
+**編號**：005
+**建立日期**：2026-03-01
+**狀態**：✅ 已完成
 **完成日期**：2026-03-01
 
 ## 📋 問題陳述
@@ -17,8 +17,8 @@
 - **若留言數為 0，則不顯示此資訊**
 - 資料來源：sync-log.json 中的 `comments_count` 欄位
 
-### 2. Label 顯示優化  
-- 過濾掉預設的 "blog" label（所有文章都有，顯示無意義）
+### 2. Label 顯示優化
+- 過濾掉預設的 "Publishing" label（所有文章都有，顯示無意義）
 - 其他 label 正常顯示
 - 需確認所有列表位置都有套用過濾邏輯
 
@@ -29,12 +29,12 @@
 1. **首頁 (docs/index.md)** - "最新文章" 區塊
    - 顯示：最新 5 篇
    - 函數：`updateHomePage()` (build-posts.js 414-477行)
-   - 狀態：✅ 已過濾 blog / ❌ 缺留言數
+   - 狀態：✅ 已過濾 Publishing / ❌ 缺留言數
 
 2. **文章列表頁 (docs/posts/index.md)** - 完整清單
    - 顯示：所有文章（依更新時間排序）
    - 函數：`generatePostsList()` (build-posts.js 336-381行)
-   - 狀態：✅ 已過濾 blog / ❌ 缺留言數
+   - 狀態：✅ 已過濾 Publishing / ❌ 缺留言數
 
 ## 🛠️ 技術方案
 
@@ -255,5 +255,5 @@ const commentsInfo = commentsCount > 0 ? `💬 ${commentsCount} 則留言` : '';
 
 ---
 
-**實作者**：Cola + GitHub Copilot CLI  
+**實作者**：Cola + GitHub Copilot CLI
 **Git Commit**：c1c7fc4 - feat: 在文章列表中顯示留言數量並優化 label 顯示

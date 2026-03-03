@@ -1,8 +1,8 @@
 # GitHub Issues 轉 VitePress Blog 專案初始化
 
-**編號**：000  
-**建立日期**：2026-03-01  
-**狀態**：✅ 已完成  
+**編號**：000
+**建立日期**：2026-03-01
+**狀態**：✅ 已完成
 **完成日期**：2026-03-01
 
 ## 📋 專案概述
@@ -12,7 +12,7 @@
 ## 🎯 核心需求
 
 1. ✅ 使用 VitePress 內建主題（簡約現代風格）
-2. ✅ 只轉換有 `blog` label 且狀態為 `closed` 的 issues
+2. ✅ 只轉換有 `Publishing` label 且狀態為 `closed` 的 issues
 3. ✅ 支援 SEO 優化（sitemap、meta tags）
 4. ✅ 每日定時建置 + 支援手動觸發
 5. ✅ Issue 留言功能透過 GitHub 原生 issue 系統
@@ -21,7 +21,7 @@
 ## 🏗️ 技術架構
 
 - **前端框架**：VitePress (Vue 生態，簡約現代)
-- **內容來源**：GitHub Issues (label: blog, status: closed)
+- **內容來源**：GitHub Issues (label: Publishing, status: closed)
 - **部署平台**：GitHub Pages
 - **自動化**：GitHub Actions
 - **URL 結構**：`https://cscolabear.github.io/posts/{issue_id}`
@@ -204,5 +204,5 @@ HTML + CSS + JS
 
 ---
 
-**實作者**：Cola + GitHub Copilot CLI  
+**實作者**：Cola + GitHub Copilot CLI
 **專案網址**：https://cscolabear.github.io
