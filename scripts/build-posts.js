@@ -356,7 +356,6 @@ permalink: "${permalink}"
 slug: "${slug}"
 issueId: ${number}
 githubUrl: "${html_url}"
-labels: ${JSON.stringify(labelNames)}
 ---
 
 `;

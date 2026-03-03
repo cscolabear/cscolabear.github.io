@@ -12,7 +12,6 @@ permalink: "/youtube-video-transcript-for-seo"
 slug: "youtube-video-transcript-for-seo"
 issueId: 6
 githubUrl: "https://github.com/cscolabear/cscolabear.github.io/issues/6"
-labels: []
 ---
 
 # Youtube 影片的 SEO，展開影片建立逐字稿

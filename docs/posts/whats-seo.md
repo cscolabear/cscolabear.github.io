@@ -12,7 +12,6 @@ permalink: "/whats-seo"
 slug: "whats-seo"
 issueId: 5
 githubUrl: "https://github.com/cscolabear/cscolabear.github.io/issues/5"
-labels: ["SEO"]
 ---
 
 # what's SEO
