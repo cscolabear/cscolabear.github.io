@@ -185,7 +185,7 @@ async function fetchIssues() {
  * @returns {string} - 轉義後的文字
  */
 function escapeHtml(text) {
-  if (!text) return '';
+  if (typeof text !== 'string' || text === '') return '';
   
   const htmlEscapeMap = {
     '&': '&amp;',
@@ -536,8 +536,9 @@ function generateArticleListMarkdown(issues, syncLog) {
     }
     
     // 只在有描述時才加入描述區塊（避免空白段落）
-    const descriptionBlock = description && description.trim()
-      ? `<p class="article-description">${escapeHtml(description)}</p>\n\n`
+    const trimmedDescription = description?.trim();
+    const descriptionBlock = trimmedDescription
+      ? `<p class="article-description">${escapeHtml(trimmedDescription)}</p>\n\n`
       : '';
     
     content += `
