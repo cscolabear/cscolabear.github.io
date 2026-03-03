@@ -180,6 +180,25 @@ async function fetchIssues() {
 }
 
 /**
+ * HTML 特殊字符轉義
+ * @param {string} text - 需要轉義的文字
+ * @returns {string} - 轉義後的文字
+ */
+function escapeHtml(text) {
+  if (typeof text !== 'string' || text === '') return '';
+  
+  const htmlEscapeMap = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#39;'
+  };
+  
+  return text.replace(/[&<>"']/g, char => htmlEscapeMap[char]);
+}
+
+/**
  * 生成文章摘要（用於 meta description）
  */
 function generateExcerpt(body, maxLength = 160) {
@@ -503,6 +522,10 @@ function generateArticleListMarkdown(issues, syncLog) {
     const customUrl = extractCustomUrl(issue.body);
     const slug = customUrl || issue.number.toString();
     
+    // 生成文章描述（使用 excerptLength 而非 metaDescriptionLength）
+    const cleanBody = removeUrlTag(issue.body);
+    const description = generateExcerpt(cleanBody, seoConfig.posts.excerptLength);
+    
     // 建立 meta 資訊陣列（合併為一行）
     const metaParts = [`**更新時間**: ${date}`];
     if (commentsCount > 0) {
@@ -512,10 +535,16 @@ function generateArticleListMarkdown(issues, syncLog) {
       metaParts.push(`**標籤**: ${labels}`);
     }
     
+    // 只在有描述時才加入描述區塊（避免空白段落）
+    const trimmedDescription = description?.trim();
+    const descriptionBlock = trimmedDescription
+      ? `<p class="article-description">${escapeHtml(trimmedDescription)}</p>\n\n`
+      : '';
+    
     content += `
 ## [${issue.title}](/${slug})
 
-${metaParts.join(' | ')}
+${descriptionBlock}${metaParts.join(' | ')}
 
 `;
   });
