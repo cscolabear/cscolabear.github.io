@@ -70,7 +70,7 @@ query($owner: String!, $repo: String!, $labels: [String!], $states: [IssueState!
             name
           }
         }
-        comments(first: 100, orderBy: {field: UPDATED_AT, direction: DESC}) {
+        comments(first: ${CONFIG.maxCommentsPerIssue}, orderBy: {field: UPDATED_AT, direction: DESC}) {
           nodes {
             body
             createdAt
@@ -104,6 +104,7 @@ GraphQL 回應會被轉換為與 REST API 相容的格式，確保：
 ## 注意事項
 
 - GraphQL API 每次請求最多可取得 100 個 issues
-- 每個 issue 最多取得 100 則留言（腳本中限制為 10 則）
+- 每個 issue 取得最新的 10 則留言（可透過 `CONFIG.maxCommentsPerIssue` 調整）
 - 使用 cursor-based pagination 處理大量資料
-- 需要 `@octokit/graphql` 套件（已加入 dependencies）
+- 需要 `@octokit/graphql` 套件（已加入 devDependencies）
+- 已移除 `@octokit/rest` 套件（不再需要）

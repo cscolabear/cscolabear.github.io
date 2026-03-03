@@ -36,7 +36,8 @@ const CONFIG = {
   siteUrl: seoConfig.site.url,
   postsDir: path.join(__dirname, '../docs/posts'),
   postsIndexPath: path.join(__dirname, '../docs/articles.md'),
-  syncLogPath: path.join(__dirname, '../docs/.vitepress/sync-log.json')
+  syncLogPath: path.join(__dirname, '../docs/.vitepress/sync-log.json'),
+  maxCommentsPerIssue: 10  // 每篇文章最多顯示的留言數量
 };
 
 // 初始化 GraphQL client
@@ -154,7 +155,7 @@ async function fetchIssues() {
                     name
                   }
                 }
-                comments(first: 100, orderBy: {field: UPDATED_AT, direction: DESC}) {
+                comments(first: ${CONFIG.maxCommentsPerIssue}, orderBy: {field: UPDATED_AT, direction: DESC}) {
                   nodes {
                     body
                     createdAt
@@ -189,7 +190,7 @@ async function fetchIssues() {
         updated_at: issue.updatedAt,
         html_url: issue.url,
         labels: issue.labels.nodes.map(label => ({ name: label.name })),
-        comments_data: issue.comments.nodes.slice(0, 10).map(comment => ({
+        comments_data: issue.comments.nodes.map(comment => ({
           body: comment.body || '',
           created_at: comment.createdAt,
           updated_at: comment.updatedAt,
