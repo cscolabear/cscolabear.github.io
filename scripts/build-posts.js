@@ -29,9 +29,9 @@ const CONFIG = {
   publishLabel: seoConfig.github.publishLabel,
   state: seoConfig.github.state,
   siteUrl: seoConfig.site.url,
-  postsDir: path.join(__dirname, '../docs/posts'),
-  postsIndexPath: path.join(__dirname, '../docs/articles.md'),
-  syncLogPath: path.join(__dirname, '../docs/.vitepress/sync-log.json')
+  postsDir: path.join(__dirname, '../blog/posts'),
+  postsIndexPath: path.join(__dirname, '../blog/articles.md'),
+  syncLogPath: path.join(__dirname, '../blog/.vitepress/sync-log.json')
 };
 
 // 初始化 Octokit
@@ -626,7 +626,7 @@ async function cleanDeletedPosts(currentIssues) {
 async function updateHomePage(issues) {
   console.log('\n🏠 正在更新首頁文章列表...');
   
-  const homePagePath = path.join(__dirname, '../docs/index.md');
+  const homePagePath = path.join(__dirname, '../blog/index.md');
   
   try {
     // 讀取首頁內容

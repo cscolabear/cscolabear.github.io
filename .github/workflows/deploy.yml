@@ -53,15 +53,15 @@ jobs:
         run: |
           echo "建置完成！"
           echo "文章數量："
-          ls -1 docs/posts/*.md | grep -v index.md | wc -l || echo "0"
+          ls -1 blog/posts/*.md | grep -v index.md | wc -l || echo "0"
           echo "輸出檔案："
-          ls -lh docs/.vitepress/dist/
+          ls -lh blog/.vitepress/dist/
       
       - name: 🚀 部署至 GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: docs/.vitepress/dist
+          publish_dir: blog/.vitepress/dist
           publish_branch: gh-pages
           user_name: 'github-actions[bot]'
           user_email: 'github-actions[bot]@users.noreply.github.com'

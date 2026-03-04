@@ -25,7 +25,7 @@
 4. 完成後將 Issue 設為 `closed` 狀態
 5. GitHub Actions 會自動將文章同步到網站（每日 08:00 或手動觸發）
 
-詳細說明請參考：[使用說明](./docs/usage-guide.md)
+詳細說明請參考：[使用說明](./usage-guide.md)
 
 ## 💬 留言功能
 
@@ -80,7 +80,7 @@ npm run docs:preview
 ├── .github/
 │   └── workflows/
 │       └── deploy.yml          # 自動部署 workflow
-├── docs/                       # VitePress 文檔目錄
+├── blog/                       # VitePress 文檔目錄
 │   ├── .vitepress/
 │   │   ├── config.js          # VitePress 配置
 │   │   ├── sync-log.json      # 同步日誌（記錄文章與留言更新時間）
@@ -148,15 +148,15 @@ npm run docs:preview
 
 ## 📚 文件
 
-- [使用說明](./docs/usage-guide.md) - 如何發佈和管理文章
-- [Workflow 說明](./docs/workflow-guide.md) - GitHub Actions 使用指南
-- [SEO 指南](./docs/seo-guide.md) - SEO 優化設定
+- [使用說明](./usage-guide.md) - 如何發佈和管理文章
+- [Workflow 說明](./workflow-guide.md) - GitHub Actions 使用指南
+- [SEO 指南](./seo-guide.md) - SEO 優化設定
 
 ## 🔧 配置說明
 
 ### 修改網站資訊
 
-編輯 `docs/.vitepress/config.js`：
+編輯 `blog/.vitepress/config.js`：
 
 ```javascript
 export default defineConfig({
@@ -168,13 +168,13 @@ export default defineConfig({
 
 ### 自訂網域
 
-1. 在 `docs/public/` 建立 `CNAME` 檔案
+1. 在 `blog/public/` 建立 `CNAME` 檔案
 2. 內容填入您的網域名稱（如 `blog.example.com`）
 3. 在網域 DNS 設定中添加 CNAME 記錄指向 `<username>.github.io`
 
 ### 修改配色
 
-編輯 `docs/.vitepress/theme/styles/custom.css`：
+編輯 `blog/.vitepress/theme/styles/custom.css`：
 
 ```css
 :root {

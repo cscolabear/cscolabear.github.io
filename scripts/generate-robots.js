@@ -17,7 +17,7 @@ const __dirname = path.dirname(__filename);
 const seoConfigPath = path.join(__dirname, '../seo.config.js');
 const seoConfig = (await import(seoConfigPath)).default;
 
-const robotsTxtPath = path.join(__dirname, '../docs/public/robots.txt');
+const robotsTxtPath = path.join(__dirname, '../blog/public/robots.txt');
 
 const robotsContent = `# https://www.robotstxt.org/robotstxt.html
 # WorkxPlay 個人技術 Blog - robots.txt
