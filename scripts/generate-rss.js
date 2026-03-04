@@ -24,7 +24,7 @@ const seoConfig = (await import(seoConfigPath)).default;
 const CONFIG = {
   postsDir: path.join(__dirname, '../blog/posts'),
   outputDir: path.join(__dirname, '../blog/public'),
-  maxItems: seoConfig.rss.maxItems || 20
+  maxItems: seoConfig.rss.itemCount || 20
 };
 
 /**
