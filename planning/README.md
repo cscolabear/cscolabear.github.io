@@ -88,7 +88,7 @@ planning/
 ## 🔗 相關文件
 
 - **專案 README**：`../README.md`
-- **使用指南**：`../blog/usage-guide.md`
+- **使用指南**：`../usage-guide.md`
 - **建置腳本**：`../scripts/build-posts.js`
 - **GitHub Actions**：`../.github/workflows/deploy.yml`
 
