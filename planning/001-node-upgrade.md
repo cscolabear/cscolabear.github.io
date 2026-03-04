@@ -84,10 +84,10 @@ npm install
 node scripts/build-posts.js
 
 # 測試開發伺服器
-npm run docs:dev
+npm run blog:dev
 
 # 測試建置
-npm run docs:build
+npm run blog:build
 ```
 
 **驗證項目**：
@@ -140,10 +140,10 @@ $ node scripts/build-posts.js
 ✅ 文章列表頁面生成完成
 🎉 建置完成！
 
-$ npm run docs:dev
+$ npm run blog:dev
 ✅ VitePress dev server running at http://localhost:5173
 
-$ npm run docs:build
+$ npm run blog:build
 ✅ building client + server bundles...
 ✅ build complete in 3.45s
 ```
@@ -172,7 +172,7 @@ a different dependency.
 - vitepress 0.2.0 - 1.6.4
 
 **評估**：
-- ✅ 僅影響開發環境（`npm run docs:dev`）
+- ✅ 僅影響開發環境（`npm run blog:dev`）
 - ✅ 不影響生產環境建置結果
 - ✅ 等待 VitePress 官方更新修復
 - ⚠️ 建議定期檢查 `npm audit` 和套件更新

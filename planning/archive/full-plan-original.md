@@ -81,7 +81,7 @@
 - vite 0.11.0 - 6.1.6
 - vitepress 0.2.0 - 1.6.4
 
-**評估**: 這些漏洞僅影響開發環境（`npm run docs:dev`），不影響生產環境建置結果。等待 VitePress 官方更新修復。
+**評估**: 這些漏洞僅影響開發環境（`npm run blog:dev`），不影響生產環境建置結果。等待 VitePress 官方更新修復。
 
 ### 使用說明
 
@@ -93,7 +93,7 @@ nvm use
 npm install
 
 # 開發
-npm run docs:dev
+npm run blog:dev
 
 # 建置
 npm run build

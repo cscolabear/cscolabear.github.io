@@ -225,7 +225,7 @@ npm install
 npm run fetch:issues
 
 # 啟動開發伺服器
-npm run docs:dev
+npm run blog:dev
 
 # 瀏覽器開啟 http://localhost:5173
 ```

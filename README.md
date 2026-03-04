@@ -52,7 +52,7 @@ nvm use
 npm install
 
 # 啟動開發伺服器
-npm run docs:dev
+npm run blog:dev
 
 # 擷取 Issues 並轉換為文章（包含留言）
 npm run fetch:issues
@@ -61,7 +61,7 @@ npm run fetch:issues
 npm run build
 
 # 預覽建置結果
-npm run docs:preview
+npm run blog:preview
 ```
 
 ## 🏗️ 技術架構

@@ -47,7 +47,7 @@ jobs:
         run: node scripts/build-posts.js
       
       - name: 🏗️ 建置 VitePress 網站
-        run: npm run docs:build
+        run: npm run blog:build
       
       - name: 📋 顯示建置結果
         run: |
