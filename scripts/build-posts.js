@@ -37,13 +37,22 @@ const CONFIG = {
   postsDir: path.join(__dirname, '../docs/posts'),
   postsIndexPath: path.join(__dirname, '../docs/articles.md'),
   syncLogPath: path.join(__dirname, '../docs/.vitepress/sync-log.json'),
-  maxCommentsPerIssue: 10  // 每篇文章最多顯示的留言數量
+  maxCommentsPerIssue: seoConfig.posts?.commentsDisplayCount ?? 10  // 每篇文章最多顯示的留言數量（以 seo.config.js 為單一來源，預設為 10）
 };
+
+// 驗證 GitHub token
+const githubToken = process.env.GITHUB_TOKEN || process.env.GH_TOKEN;
+
+if (!githubToken) {
+  throw new Error(
+    'GitHub token is required. Please set GITHUB_TOKEN or GH_TOKEN environment variable.'
+  );
+}
 
 // 初始化 GraphQL client
 const graphqlWithAuth = graphql.defaults({
   headers: {
-    authorization: `token ${process.env.GITHUB_TOKEN || process.env.GH_TOKEN}`,
+    authorization: `token ${githubToken}`,
   },
 });
 
@@ -127,56 +136,58 @@ async function fetchIssues() {
     const stateFilter = CONFIG.state === 'closed' ? 'CLOSED' : 
                         CONFIG.state === 'open' ? 'OPEN' : 'CLOSED';
     
-    while (hasNextPage) {
-      // GraphQL query - 一次性取得 issues 和其留言
-      const query = `
-        query($owner: String!, $repo: String!, $labels: [String!], $states: [IssueState!], $cursor: String) {
-          repository(owner: $owner, name: $repo) {
-            issues(
-              first: 100,
-              after: $cursor,
-              labels: $labels,
-              states: $states,
-              orderBy: {field: UPDATED_AT, direction: DESC}
-            ) {
-              pageInfo {
-                hasNextPage
-                endCursor
-              }
-              nodes {
-                number
-                title
-                body
-                createdAt
-                updatedAt
-                url
-                labels(first: 20) {
-                  nodes {
-                    name
-                  }
+    // GraphQL query - 定義一次，在迴圈中重複使用
+    // 使用變數而非字串插值，以提高可維護性
+    const query = `
+      query($owner: String!, $repo: String!, $labels: [String!], $states: [IssueState!], $cursor: String, $commentsFirst: Int!) {
+        repository(owner: $owner, name: $repo) {
+          issues(
+            first: 100,
+            after: $cursor,
+            labels: $labels,
+            states: $states,
+            orderBy: {field: UPDATED_AT, direction: DESC}
+          ) {
+            pageInfo {
+              hasNextPage
+              endCursor
+            }
+            nodes {
+              number
+              title
+              body
+              createdAt
+              updatedAt
+              url
+              labels(first: 20) {
+                nodes {
+                  name
                 }
-                comments(first: ${CONFIG.maxCommentsPerIssue}, orderBy: {field: UPDATED_AT, direction: DESC}) {
-                  nodes {
-                    body
-                    createdAt
-                    updatedAt
-                    author {
-                      login
-                    }
+              }
+              comments(first: $commentsFirst, orderBy: {field: CREATED_AT, direction: DESC}) {
+                nodes {
+                  body
+                  createdAt
+                  updatedAt
+                  author {
+                    login
                   }
                 }
               }
             }
           }
         }
-      `;
-      
+      }
+    `;
+    
+    while (hasNextPage) {
       const result = await graphqlWithAuth(query, {
         owner: CONFIG.owner,
         repo: CONFIG.repo,
         labels: [CONFIG.publishLabel],
         states: [stateFilter],
-        cursor: cursor
+        cursor: cursor,
+        commentsFirst: CONFIG.maxCommentsPerIssue
       });
       
       const issuesData = result.repository.issues;

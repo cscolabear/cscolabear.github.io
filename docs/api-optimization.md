@@ -24,7 +24,7 @@
 
 1. **單一 GraphQL Query**：同時取得
    - Issues 列表
-   - 每個 issue 的留言（最多 100 則）
+   - 每個 issue 的留言（預設為最新的 10 則，可由 `CONFIG.maxCommentsPerIssue` 調整，建議上限為 100 則）
    - 所有相關的 metadata
 
 **總 API 呼叫次數**：`1`（或少數幾次用於分頁）
