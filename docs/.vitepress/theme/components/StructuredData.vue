@@ -1,5 +1,6 @@
 <script setup>
 import { useData } from 'vitepress'
+import { computed } from 'vue'
 import seoConfig from '../../../../seo.config.js'
 
 const { page, frontmatter } = useData()
@@ -8,6 +9,20 @@ const { site } = seoConfig
 // 判斷是否為文章頁面
 const isArticle = page.value.relativePath.startsWith('posts/') && 
                   !page.value.relativePath.endsWith('index.md')
+
+// 合併 keywords 和 tags，去除重複
+const mergedKeywords = computed(() => {
+  const keywordsArray = frontmatter.value.keywords 
+    ? (Array.isArray(frontmatter.value.keywords) ? frontmatter.value.keywords : [frontmatter.value.keywords])
+    : [];
+  const tagsArray = frontmatter.value.tags 
+    ? (Array.isArray(frontmatter.value.tags) ? frontmatter.value.tags : [frontmatter.value.tags])
+    : [];
+  
+  const allKeywords = [...new Set([...keywordsArray, ...tagsArray])];
+  
+  return allKeywords.length > 0 ? allKeywords.join(', ') : null;
+})
 
 // 生成結構化資料
 const getStructuredData = () => {
@@ -37,21 +52,11 @@ const getStructuredData = () => {
         '@type': 'WebPage',
         '@id': `${site.url}/${page.value.relativePath.replace(/\.md$/, '')}`
       },
-      ...(frontmatter.value.keywords && {
-        keywords: Array.isArray(frontmatter.value.keywords) 
-          ? frontmatter.value.keywords.join(', ')
-          : frontmatter.value.keywords
-      }),
-      ...(frontmatter.value.category && {
-        articleSection: frontmatter.value.category
+      ...(mergedKeywords.value && {
+        keywords: mergedKeywords.value
       }),
       ...(frontmatter.value.readingTime && {
         timeRequired: `PT${frontmatter.value.readingMinutes || 1}M`
-      }),
-      ...(frontmatter.value.tags && {
-        keywords: Array.isArray(frontmatter.value.tags)
-          ? frontmatter.value.tags.join(', ')
-          : frontmatter.value.tags
       }),
       inLanguage: site.locale.replace('_', '-'),
       // 添加文章 URL 作為 image（如有自訂圖片可覆蓋）

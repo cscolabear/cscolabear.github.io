@@ -81,9 +81,6 @@ export default {
     // 預設作者（如果文章沒有指定作者）
     defaultAuthor: 'Cola',
 
-    // 文章預設分類
-    defaultCategory: '技術文章',
-
     // Meta description 最大長度
     metaDescriptionLength: 160,
 

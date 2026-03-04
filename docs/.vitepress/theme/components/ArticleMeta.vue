@@ -37,11 +37,6 @@ const formatDate = (dateString) => {
       <span class="meta-text">{{ frontmatter.readingTime }}</span>
     </div>
     
-    <div class="meta-item" v-if="frontmatter.category">
-      <span class="meta-icon">📂</span>
-      <span class="meta-text">{{ frontmatter.category }}</span>
-    </div>
-    
     <div class="meta-tags" v-if="frontmatter.tags && frontmatter.tags.length > 0">
       <span class="meta-icon">🏷️</span>
       <span 

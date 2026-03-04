@@ -4,7 +4,6 @@ date: 2026-03-01
 updated: 2026-03-02
 description: "網路、資訊上目前頗重要的一件事 SEO(Search Engine Optimization) 中文為 搜尋引擎最佳化 那這個東西是什麼? 能吃? 能用? 能有什麼幫助呢? 簡單說明 SEO... 如上圖所示, 在Google 搜尋iphone6s, 所得到的搜尋結果..."
 author: "Cola"
-category: "SEO"
 tags: ["SEO"]
 keywords: ["SEO","php","seo"]
 readingTime: "7 min read"
@@ -13,7 +12,6 @@ permalink: "/whats-seo"
 slug: "whats-seo"
 issueId: 5
 githubUrl: "https://github.com/cscolabear/cscolabear.github.io/issues/5"
-labels: ["SEO"]
 ---
 
 # what's SEO

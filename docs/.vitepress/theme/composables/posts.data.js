@@ -14,7 +14,6 @@ export default createContentLoader('posts/*.md', {
         updated: page.frontmatter.updated,
         description: page.frontmatter.description,
         tags: page.frontmatter.tags || [],
-        category: page.frontmatter.category,
         issueId: page.frontmatter.issueId
       }))
       .sort((a, b) => {
