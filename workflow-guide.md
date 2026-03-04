@@ -30,9 +30,9 @@
    ↓
 4. 擷取 GitHub Issues（label: Publishing, state: closed）
    ↓
-5. 轉換為 Markdown 文章 (docs/posts/*.md)
+5. 轉換為 Markdown 文章 (blog/posts/*.md)
    ↓
-6. 建置 VitePress 靜態網站 (docs/.vitepress/dist)
+6. 建置 VitePress 靜態網站 (blog/.vitepress/dist)
    ↓
 7. 部署至 gh-pages 分支
    ↓

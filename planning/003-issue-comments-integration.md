@@ -106,7 +106,7 @@ if (syncLog[issueKey]?.comments_updated_at) {
 
 ### 5. ✅ CSS 樣式
 
-**位置**：`docs/.vitepress/theme/styles/custom.css`（24-82 行）
+**位置**：`blog/.vitepress/theme/styles/custom.css`（24-82 行）
 
 **卡片樣式**：
 ```css
@@ -264,8 +264,8 @@ if (syncLog[issueKey]?.comments_updated_at) {
   - `fetchIssues()` (95-174)
   - `needsUpdate()` (59-101)
   - `convertIssueToMarkdown()` (176-295)
-- `docs/.vitepress/theme/styles/custom.css` (24-82)
-- `docs/.vitepress/sync-log.json` - 留言狀態記錄
+- `blog/.vitepress/theme/styles/custom.css` (24-82)
+- `blog/.vitepress/sync-log.json` - 留言狀態記錄
 
 ## ✅ 完成確認
 

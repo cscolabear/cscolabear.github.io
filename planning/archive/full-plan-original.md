@@ -20,12 +20,12 @@
 
 ### 文章列表位置
 
-1. **首頁 (docs/index.md)** - "最新文章" 區塊
+1. **首頁 (blog/index.md)** - "最新文章" 區塊
    - 顯示：最新 5 篇
    - 函數：`updateHomePage()` (414-477行)
    - 狀態：✅ 已過濾 Publishing / ❌ 缺留言數
 
-2. **文章列表頁 (docs/posts/index.md)** - 完整清單
+2. **文章列表頁 (blog/posts/index.md)** - 完整清單
    - 顯示：所有文章（依更新時間排序）
    - 函數：`generatePostsList()` (336-381行)
    - 狀態：✅ 已過濾  / ❌ 缺留言數
@@ -144,7 +144,7 @@ npm run build
   - 將 issue body 轉換為 VitePress markdown 格式
   - 添加 frontmatter（title, date, updated, description）
   - 處理圖片連結（確保相對路徑正確）
-  - 儲存至 `docs/posts/{issue_id}.md`
+  - 儲存至 `blog/posts/{issue_id}.md`
   - **詳細轉換流程說明**：
     1. **取得 Issue 內容**: 透過 GitHub API 取得 issue.body（原始 Markdown）
     2. **Markdown 預處理**:
@@ -185,7 +185,7 @@ npm run build
   - 生成首頁文章列表
   - 顯示標題、日期、摘要
   - **列表頁面 HTML 生成**:
-    1. 讀取所有 `docs/posts/*.md` 檔案的 frontmatter
+    1. 讀取所有 `blog/posts/*.md` 檔案的 frontmatter
     2. 排序文章（依 updated 時間降序）
     3. 生成動態列表組件（使用 Vue）
     4. 建置時產生靜態 HTML（SSG - Static Site Generation）
@@ -279,7 +279,7 @@ function hello() {
 - 列表項目 2
 ```
 
-#### 2. 轉換後的 VitePress Markdown（docs/posts/1.md）
+#### 2. 轉換後的 VitePress Markdown（blog/posts/1.md）
 ```markdown
 ---
 title: "我的第一篇文章"
@@ -482,7 +482,7 @@ githubUrl: "https://github.com/cscolabear/cscolabear.github.io/issues/1"
 ```
 
 ### URL 重寫策略
-- VitePress 檔案路徑: `docs/posts/{issue_id}.md`
+- VitePress 檔案路徑: `blog/posts/{issue_id}.md`
 - 產生的 URL: `https://cscolabear.github.io/posts/{issue_id}`
 - 可透過 VitePress 的 rewrites 功能調整為 `/{issue_id}`
 
@@ -492,7 +492,7 @@ cscolabear.github.io/
 ├── .github/
 │   └── workflows/
 │       └── deploy.yml          # 部署 workflow
-├── docs/
+├── blog/
 │   ├── .vitepress/
 │   │   ├── config.js          # VitePress 配置
 │   │   ├── theme/
@@ -524,7 +524,7 @@ cscolabear.github.io/
 └── README.md
 ```
 
-### 建置後的輸出結構（docs/.vitepress/dist/）
+### 建置後的輸出結構（blog/.vitepress/dist/）
 ```
 dist/
 ├── index.html                # 首頁
@@ -548,7 +548,7 @@ dist/
 2. **Issue 更新延遲**: 定時建置每日執行一次，若需即時更新需手動觸發
 3. **圖片處理**: Issue 中的圖片使用 GitHub CDN，確保連結有效
 4. **留言功能**: 讀者需前往 GitHub issue 頁面留言（非即時顯示在網站上）
-5. **自定義 Domain**: 需在 repository settings 中設定，並在 docs/public 添加 CNAME 檔案
+5. **自定義 Domain**: 需在 repository settings 中設定，並在 blog/public 添加 CNAME 檔案
 
 ## 後續優化建議
 - [ ] 添加標籤分類系統（依 issue labels）

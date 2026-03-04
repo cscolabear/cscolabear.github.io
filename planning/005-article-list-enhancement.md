@@ -26,12 +26,12 @@
 
 ### 文章列表位置
 
-1. **首頁 (docs/index.md)** - "最新文章" 區塊
+1. **首頁 (blog/index.md)** - "最新文章" 區塊
    - 顯示：最新 5 篇
    - 函數：`updateHomePage()` (build-posts.js 414-477行)
    - 狀態：✅ 已過濾 Publishing / ❌ 缺留言數
 
-2. **文章列表頁 (docs/posts/index.md)** - 完整清單
+2. **文章列表頁 (blog/posts/index.md)** - 完整清單
    - 顯示：所有文章（依更新時間排序）
    - 函數：`generatePostsList()` (build-posts.js 336-381行)
    - 狀態：✅ 已過濾 Publishing / ❌ 缺留言數
@@ -96,8 +96,8 @@ sync-log.json 格式：
 ### ✅ 4. test-build
 測試建置與驗證結果
 - 執行 `node scripts/build-posts.js`
-- 檢查 docs/index.md（首頁）
-- 檢查 docs/posts/index.md（列表頁）
+- 檢查 blog/index.md（首頁）
+- 檢查 blog/posts/index.md（列表頁）
 - 驗證：有留言的顯示數量、無留言的不顯示
 - 驗證："blog" label 已被過濾
 
@@ -108,7 +108,7 @@ sync-log.json 格式：
 
 ## 🎨 顯示效果
 
-### 首頁 (docs/index.md)
+### 首頁 (blog/index.md)
 
 ```markdown
 ### [WIP 測試，這是一篇用於測試 blog 的標題 #1](/posts/2)
@@ -118,7 +118,7 @@ sync-log.json 格式：
 **更新時間**: 2026/3/1 | 💬 1 則留言
 ```
 
-### 文章列表頁 (docs/posts/index.md)
+### 文章列表頁 (blog/posts/index.md)
 
 ```markdown
 ## [WIP 測試，這是一篇用於測試 blog 的標題 #1](/posts/2)
@@ -216,9 +216,9 @@ const commentsInfo = commentsCount > 0 ? `💬 ${commentsCount} 則留言` : '';
 - `scripts/build-posts.js` - 主要修改檔案
   - `generatePostsList()` 函數（336-385行）
   - `updateHomePage()` 函數（417-483行）
-- `docs/index.md` - 首頁文章列表
-- `docs/posts/index.md` - 完整文章列表
-- `docs/.vitepress/sync-log.json` - 留言數據來源
+- `blog/index.md` - 首頁文章列表
+- `blog/posts/index.md` - 完整文章列表
+- `blog/.vitepress/sync-log.json` - 留言數據來源
 
 ## 📊 影響評估
 

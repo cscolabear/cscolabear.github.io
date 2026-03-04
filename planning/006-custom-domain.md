@@ -36,7 +36,7 @@
 ## 🚀 設定步驟
 
 #### ✅ Task 1: 建立 CNAME 檔案
-- **位置**：`docs/public/CNAME`
+- **位置**：`blog/public/CNAME`
 - **內容**：`cola.workxplay.net`
 - **作用**：告訴 GitHub Pages 使用的自訂網域
 

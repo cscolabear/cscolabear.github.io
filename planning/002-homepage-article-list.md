@@ -7,7 +7,7 @@
 
 ## 📋 問題陳述
 
-首頁（docs/index.md）的「最新文章」區域只有佔位文字「文章列表將自動從 GitHub Issues 生成...」，沒有顯示實際的文章列表。
+首頁（blog/index.md）的「最新文章」區域只有佔位文字「文章列表將自動從 GitHub Issues 生成...」，沒有顯示實際的文章列表。
 
 ## 🎯 解決方案
 
@@ -27,7 +27,7 @@
 **位置**：`scripts/build-posts.js`（414-477 行）
 
 **功能**：
-- 讀取首頁內容（docs/index.md）
+- 讀取首頁內容（blog/index.md）
 - 取得最新 5 篇文章
 - 生成 Markdown 格式的文章列表
 - 替換「最新文章」區域的內容
@@ -199,7 +199,7 @@ $ node scripts/build-posts.js
 
 - `scripts/build-posts.js` - 主要實作檔案
   - `updateHomePage()` 函數（414-477 行）
-- `docs/index.md` - 首頁檔案
+- `blog/index.md` - 首頁檔案
   - 「最新文章」區塊會被自動更新
 
 ## ✅ 完成確認

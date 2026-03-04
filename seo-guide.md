@@ -42,7 +42,7 @@
 1. 前往 https://search.google.com/search-console
 2. 添加網站並驗證
 3. 取得驗證碼
-4. 在 `docs/.vitepress/config.js` 中取消註解並填入驗證碼：
+4. 在 `blog/.vitepress/config.js` 中取消註解並填入驗證碼：
    ```javascript
    ['meta', { name: 'google-site-verification', content: 'your-verification-code' }],
    ```
@@ -50,7 +50,7 @@
 ### Google Analytics
 如需添加 Google Analytics：
 1. 建立 GA4 測量 ID
-2. 在 `docs/.vitepress/config.js` 的 `head` 中添加：
+2. 在 `blog/.vitepress/config.js` 的 `head` 中添加：
    ```javascript
    ['script', { async: true, src: 'https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX' }],
    ['script', {}, `
@@ -62,7 +62,7 @@
    ```
 
 ### 自訂 OG Image
-建議建立 1200x630 的 og-image.png 並放在 `docs/public/` 目錄。
+建議建立 1200x630 的 og-image.png 並放在 `blog/public/` 目錄。
 
 ## 🔍 檢查工具
 

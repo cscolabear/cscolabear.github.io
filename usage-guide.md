@@ -242,15 +242,15 @@ A: 檢查以下項目：
 
 ### Q: 如何修改網站標題、描述等？
 
-A: 修改 `docs/.vitepress/config.js` 檔案中的設定
+A: 修改 `blog/.vitepress/config.js` 檔案中的設定
 
 ### Q: 可以自訂網域嗎？
 
-A: 可以，在 `docs/public/` 目錄建立 `CNAME` 檔案，內容為您的網域名稱
+A: 可以，在 `blog/public/` 目錄建立 `CNAME` 檔案，內容為您的網域名稱
 
 ### Q: 如何添加 Google Analytics？
 
-A: 參考 `docs/seo-guide.md` 中的說明
+A: 參考 `blog/seo-guide.md` 中的說明
 
 ## 📚 相關文件
 

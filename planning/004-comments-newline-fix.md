@@ -138,7 +138,7 @@ comments.forEach(comment => {
 
 ### Markdown 源碼驗證
 
-檢查 `docs/posts/2.md`：
+檢查 `blog/posts/2.md`：
 ```markdown
 測試留言<br>
 編輯~

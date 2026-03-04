@@ -32,7 +32,7 @@
 cscolabear.github.io/
 ├── .github/workflows/
 │   └── deploy.yml              # 部署 workflow
-├── docs/
+├── blog/
 │   ├── .vitepress/
 │   │   ├── config.js           # VitePress 配置
 │   │   ├── theme/              # 自定義主題
@@ -59,7 +59,7 @@ cscolabear.github.io/
 這是內容...
 ```
 
-**轉換後的 VitePress Markdown**（docs/posts/1.md）：
+**轉換後的 VitePress Markdown**（blog/posts/1.md）：
 ```markdown
 ---
 title: "我的第一篇文章"
@@ -122,7 +122,7 @@ HTML + CSS + JS
    - 添加 GitHub 討論連結
 
 3. **generatePostsList()**
-   - 生成文章列表頁面（docs/posts/index.md）
+   - 生成文章列表頁面（blog/posts/index.md）
    - 依更新時間排序
 
 4. **needsUpdate()**
@@ -156,7 +156,7 @@ HTML + CSS + JS
 - 目錄導航（TOC）
 
 ### 自定義樣式
-- `docs/.vitepress/theme/styles/custom.css`
+- `blog/.vitepress/theme/styles/custom.css`
 - 使用 CSS 變數實現主題一致性
 
 ## 🔗 相關計劃

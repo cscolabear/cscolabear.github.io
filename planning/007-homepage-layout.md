@@ -19,14 +19,14 @@
 
 ### 檔案變更
 
-1. **新增**: `docs/.vitepress/theme/components/CustomHome.vue`
+1. **新增**: `blog/.vitepress/theme/components/CustomHome.vue`
    - 自訂首頁組件
    - 渲染順序: Hero → 最新文章 → 分隔線 → 網站特色
 
-2. **修改**: `docs/.vitepress/theme/index.js`
+2. **修改**: `blog/.vitepress/theme/index.js`
    - 註冊 CustomHome 組件
 
-3. **修改**: `docs/index.md`
+3. **修改**: `blog/index.md`
    - layout 從 `home` 改為 `custom-home`
 
 ### 樣式調整
