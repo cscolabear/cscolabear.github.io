@@ -7,7 +7,7 @@ hero:
   text: Cola 的技術筆記與分享
   actions:
     - theme: brand
-      text: 查看文章
+      text: 最新文章
       link: /articles
     - theme: alt
       text: 關於我
