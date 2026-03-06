@@ -45,6 +45,87 @@
 1. 等待 DNS 設定生效（可能需要幾分鐘到幾小時）
 2. 在 Pages 設定頁面勾選 **Enforce HTTPS**
 
+## 🔑 本地開發 vs CI/CD 環境
+
+本專案需要 GitHub token 來存取 GitHub Issues API。本地開發和 GitHub Actions 環境的 token 來源不同：
+
+### 本地開發環境
+
+**Token 來源**：`.env` 檔案（需手動設定）
+
+**設定步驟**：
+
+1. 複製環境變數範本：
+   ```bash
+   cp .env.example .env
+   ```
+
+2. 取得 GitHub Personal Access Token：
+   - 前往 [GitHub Token 設定頁面](https://github.com/settings/tokens)
+   - 建立新的 token (classic)
+   - 權限：勾選 `repo`（完整權限）
+   - 過期時間：建議 90 days
+
+3. 將 token 填入 `.env` 檔案：
+   ```bash
+   GITHUB_TOKEN=ghp_your_token_here
+   ```
+
+4. 執行建置：
+   ```bash
+   npm run build
+   ```
+
+詳細說明請參考：[本地開發指南](./docs/local-development.md)
+
+### GitHub Actions 環境
+
+**Token 來源**：`${{ secrets.GITHUB_TOKEN }}`（GitHub 自動提供）
+
+**特點**：
+- ✅ 無需手動設定
+- ✅ 自動提供並注入到環境變數
+- ✅ 每次執行時自動更新
+- ✅ 有足夠權限讀取 Issues 和部署 Pages
+
+**Workflow 設定**（`.github/workflows/deploy.yml`）：
+
+```yaml
+- name: 🏗️ 完整建置（robots + issues + rss + vitepress）
+  env:
+    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  run: npm run build
+```
+
+### 環境比較表
+
+| 項目 | 本地開發 | GitHub Actions |
+|------|---------|----------------|
+| **Token 來源** | `.env` 檔案 | `secrets.GITHUB_TOKEN` |
+| **設定方式** | 手動建立 Personal Access Token | 自動提供 |
+| **權限範圍** | 根據 token 設定 | Repository 完整權限 |
+| **過期時間** | 需手動設定（建議 90 天） | 每次執行時自動更新 |
+| **建置指令** | `npm run build` | `npm run build` |
+| **安全性** | `.env` 已被 `.gitignore` 保護 | GitHub 自動管理 |
+
+### 統一建置流程
+
+無論在哪個環境，都執行相同的建置指令：
+
+```bash
+npm run build
+```
+
+此指令會依序執行：
+1. `generate:robots` - 生成 robots.txt
+2. `fetch:issues` - 擷取 GitHub Issues（需要 token）
+3. `generate:rss` - 生成 RSS feeds
+4. `docs:build` - 建置 VitePress 網站
+
+Node.js 會自動載入正確的環境變數來源：
+- 本地：讀取 `.env` 檔案（使用 `--env-file-if-exists` 參數）
+- CI：使用系統環境變數（GitHub Actions 注入）
+
 ## 🚀 首次部署
 
 ### 方法 1: 透過 Git Push（推薦）
