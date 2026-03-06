@@ -130,6 +130,19 @@ features:
 
 
 
+
+
+
+
+
+
+## [如何在 Json 中加入註解](/json-comment)
+
+<p class="article-description">如何在 Json 中加入註解呢？ 可以在 Json 裡加入註解嗎？ Json (JavaScript Object Notation) 是目前最流行的資料交換格式，簡單、小巧且易用是他的特色。 但是一大串資料內，難免有需要加入註解(comment)的時候。這時候應該怎麼做呢? 當然官方是不建議這麼做的(www.json.</p>
+
+**更新時間**: 2026/3/6 | 💬 1 則留言 | **標籤**: `Javascript`
+
+
 ## [what's SEO](/whats-seo)
 
 <p class="article-description">網路、資訊上目前頗重要的一件事 SEO(Search Engine Optimization) 中文為 搜尋引擎最佳化 那這個東西是什麼? 能吃? 能用? 能有什麼幫助呢? 簡單說明 SEO... 如上圖所示, 在Google 搜尋iphone6s, 所得到的搜尋結果...</p>
