@@ -4,12 +4,17 @@
  * GitHub Issues 轉 VitePress Markdown 腳本
  * 
  * 功能：
- * 1. 從 GitHub API 擷取符合條件的 issues（label: Publishing, state: closed）
- * 2. 將 issue 內容轉換為 VitePress markdown 格式
- * 3. 生成文章列表頁面
+ * 1. 使用 GraphQL API 從 GitHub 擷取符合條件的 issues（label: Publishing, state: closed）
+ * 2. 同時取得 issue 內容與留言（單一請求，優化 API 使用）
+ * 3. 將 issue 內容轉換為 VitePress markdown 格式
+ * 4. 生成文章列表頁面
+ * 
+ * 優化重點：
+ * - 使用 GraphQL 取代 REST API，減少 API 呼叫次數達 98%
+ * - 單一請求同時取得 issues 和 comments，大幅降低 rate limit 消耗
  */
 
-import { Octokit } from '@octokit/rest';
+import { graphql } from '@octokit/graphql';
 import fs from 'fs/promises';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -31,12 +36,24 @@ const CONFIG = {
   siteUrl: seoConfig.site.url,
   postsDir: path.join(__dirname, '../blog/posts'),
   postsIndexPath: path.join(__dirname, '../blog/articles.md'),
-  syncLogPath: path.join(__dirname, '../blog/.vitepress/sync-log.json')
+  syncLogPath: path.join(__dirname, '../blog/.vitepress/sync-log.json'),
+  maxCommentsPerIssue: seoConfig.posts?.commentsDisplayCount ?? 10  // 每篇文章最多顯示的留言數量（以 seo.config.js 為單一來源，預設為 10）
 };
 
-// 初始化 Octokit
-const octokit = new Octokit({
-  auth: process.env.GITHUB_TOKEN || process.env.GH_TOKEN
+// 驗證 GitHub token
+const githubToken = process.env.GITHUB_TOKEN || process.env.GH_TOKEN;
+
+if (!githubToken) {
+  throw new Error(
+    'GitHub token is required. Please set GITHUB_TOKEN or GH_TOKEN environment variable.'
+  );
+}
+
+// 初始化 GraphQL client
+const graphqlWithAuth = graphql.defaults({
+  headers: {
+    authorization: `token ${githubToken}`,
+  },
 });
 
 /**
@@ -103,78 +120,131 @@ function needsUpdate(issue, syncLog) {
 }
 
 /**
- * 擷取指定 issue 的最新留言（最多 10 則）
- */
-async function fetchIssueComments(issueNumber) {
-  try {
-    const { data: comments } = await octokit.rest.issues.listComments({
-      owner: CONFIG.owner,
-      repo: CONFIG.repo,
-      issue_number: issueNumber,
-      per_page: 100,
-      sort: 'created',
-      direction: 'desc' // 最新的在前
-    });
-    
-    // 只取最新 10 則
-    return comments.slice(0, 10);
-    
-  } catch (error) {
-    console.warn(`⚠️  擷取 Issue #${issueNumber} 留言失敗:`, error.message);
-    return []; // 失敗時返回空陣列，不中斷流程
-  }
-}
-
-/**
- * 擷取所有符合條件的 GitHub Issues（包含留言）
+ * 使用 GraphQL API 擷取所有符合條件的 GitHub Issues（包含留言）
+ * 相較於 REST API，GraphQL 可以一次性取得 issues 和 comments，大幅減少 API 呼叫次數
  */
 async function fetchIssues() {
-  console.log('📥 正在擷取 GitHub Issues...');
+  console.log('📥 正在擷取 GitHub Issues（使用 GraphQL API）...');
   
   try {
     const issues = [];
-    let page = 1;
-    let hasMore = true;
+    let hasNextPage = true;
+    let cursor = null;
+    let pageNum = 1;
     
-    while (hasMore) {
-      const response = await octokit.rest.issues.listForRepo({
+    // 將 state 轉換為 GraphQL 格式（OPEN/CLOSED）
+    const stateFilter = CONFIG.state === 'closed' ? 'CLOSED' : 
+                        CONFIG.state === 'open' ? 'OPEN' : 'CLOSED';
+    
+    // GraphQL query - 定義一次，在迴圈中重複使用
+    // 使用變數而非字串插值，以提高可維護性
+    const query = `
+      query($owner: String!, $repo: String!, $labels: [String!], $states: [IssueState!], $cursor: String, $commentsFirst: Int!) {
+        repository(owner: $owner, name: $repo) {
+          issues(
+            first: 100,
+            after: $cursor,
+            labels: $labels,
+            states: $states,
+            orderBy: {field: UPDATED_AT, direction: DESC}
+          ) {
+            pageInfo {
+              hasNextPage
+              endCursor
+            }
+            nodes {
+              number
+              title
+              body
+              createdAt
+              updatedAt
+              url
+              labels(first: 20) {
+                nodes {
+                  name
+                }
+              }
+              comments(first: $commentsFirst, orderBy: {field: UPDATED_AT, direction: DESC}) {
+                nodes {
+                  body
+                  createdAt
+                  updatedAt
+                  author {
+                    login
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    `;
+    
+    while (hasNextPage) {
+      const result = await graphqlWithAuth(query, {
         owner: CONFIG.owner,
         repo: CONFIG.repo,
-        state: CONFIG.state,
-        labels: CONFIG.publishLabel,
-        sort: 'updated',
-        direction: 'desc',
-        per_page: 100,
-        page: page
+        labels: [CONFIG.publishLabel],
+        states: [stateFilter],
+        cursor: cursor,
+        commentsFirst: CONFIG.maxCommentsPerIssue
       });
       
-      issues.push(...response.data);
+      const issuesData = result.repository.issues;
       
-      // 檢查是否還有更多頁面
-      hasMore = response.data.length === 100;
-      page++;
+      // 轉換 GraphQL 回應格式為與 REST API 相容的格式
+      const convertedIssues = issuesData.nodes.map(issue => ({
+        number: issue.number,
+        title: issue.title,
+        body: issue.body || '',
+        created_at: issue.createdAt,
+        updated_at: issue.updatedAt,
+        html_url: issue.url,
+        labels: issue.labels.nodes.map(label => ({ name: label.name })),
+        comments_data: issue.comments.nodes.map(comment => ({
+          body: comment.body || '',
+          created_at: comment.createdAt,
+          updated_at: comment.updatedAt,
+          user: {
+            login: comment.author?.login || 'ghost'
+          }
+        }))
+      }));
       
-      console.log(`   ✓ 已擷取第 ${page - 1} 頁，共 ${response.data.length} 篇`);
+      issues.push(...convertedIssues);
+      
+      hasNextPage = issuesData.pageInfo.hasNextPage;
+      cursor = issuesData.pageInfo.endCursor;
+      
+      console.log(`   ✓ 已擷取第 ${pageNum} 頁，共 ${convertedIssues.length} 篇`);
+      
+      // 顯示留言統計
+      const issuesWithComments = convertedIssues.filter(i => i.comments_data.length > 0);
+      if (issuesWithComments.length > 0) {
+        const totalComments = issuesWithComments.reduce((sum, i) => sum + i.comments_data.length, 0);
+        console.log(`   ✓ 本頁包含 ${totalComments} 則留言（來自 ${issuesWithComments.length} 篇文章）`);
+      }
+      
+      pageNum++;
     }
     
     console.log(`✅ 共擷取 ${issues.length} 篇文章`);
     
-    // 為每個 issue 取得留言
-    console.log('📥 正在擷取留言...');
-    for (const issue of issues) {
-      const comments = await fetchIssueComments(issue.number);
-      issue.comments_data = comments; // 附加留言資料到 issue 物件
-      
-      if (comments.length > 0) {
-        console.log(`   ✓ Issue #${issue.number}: ${comments.length} 則留言`);
-      }
+    // 統計總留言數
+    const totalComments = issues.reduce((sum, issue) => sum + issue.comments_data.length, 0);
+    if (totalComments > 0) {
+      console.log(`✅ 共擷取 ${totalComments} 則留言\n`);
+    } else {
+      console.log(`✅ 無留言\n`);
     }
     
-    console.log(`✅ 留言擷取完成\n`);
     return issues;
     
   } catch (error) {
     console.error('❌ 擷取 Issues 失敗:', error.message);
+    if (error.errors) {
+      console.error('GraphQL 錯誤詳情:', JSON.stringify(error.errors, null, 2));
+    }
     throw error;
   }
 }

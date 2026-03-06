@@ -41,7 +41,7 @@ jobs:
       - name: 📥 安裝依賴
         run: npm ci
       
-      - name: 🏗️ 建置網站（包含擷取 Issues、生成 RSS 和 robots.txt）
+      - name: 🏗️ 完整建置（robots + issues + rss + vitepress）
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npm run build

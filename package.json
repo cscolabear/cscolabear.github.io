@@ -7,7 +7,7 @@
     "blog:dev": "vitepress dev blog",
     "blog:build": "vitepress build blog",
     "blog:preview": "vitepress preview blog",
-    "fetch:issues": "node scripts/build-posts.js",
+    "fetch:issues": "node --env-file-if-exists=.env scripts/build-posts.js",
     "generate:robots": "node scripts/generate-robots.js",
     "generate:rss": "node scripts/generate-rss.js",
     "build": "npm run generate:robots && npm run fetch:issues && npm run generate:rss && npm run blog:build"
@@ -20,7 +20,7 @@
   "author": "Cola",
   "license": "MIT",
   "devDependencies": {
-    "@octokit/rest": "^22.0.1",
+    "@octokit/graphql": "^9.0.3",
     "feed": "^5.2.0",
     "reading-time": "^1.5.0",
     "sitemap": "^9.0.1",
