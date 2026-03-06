@@ -41,13 +41,10 @@ jobs:
       - name: 📥 安裝依賴
         run: npm ci
       
-      - name: 🔄 擷取 GitHub Issues 並轉換為文章
+      - name: 🏗️ 完整建置（robots + issues + rss + vitepress）
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: node scripts/build-posts.js
-      
-      - name: 🏗️ 建置 VitePress 網站
-        run: npm run docs:build
+        run: npm run build
       
       - name: 📋 顯示建置結果
         run: |
