@@ -173,7 +173,7 @@ npm run fetch:issues
 
 ```
 ✅ 成功擷取 X 篇文章
-✅ 文章已同步至 docs/posts/
+✅ 文章已同步至 blog/posts/
 ```
 
 ## 🛠️ 可用的 npm scripts
