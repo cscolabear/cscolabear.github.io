@@ -51,6 +51,11 @@ nvm use
 # 安裝依賴
 npm install
 
+# 設定環境變數（首次使用必須）
+cp .env.example .env
+# 編輯 .env，填入你的 GitHub Personal Access Token
+# 取得方式請參考：local-development.md
+
 # 啟動開發伺服器
 npm run docs:dev
 
