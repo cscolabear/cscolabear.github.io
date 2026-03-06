@@ -164,7 +164,7 @@ async function fetchIssues() {
                   name
                 }
               }
-              comments(first: $commentsFirst, orderBy: {field: CREATED_AT, direction: DESC}) {
+              comments(first: $commentsFirst, orderBy: {field: UPDATED_AT, direction: DESC}) {
                 nodes {
                   body
                   createdAt
