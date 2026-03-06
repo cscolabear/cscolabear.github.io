@@ -225,7 +225,7 @@ npm run fetch:issues
 
 **原因**：文章是從 GitHub Issues 動態擷取的，首次執行需要手動擷取。
 
-**解決方法**:
+**解決方法**：
 ```bash
 npm run fetch:issues
 npm run blog:dev
