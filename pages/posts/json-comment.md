@@ -4,7 +4,6 @@ date: 2026-03-05
 updated: 2026-03-06
 description: "如何在 Json 中加入註解呢？ 可以在 Json 裡加入註解嗎？ Json (JavaScript Object Notation) 是目前最流行的資料交換格式，簡單、小巧且易用是他的特色。 但是一大串資料內，難免有需要加入註解(comment)的時候。這時候應該怎麼做呢? 當然官方是不建議這麼做的(www."
 author: "Cola"
-category: "Javascript"
 tags: ["Javascript"]
 keywords: ["Javascript","php","seo"]
 readingTime: "2 min read"
@@ -13,10 +12,11 @@ permalink: "/json-comment"
 slug: "json-comment"
 issueId: 15
 githubUrl: "https://github.com/cscolabear/cscolabear.github.io/issues/15"
-labels: ["Javascript"]
 ---
 
 # 如何在 Json 中加入註解
+
+<img width="1376" height="768" alt="Image" src="https://github.com/user-attachments/assets/de652018-ff77-47ba-b929-8d1bef5cd332" />
 
 如何在 Json 中加入註解呢？ 可以在 Json 裡加入註解嗎？
 Json (JavaScript Object Notation) 是目前最流行的資料交換格式，簡單、小巧且易用是他的特色。
@@ -84,23 +84,6 @@ e.g.
  
 
 參考：[https://stackoverflow.com/questions/244777/can-comments-be-used-in-json](https://stackoverflow.com/questions/244777/can-comments-be-used-in-json?ref=cola.workxplay.net)
-
----
-
-## 💬 留言討論 (1 則)
-
-
-<div class="comment-card">
-<div class="comment-header">
-<strong>@cscolabear</strong>
-<span class="comment-date">2026/3/6 上午11:10</span>
-</div>
-
-待補 hero image~
-
-</div>
-
-
 
 ---
 

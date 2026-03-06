@@ -225,7 +225,7 @@ npm install
 npm run fetch:issues
 
 # 啟動開發伺服器
-npm run docs:dev
+npm run pages:dev
 
 # 瀏覽器開啟 http://localhost:5173
 ```
@@ -242,11 +242,11 @@ A: 檢查以下項目：
 
 ### Q: 如何修改網站標題、描述等？
 
-A: 修改 `docs/.vitepress/config.js` 檔案中的設定
+A: 修改 `pages/.vitepress/config.js` 檔案中的設定
 
 ### Q: 可以自訂網域嗎？
 
-A: 可以，在 `docs/public/` 目錄建立 `CNAME` 檔案，內容為您的網域名稱
+A: 可以，在 `pages/public/` 目錄建立 `CNAME` 檔案，內容為您的網域名稱
 
 ### Q: 如何添加 Google Analytics？
 

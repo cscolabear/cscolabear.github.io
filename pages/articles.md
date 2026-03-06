@@ -1,146 +1,17 @@
 ---
-layout: custom-home
-description: "WorkxPlay - Cola 的技術筆記部落格，分享 PHP、Laravel、AI、SEO、網站開發等技術內容。"
-
-hero:
-  name: WorkxPlay 工作與玩樂實驗室
-  text: Cola 的技術筆記與分享
-  actions:
-    - theme: brand
-      text: 查看文章
-      link: /articles
-    - theme: alt
-      text: 關於我
-      link: /about
-
-features:
-  - icon: 📝
-    title: Markdown 驅動
-    details: 使用 Markdown 撰寫文章，簡單純粹
-  - icon: 🔄
-    title: 自動同步
-    details: 透過 GitHub Actions 自動同步 Issues 內容
-  - icon: 💬
-    title: GitHub 討論
-    details: 讀者可透過 GitHub Issues 留言討論
-  - icon: 🚀
-    title: 快速部署
-    details: 基於 VitePress 建置，部署至 GitHub Pages
+description: "文章列表 - 瀏覽所有技術文章。涵蓋 SEO、網站開發等主題，定期更新。"
 ---
 
-## 最新文章
+# 文章列表
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+共 3 篇文章
 
 
 ## [如何在 Json 中加入註解](/json-comment)
 
 <p class="article-description">如何在 Json 中加入註解呢？ 可以在 Json 裡加入註解嗎？ Json (JavaScript Object Notation) 是目前最流行的資料交換格式，簡單、小巧且易用是他的特色。 但是一大串資料內，難免有需要加入註解(comment)的時候。這時候應該怎麼做呢? 當然官方是不建議這麼做的(www.json.</p>
 
-**更新時間**: 2026/3/6 | 💬 1 則留言 | **標籤**: `Javascript`
+**更新時間**: 2026/3/6 | **標籤**: `Javascript`
 
 
 ## [what's SEO](/whats-seo)
@@ -156,5 +27,3 @@ features:
 
 **更新時間**: 2026/3/2
 
-
-<p class="view-all"><a href="/articles">查看所有文章 →</a></p>

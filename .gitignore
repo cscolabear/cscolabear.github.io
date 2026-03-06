@@ -2,11 +2,11 @@
 node_modules/
 
 # Build output
-docs/.vitepress/dist
-docs/.vitepress/cache
+pages/.vitepress/dist
+pages/.vitepress/cache
 
 # Auto-generated files
-docs/.vitepress/sync-log.json
+pages/.vitepress/sync-log.json
 
 # Logs
 *.log

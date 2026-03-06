@@ -25,7 +25,7 @@
 4. 完成後將 Issue 設為 `closed` 狀態
 5. GitHub Actions 會自動將文章同步到網站（每日 08:00 或手動觸發）
 
-詳細說明請參考：[使用說明](./docs/usage-guide.md)
+詳細說明請參考：[使用說明](./usage-guide.md)
 
 ## 💬 留言功能
 
@@ -57,7 +57,7 @@ cp .env.example .env
 # 取得方式請參考：local-development.md
 
 # 啟動開發伺服器
-npm run docs:dev
+npm run pages:dev
 
 # 擷取 Issues 並轉換為文章（包含留言）
 npm run fetch:issues
@@ -66,7 +66,7 @@ npm run fetch:issues
 npm run build
 
 # 預覽建置結果
-npm run docs:preview
+npm run pages:preview
 ```
 
 ## 🏗️ 技術架構
@@ -85,7 +85,7 @@ npm run docs:preview
 ├── .github/
 │   └── workflows/
 │       └── deploy.yml          # 自動部署 workflow
-├── docs/                       # VitePress 文檔目錄
+├── pages/                      # VitePress 文檔目錄
 │   ├── .vitepress/
 │   │   ├── config.js          # VitePress 配置
 │   │   ├── sync-log.json      # 同步日誌（記錄文章與留言更新時間）
@@ -103,6 +103,7 @@ npm run docs:preview
 │   ├── usage-guide.md        # 使用說明
 │   ├── workflow-guide.md     # Workflow 說明
 │   └── seo-guide.md          # SEO 指南
+├── docs/                      # 專案說明文件目錄（保留）
 ├── planning/                  # 開發計劃與記錄（詳見下方說明）
 │   ├── README.md             # 計劃文件系統說明
 │   ├── 000-*.md              # 各階段開發計劃
@@ -153,15 +154,15 @@ npm run docs:preview
 
 ## 📚 文件
 
-- [使用說明](./docs/usage-guide.md) - 如何發佈和管理文章
-- [Workflow 說明](./docs/workflow-guide.md) - GitHub Actions 使用指南
-- [SEO 指南](./docs/seo-guide.md) - SEO 優化設定
+- [使用說明](./usage-guide.md) - 如何發佈和管理文章
+- [Workflow 說明](./workflow-guide.md) - GitHub Actions 使用指南
+- [SEO 指南](./seo-guide.md) - SEO 優化設定
 
 ## 🔧 配置說明
 
 ### 修改網站資訊
 
-編輯 `docs/.vitepress/config.js`：
+編輯 `pages/.vitepress/config.js`：
 
 ```javascript
 export default defineConfig({
@@ -173,13 +174,13 @@ export default defineConfig({
 
 ### 自訂網域
 
-1. 在 `docs/public/` 建立 `CNAME` 檔案
+1. 在 `pages/public/` 建立 `CNAME` 檔案
 2. 內容填入您的網域名稱（如 `blog.example.com`）
 3. 在網域 DNS 設定中添加 CNAME 記錄指向 `<username>.github.io`
 
 ### 修改配色
 
-編輯 `docs/.vitepress/theme/styles/custom.css`：
+編輯 `pages/.vitepress/theme/styles/custom.css`：
 
 ```css
 :root {

@@ -22,8 +22,8 @@ const seoConfigPath = path.join(__dirname, '../seo.config.js');
 const seoConfig = (await import(seoConfigPath)).default;
 
 const CONFIG = {
-  postsDir: path.join(__dirname, '../docs/posts'),
-  outputDir: path.join(__dirname, '../docs/public'),
+  postsDir: path.join(__dirname, '../pages/posts'),
+  outputDir: path.join(__dirname, '../pages/public'),
   maxItems: seoConfig.rss.maxItems || 20
 };
 

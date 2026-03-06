@@ -4,13 +4,13 @@
   "description": "個人技術 Blog - 基於 GitHub Issues 和 VitePress",
   "type": "module",
   "scripts": {
-    "docs:dev": "vitepress dev docs",
-    "docs:build": "vitepress build docs",
-    "docs:preview": "vitepress preview docs",
+    "pages:dev": "vitepress dev pages",
+    "pages:build": "vitepress build pages",
+    "pages:preview": "vitepress preview pages",
     "fetch:issues": "node --env-file-if-exists=.env scripts/build-posts.js",
     "generate:robots": "node scripts/generate-robots.js",
     "generate:rss": "node scripts/generate-rss.js",
-    "build": "npm run generate:robots && npm run fetch:issues && npm run generate:rss && npm run docs:build"
+    "build": "npm run generate:robots && npm run fetch:issues && npm run generate:rss && npm run pages:build"
   },
   "keywords": [
     "blog",

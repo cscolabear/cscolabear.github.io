@@ -34,9 +34,9 @@ const CONFIG = {
   publishLabel: seoConfig.github.publishLabel,
   state: seoConfig.github.state,
   siteUrl: seoConfig.site.url,
-  postsDir: path.join(__dirname, '../docs/posts'),
-  postsIndexPath: path.join(__dirname, '../docs/articles.md'),
-  syncLogPath: path.join(__dirname, '../docs/.vitepress/sync-log.json'),
+  postsDir: path.join(__dirname, '../pages/posts'),
+  postsIndexPath: path.join(__dirname, '../pages/articles.md'),
+  syncLogPath: path.join(__dirname, '../pages/.vitepress/sync-log.json'),
   maxCommentsPerIssue: seoConfig.posts?.commentsDisplayCount ?? 10  // 每篇文章最多顯示的留言數量（以 seo.config.js 為單一來源，預設為 10）
 };
 
@@ -696,7 +696,7 @@ async function cleanDeletedPosts(currentIssues) {
 async function updateHomePage(issues) {
   console.log('\n🏠 正在更新首頁文章列表...');
   
-  const homePagePath = path.join(__dirname, '../docs/index.md');
+  const homePagePath = path.join(__dirname, '../pages/index.md');
   
   try {
     // 讀取首頁內容

@@ -32,7 +32,7 @@
 
 1. 在 **Custom domain** 欄位輸入您的網域（如 `blog.example.com`）
 2. 點選 **Save**
-3. 在 `docs/public/` 目錄建立 `CNAME` 檔案，內容為您的網域名稱
+3. 在 `pages/public/` 目錄建立 `CNAME` 檔案，內容為您的網域名稱
 4. 在您的 DNS 提供商設定：
    ```
    類型: CNAME
@@ -76,7 +76,7 @@
    npm run build
    ```
 
-詳細說明請參考：[本地開發指南](./docs/local-development.md)
+詳細說明請參考：[本地開發指南](./local-development.md)
 
 ### GitHub Actions 環境
 
@@ -120,7 +120,7 @@ npm run build
 1. `generate:robots` - 生成 robots.txt
 2. `fetch:issues` - 擷取 GitHub Issues（需要 token）
 3. `generate:rss` - 生成 RSS feeds
-4. `docs:build` - 建置 VitePress 網站
+4. `pages:build` - 建置 VitePress 網站
 
 Node.js 會自動載入正確的環境變數來源：
 - 本地：讀取 `.env` 檔案（使用 `--env-file-if-exists` 參數）
@@ -214,7 +214,7 @@ git push
 
 **檢查清單**:
 - [ ] DNS 設定正確（使用 `dig` 或 `nslookup` 檢查）
-- [ ] CNAME 檔案存在於 `docs/public/` 目錄
+- [ ] CNAME 檔案存在於 `pages/public/` 目錄
 - [ ] GitHub Pages 設定中已填入自訂網域
 - [ ] 已等待足夠時間讓 DNS 生效（最多 48 小時）
 
