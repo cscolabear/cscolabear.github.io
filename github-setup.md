@@ -120,7 +120,7 @@ npm run build
 1. `generate:robots` - 生成 robots.txt
 2. `fetch:issues` - 擷取 GitHub Issues（需要 token）
 3. `generate:rss` - 生成 RSS feeds
-4. `docs:build` - 建置 VitePress 網站
+4. `blog:build` - 建置 VitePress 網站
 
 Node.js 會自動載入正確的環境變數來源：
 - 本地：讀取 `.env` 檔案（使用 `--env-file-if-exists` 參數）

@@ -67,11 +67,11 @@ GITHUB_TOKEN=ghp_your_actual_token_here
 
 ```bash
 # 僅啟動 VitePress 開發伺服器（不擷取 Issues）
-npm run docs:dev
+npm run blog:dev
 
 # 或先擷取 Issues 再啟動開發伺服器
 npm run fetch:issues
-npm run docs:dev
+npm run blog:dev
 ```
 
 訪問 `http://localhost:5173` 查看網站。
@@ -87,7 +87,7 @@ npm run docs:dev
 npm run build
 
 # 預覽建置結果
-npm run docs:preview
+npm run blog:preview
 ```
 
 ## 🔑 如何取得 GitHub Token
@@ -180,9 +180,9 @@ npm run fetch:issues
 
 | 指令 | 說明 |
 |------|------|
-| `npm run docs:dev` | 啟動 VitePress 開發伺服器 |
-| `npm run docs:build` | 建置 VitePress 網站 |
-| `npm run docs:preview` | 預覽建置結果 |
+| `npm run blog:dev` | 啟動 VitePress 開發伺服器 |
+| `npm run blog:build` | 建置 VitePress 網站 |
+| `npm run blog:preview` | 預覽建置結果 |
 | `npm run fetch:issues` | 擷取 GitHub Issues 並轉換為文章 |
 | `npm run generate:robots` | 生成 robots.txt |
 | `npm run generate:rss` | 生成 RSS feeds |
@@ -228,7 +228,7 @@ npm run fetch:issues
 **解決方法**：
 ```bash
 npm run fetch:issues
-npm run docs:dev
+npm run blog:dev
 ```
 
 ### Q5: Node.js 版本不正確
@@ -319,13 +319,13 @@ nvm use 24
    - 執行 `npm run fetch:issues` 更新本地
 
 2. **修改網站樣式/功能**：
-   - 編輯 `docs/.vitepress/` 目錄下的檔案
+   - 編輯 `blog/.vitepress/` 目錄下的檔案
    - 開發伺服器會自動熱重載
 
 3. **測試建置**：
    ```bash
    npm run build
-   npm run docs:preview
+   npm run blog:preview
    ```
 
 4. **提交變更**：
@@ -341,7 +341,7 @@ nvm use 24
 
 ```bash
 # 啟動開發伺服器
-npm run docs:dev
+npm run blog:dev
 
 # 在瀏覽器訪問
 open http://localhost:5173
