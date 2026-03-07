@@ -3,6 +3,17 @@ import seoConfig from '../../seo.config.js'
 
 const { site, seo, social } = seoConfig
 
+// Collect page last-modification dates from frontmatter for sitemap generation.
+// Populated by transformPageData (runs per-page during build) and consumed by
+// sitemap.transformItems (runs after all pages are processed).
+const pageLastModDates = new Map()
+
+// Normalise a source path or URL path to a consistent Map key.
+// Handles both "relativePath" form (e.g. "posts/slug.md") and
+// URL form (e.g. "/slug") so both sides produce identical keys.
+const toSitemapKey = (p) =>
+  p.replace(/\.md$/, '').replace(/index$/, '').replace(/^\//, '').replace(/\/$/, '')
+
 export default defineConfig({
   title: site.name,
   description: site.description,
@@ -152,7 +163,29 @@ export default defineConfig({
 
   // Sitemap 配置（SEO 重要）
   sitemap: {
-    hostname: site.url
+    hostname: site.url,
+    // Use date-only format (YYYY-MM-DD) as recommended by Google's sitemap spec
+    lastmodDateOnly: true,
+    // Override lastmod with actual article dates from frontmatter
+    transformItems: (items) => {
+      return items.map(item => {
+        const key = toSitemapKey(item.url)
+        const lastmod = pageLastModDates.get(key)
+        if (lastmod) {
+          return { ...item, lastmod: new Date(lastmod) }
+        }
+        return item
+      })
+    }
+  },
+
+  // transformPageData - collect last-modification dates for sitemap
+  transformPageData(pageData) {
+    const key = toSitemapKey(pageData.relativePath)
+    const date = pageData.frontmatter.updated || pageData.frontmatter.date
+    if (date) {
+      pageLastModDates.set(key, date)
+    }
   },
 
   // transformHead - 為每個頁面動態添加 meta 標籤
