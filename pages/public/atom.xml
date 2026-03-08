@@ -5,17 +5,14 @@
     <updated>2026-03-06T00:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <author>
-        <name>
-            <name>Cola</name>
-            <email/>
-        </name>
+        <name>Cola</name>
         <uri>https://cola.workxplay.net</uri>
     </author>
     <link rel="alternate" href="https://cola.workxplay.net"/>
     <link rel="self" href="https://cola.workxplay.net/atom.xml"/>
     <subtitle>Cola 的技術筆記與分享</subtitle>
     <icon>https://cola.workxplay.net/favicon.ico</icon>
-    <rights>Copyright © 2026 [object Object]</rights>
+    <rights>Copyright © 2026 Cola</rights>
     <entry>
         <title type="html"><![CDATA[如何在 Json 中加入註解]]></title>
         <id>https://cola.workxplay.net/json-comment.html</id>

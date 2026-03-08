@@ -24,7 +24,7 @@ const seoConfig = (await import(seoConfigPath)).default;
 const CONFIG = {
   postsDir: path.join(__dirname, '../pages/posts'),
   outputDir: path.join(__dirname, '../pages/public'),
-  maxItems: seoConfig.rss.maxItems || 20
+  maxItems: seoConfig.rss.itemCount || 20
 };
 
 /**
@@ -124,7 +124,7 @@ async function generateRSSFeed() {
     link: seoConfig.site.url,
     language: seoConfig.site.locale.replace('_', '-'), // zh_TW -> zh-TW
     favicon: `${seoConfig.site.url}/favicon.ico`,
-    copyright: `Copyright © ${new Date().getFullYear()} ${seoConfig.site.author}`,
+    copyright: `Copyright © ${new Date().getFullYear()} ${seoConfig.site.author.name}`,
     updated: new Date(latestPosts[0]?.updated || latestPosts[0]?.date || new Date()),
     feedLinks: {
       rss2: `${seoConfig.site.url}/rss.xml`,
@@ -132,7 +132,7 @@ async function generateRSSFeed() {
       json: `${seoConfig.site.url}/feed.json`
     },
     author: {
-      name: seoConfig.site.author,
+      name: seoConfig.site.author.name,
       link: seoConfig.site.url
     }
   });
