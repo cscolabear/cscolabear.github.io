@@ -3,6 +3,27 @@ import seoConfig from '../../seo.config.js'
 
 const { site, seo, social } = seoConfig
 
+// Collect page last-modification dates from frontmatter for sitemap generation.
+// Populated by transformPageData (runs per-page during build) and consumed by
+// sitemap.transformItems (runs after all pages are processed).
+const pageLastModDates = new Map()
+
+// Normalise a source path or URL path to a consistent Map key (the route slug).
+// Works for both "relativePath" form (e.g. "posts/slug.md") and URL form
+// (e.g. "/slug") by stripping the extension and keeping only the last segment.
+// The homepage index normalises to an empty string "".
+const toSitemapKey = (p) => {
+  const withoutExt = p.replace(/\.md$/, '')
+  const trimmed = withoutExt.replace(/^\//, '').replace(/\/$/, '')
+  // Root index page → empty key
+  if (trimmed === 'index') return ''
+  // Only strip a final "/index" path segment (not any slug ending in "index")
+  const withoutIndex = trimmed.replace(/\/index$/, '')
+  // Return the last path segment so "posts/slug" and "slug" both produce "slug"
+  const segments = withoutIndex.split('/')
+  return segments[segments.length - 1] || ''
+}
+
 export default defineConfig({
   title: site.name,
   description: site.description,
@@ -152,7 +173,29 @@ export default defineConfig({
 
   // Sitemap 配置（SEO 重要）
   sitemap: {
-    hostname: site.url
+    hostname: site.url,
+    // Use date-only format (YYYY-MM-DD) as recommended by Google's sitemap spec
+    lastmodDateOnly: true,
+    // Override lastmod with actual article dates from frontmatter
+    transformItems: (items) => {
+      return items.map(item => {
+        const key = toSitemapKey(item.url)
+        const lastmod = pageLastModDates.get(key)
+        if (lastmod) {
+          return { ...item, lastmod: new Date(lastmod) }
+        }
+        return item
+      })
+    }
+  },
+
+  // transformPageData - collect last-modification dates for sitemap
+  transformPageData(pageData) {
+    const key = toSitemapKey(pageData.relativePath)
+    const date = pageData.frontmatter.updated || pageData.frontmatter.date
+    if (date) {
+      pageLastModDates.set(key, date)
+    }
   },
 
   // transformHead - 為每個頁面動態添加 meta 標籤
