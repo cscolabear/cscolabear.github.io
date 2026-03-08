@@ -147,7 +147,7 @@ async function generateRSSFeed() {
       content: post.content,
       author: [
         {
-          name: post.author || seoConfig.site.author,
+          name: post.author || seoConfig.site.author.name,
           link: seoConfig.site.url
         }
       ],
