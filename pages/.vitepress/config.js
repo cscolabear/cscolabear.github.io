@@ -8,11 +8,21 @@ const { site, seo, social } = seoConfig
 // sitemap.transformItems (runs after all pages are processed).
 const pageLastModDates = new Map()
 
-// Normalise a source path or URL path to a consistent Map key.
-// Handles both "relativePath" form (e.g. "posts/slug.md") and
-// URL form (e.g. "/slug") so both sides produce identical keys.
-const toSitemapKey = (p) =>
-  p.replace(/\.md$/, '').replace(/index$/, '').replace(/^\//, '').replace(/\/$/, '')
+// Normalise a source path or URL path to a consistent Map key (the route slug).
+// Works for both "relativePath" form (e.g. "posts/slug.md") and URL form
+// (e.g. "/slug") by stripping the extension and keeping only the last segment.
+// The homepage index normalises to an empty string "".
+const toSitemapKey = (p) => {
+  const withoutExt = p.replace(/\.md$/, '')
+  const trimmed = withoutExt.replace(/^\//, '').replace(/\/$/, '')
+  // Root index page → empty key
+  if (trimmed === 'index') return ''
+  // Only strip a final "/index" path segment (not any slug ending in "index")
+  const withoutIndex = trimmed.replace(/\/index$/, '')
+  // Return the last path segment so "posts/slug" and "slug" both produce "slug"
+  const segments = withoutIndex.split('/')
+  return segments[segments.length - 1] || ''
+}
 
 export default defineConfig({
   title: site.name,
