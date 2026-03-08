@@ -5,10 +5,7 @@
     "feed_url": "https://cola.workxplay.net/feed.json",
     "description": "Cola 的技術筆記與分享",
     "author": {
-        "name": {
-            "name": "Cola",
-            "email": ""
-        },
+        "name": "Cola",
         "url": "https://cola.workxplay.net"
     },
     "items": [
