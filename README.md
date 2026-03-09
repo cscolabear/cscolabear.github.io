@@ -10,6 +10,7 @@
 - ✅ **增量更新機制**，只同步有變更的文章
 - ✅ **留言自動同步**，Issue 留言整合至文章頁面
 - ✅ 支援 **SEO 優化**（sitemap、meta tags、Open Graph）
+- ✅ **RSS/Atom 訂閱**（純文字格式，支援 RSS 閱讀器）
 - ✅ 讀者可透過 GitHub Issues 留言討論
 - ✅ 完整的**繁體中文介面**
 
@@ -62,7 +63,10 @@ npm run pages:dev
 # 擷取 Issues 並轉換為文章（包含留言）
 npm run fetch:issues
 
-# 完整建置（擷取 + 建置）
+# 生成 RSS Feed（自動包含在完整建置中）
+npm run generate:rss
+
+# 完整建置（擷取 + RSS + 建置）
 npm run build
 
 # 預覽建置結果
@@ -145,6 +149,15 @@ npm run pages:preview
 - Open Graph & Twitter Card 支援
 - 清理 URL（無 .html 後綴）
 - 結構化資料標記
+- RSS/Atom/JSON Feed 訂閱支援（純文字格式）
+
+### RSS 訂閱
+- **RSS 2.0**: https://cola.workxplay.net/rss.xml
+- **Atom 1.0**: https://cola.workxplay.net/atom.xml
+- **JSON Feed**: https://cola.workxplay.net/feed.json
+- 純文字格式（移除所有 Markdown 和 HTML 語法）
+- description: 160 字摘要，content: 200 字摘要
+- 最新 20 篇文章自動更新
 
 ### 自動部署
 - 每日定時建置（台灣時間 08:00）

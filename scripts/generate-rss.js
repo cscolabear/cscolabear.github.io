@@ -73,6 +73,57 @@ function extractContent(content) {
 }
 
 /**
+ * 將 Markdown 和 HTML 內容轉換為純文字
+ * @param {string} content - 原始內容
+ * @param {number} maxLength - 最大長度（預設 200）
+ * @returns {string} 純文字內容
+ */
+function convertToPlainText(content, maxLength = 200) {
+  let text = content
+    // 移除 Markdown 程式碼區塊
+    .replace(/```[\s\S]*?```/g, '')
+    .replace(/`([^`]+)`/g, '$1')
+    // 移除 Markdown 圖片（必須在連結之前處理）
+    .replace(/!\[[^\]]*\]\([^)]+\)/g, '')
+    // 移除 Markdown 連結，保留文字部分
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
+    // 移除 Markdown 標題
+    .replace(/^#+\s+/gm, '')
+    // 移除 Markdown 粗體和斜體
+    .replace(/(\*\*|__)(.*?)\1/g, '$2')
+    .replace(/(\*|_)(.*?)\1/g, '$2')
+    // 移除所有 HTML 標籤（包括 img, a, div 等）
+    .replace(/<[^>]+>/g, '')
+    // 移除 HTML 實體
+    .replace(/&[a-z]+;/gi, ' ')
+    .replace(/&#[0-9]+;/g, ' ')
+    // 移除 Markdown 列表標記
+    .replace(/^[\s]*[-*+]\s+/gm, '')
+    .replace(/^[\s]*\d+\.\s+/gm, '')
+    // 移除 Markdown 引用標記
+    .replace(/^>\s+/gm, '')
+    // 移除 Markdown 分隔線
+    .replace(/^[\s]*[-*_]{3,}[\s]*$/gm, '')
+    // 移除多餘空白和換行
+    .replace(/\n+/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+  
+  // 截斷到指定長度
+  if (text.length > maxLength) {
+    text = text.substring(0, maxLength).trim();
+    // 避免在詞中間截斷，尋找最後一個空格
+    const lastSpace = text.lastIndexOf(' ');
+    if (lastSpace > maxLength * 0.8) {
+      text = text.substring(0, lastSpace);
+    }
+    text += '...';
+  }
+  
+  return text;
+}
+
+/**
  * 讀取所有文章
  */
 async function getAllPosts() {
@@ -124,7 +175,7 @@ async function generateRSSFeed() {
     link: seoConfig.site.url,
     language: seoConfig.site.locale.replace('_', '-'), // zh_TW -> zh-TW
     favicon: `${seoConfig.site.url}/favicon.ico`,
-    copyright: `Copyright © ${new Date().getFullYear()} ${seoConfig.site.author}`,
+    copyright: `Copyright © ${new Date().getFullYear()} ${seoConfig.site.author.name}`,
     updated: new Date(latestPosts[0]?.updated || latestPosts[0]?.date || new Date()),
     feedLinks: {
       rss2: `${seoConfig.site.url}/rss.xml`,
@@ -132,7 +183,8 @@ async function generateRSSFeed() {
       json: `${seoConfig.site.url}/feed.json`
     },
     author: {
-      name: seoConfig.site.author,
+      name: seoConfig.site.author.name,
+      email: seoConfig.site.author.email,
       link: seoConfig.site.url
     }
   });
@@ -143,11 +195,12 @@ async function generateRSSFeed() {
       title: post.title,
       id: post.url,
       link: post.url,
-      description: post.description,
-      content: post.content,
+      description: convertToPlainText(post.content, 160),
+      content: convertToPlainText(post.content, 200),
       author: [
         {
-          name: post.author || seoConfig.site.author,
+          name: post.author || seoConfig.site.author.name,
+          email: seoConfig.site.author.email,
           link: seoConfig.site.url
         }
       ],
