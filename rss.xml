@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+    <channel>
+        <title>WorkxPlay 工作與玩樂實驗室</title>
+        <link>https://cola.workxplay.net</link>
+        <description>Cola 的技術筆記與分享</description>
+        <lastBuildDate>Mon, 09 Mar 2026 00:00:00 GMT</lastBuildDate>
+        <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
+        <generator>https://github.com/jpmonette/feed</generator>
+        <language>zh-TW</language>
+        <copyright>Copyright © 2026 Cola</copyright>
+        <item>
+            <title><![CDATA[優化 Laravel 中大型 whereIn 查詢緩慢問題]]></title>
+            <link>https://cola.workxplay.net/optimising-large-wherein-queries-in-laravel.html</link>
+            <guid isPermaLink="false">https://cola.workxplay.net/optimising-large-wherein-queries-in-laravel.html</guid>
+            <pubDate>Mon, 09 Mar 2026 00:00:00 GMT</pubDate>
+            <description><![CDATA[優化 Laravel 中大型 whereIn 查詢緩慢問題 Laravel Eloquent whereIn() 每個人都用過，但你曉得但 whereIn() 量大時，可能會造成查詢緩慢問題之一嗎? 他不一定是資料 index 索引的問題，可能是更底層問題喔 這邊提供一個 Laravel 資料庫查詢效能優化的手式...]]></description>
+            <content:encoded><![CDATA[優化 Laravel 中大型 whereIn 查詢緩慢問題 Laravel Eloquent whereIn() 每個人都用過，但你曉得但 whereIn() 量大時，可能會造成查詢緩慢問題之一嗎? 他不一定是資料 index 索引的問題，可能是更底層問題喔 這邊提供一個 Laravel 資料庫查詢效能優化的手式 Laravel 查詢緩慢的情境 常有的需求是使用指定的 id 取出多個使用者...]]></content:encoded>
+            <author>Cola</author>
+            <enclosure url="https://cola.workxplay.net/og-image.png" length="0" type="image/png"/>
+        </item>
+        <item>
+            <title><![CDATA[如何在 Json 中加入註解]]></title>
+            <link>https://cola.workxplay.net/json-comment.html</link>
+            <guid isPermaLink="false">https://cola.workxplay.net/json-comment.html</guid>
+            <pubDate>Fri, 06 Mar 2026 00:00:00 GMT</pubDate>
+            <description><![CDATA[如何在 Json 中加入註解 如何在 Json 中加入註解呢？ 可以在 Json 裡加入註解嗎？ Json (JavaScript Object Notation) 是目前最流行的資料交換格式，簡單、小巧且易用是他的特色。 但是一大串資料內，難免有需要加入註解(comment)的時候。這時候應該怎麼做呢?...]]></description>
+            <content:encoded><![CDATA[如何在 Json 中加入註解 如何在 Json 中加入註解呢？ 可以在 Json 裡加入註解嗎？ Json (JavaScript Object Notation) 是目前最流行的資料交換格式，簡單、小巧且易用是他的特色。 但是一大串資料內，難免有需要加入註解(comment)的時候。這時候應該怎麼做呢? 當然官方是不建議這麼做的(www.json.org); 意同，最好的註解就是程式本身😅...]]></content:encoded>
+            <author>Cola</author>
+            <category>Javascript</category>
+            <enclosure url="https://cola.workxplay.net/og-image.png" length="0" type="image/png"/>
+        </item>
+        <item>
+            <title><![CDATA[what's SEO]]></title>
+            <link>https://cola.workxplay.net/whats-seo.html</link>
+            <guid isPermaLink="false">https://cola.workxplay.net/whats-seo.html</guid>
+            <pubDate>Mon, 02 Mar 2026 00:00:00 GMT</pubDate>
+            <description><![CDATA[what's SEO 網路、資訊上目前頗重要的一件事 SEO(Search Engine Optimization) 中文為 搜尋引擎最佳化 那這個東西是什麼? 能吃? 能用? 能有什麼幫助呢? 簡單說明 SEO... 如上圖所示, 在Google 搜尋iphone6s, 所得到的搜尋結果......]]></description>
+            <content:encoded><![CDATA[what's SEO 網路、資訊上目前頗重要的一件事 SEO(Search Engine Optimization) 中文為 搜尋引擎最佳化 那這個東西是什麼? 能吃? 能用? 能有什麼幫助呢? 簡單說明 SEO... 如上圖所示, 在Google 搜尋iphone6s, 所得到的搜尋結果... 這樣的搜尋結果排序內容, 就被稱為 SEO 使用者所用的關鍵字在Google得到的排序結果...]]></content:encoded>
+            <author>Cola</author>
+            <category>SEO</category>
+            <enclosure url="https://cola.workxplay.net/og-image.png" length="0" type="image/png"/>
+        </item>
+        <item>
+            <title><![CDATA[Youtube 影片的 SEO，展開影片建立逐字稿]]></title>
+            <link>https://cola.workxplay.net/youtube-video-transcript-for-seo.html</link>
+            <guid isPermaLink="false">https://cola.workxplay.net/youtube-video-transcript-for-seo.html</guid>
+            <pubDate>Mon, 02 Mar 2026 00:00:00 GMT</pubDate>
+            <description><![CDATA[Youtube 影片的 SEO，展開影片建立逐字稿 影片該怎麼做好 SEO 呢? 除了設定好 Youtube 影片設定與基本資訊之外，還有個特別的方法增加影片的曝光度。 其實方法很簡單... 而且這個方式也不侷限在 Youtube, Vimeo 這類型的影音平台，主要目的在於影片的再利用! Youtube SEO...]]></description>
+            <content:encoded><![CDATA[Youtube 影片的 SEO，展開影片建立逐字稿 影片該怎麼做好 SEO 呢? 除了設定好 Youtube 影片設定與基本資訊之外，還有個特別的方法增加影片的曝光度。 其實方法很簡單... 而且這個方式也不侷限在 Youtube, Vimeo 這類型的影音平台，主要目的在於影片的再利用! Youtube SEO 其實講 Youtube 影片的 SEO 有點言過其實。 單純的 Youtube...]]></content:encoded>
+            <author>Cola</author>
+            <enclosure url="https://cola.workxplay.net/og-image.png" length="0" type="image/png"/>
+        </item>
+    </channel>
+</rss>

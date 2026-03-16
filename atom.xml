@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://cola.workxplay.net</id>
+    <title>WorkxPlay 工作與玩樂實驗室</title>
+    <updated>2026-03-09T00:00:00.000Z</updated>
+    <generator>https://github.com/jpmonette/feed</generator>
+    <author>
+        <name>Cola</name>
+        <uri>https://cola.workxplay.net</uri>
+    </author>
+    <link rel="alternate" href="https://cola.workxplay.net"/>
+    <link rel="self" href="https://cola.workxplay.net/atom.xml"/>
+    <subtitle>Cola 的技術筆記與分享</subtitle>
+    <icon>https://cola.workxplay.net/favicon.ico</icon>
+    <rights>Copyright © 2026 Cola</rights>
+    <entry>
+        <title type="html"><![CDATA[優化 Laravel 中大型 whereIn 查詢緩慢問題]]></title>
+        <id>https://cola.workxplay.net/optimising-large-wherein-queries-in-laravel.html</id>
+        <link href="https://cola.workxplay.net/optimising-large-wherein-queries-in-laravel.html"/>
+        <link rel="enclosure" href="https://cola.workxplay.net/og-image.png" type="image/png"/>
+        <updated>2026-03-09T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[優化 Laravel 中大型 whereIn 查詢緩慢問題 Laravel Eloquent whereIn() 每個人都用過，但你曉得但 whereIn() 量大時，可能會造成查詢緩慢問題之一嗎? 他不一定是資料 index 索引的問題，可能是更底層問題喔 這邊提供一個 Laravel 資料庫查詢效能優化的手式...]]></summary>
+        <content type="html"><![CDATA[優化 Laravel 中大型 whereIn 查詢緩慢問題 Laravel Eloquent whereIn() 每個人都用過，但你曉得但 whereIn() 量大時，可能會造成查詢緩慢問題之一嗎? 他不一定是資料 index 索引的問題，可能是更底層問題喔 這邊提供一個 Laravel 資料庫查詢效能優化的手式 Laravel 查詢緩慢的情境 常有的需求是使用指定的 id 取出多個使用者...]]></content>
+        <author>
+            <name>Cola</name>
+            <uri>https://cola.workxplay.net</uri>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[如何在 Json 中加入註解]]></title>
+        <id>https://cola.workxplay.net/json-comment.html</id>
+        <link href="https://cola.workxplay.net/json-comment.html"/>
+        <link rel="enclosure" href="https://cola.workxplay.net/og-image.png" type="image/png"/>
+        <updated>2026-03-06T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[如何在 Json 中加入註解 如何在 Json 中加入註解呢？ 可以在 Json 裡加入註解嗎？ Json (JavaScript Object Notation) 是目前最流行的資料交換格式，簡單、小巧且易用是他的特色。 但是一大串資料內，難免有需要加入註解(comment)的時候。這時候應該怎麼做呢?...]]></summary>
+        <content type="html"><![CDATA[如何在 Json 中加入註解 如何在 Json 中加入註解呢？ 可以在 Json 裡加入註解嗎？ Json (JavaScript Object Notation) 是目前最流行的資料交換格式，簡單、小巧且易用是他的特色。 但是一大串資料內，難免有需要加入註解(comment)的時候。這時候應該怎麼做呢? 當然官方是不建議這麼做的(www.json.org); 意同，最好的註解就是程式本身😅...]]></content>
+        <author>
+            <name>Cola</name>
+            <uri>https://cola.workxplay.net</uri>
+        </author>
+        <category label="Javascript"/>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[what's SEO]]></title>
+        <id>https://cola.workxplay.net/whats-seo.html</id>
+        <link href="https://cola.workxplay.net/whats-seo.html"/>
+        <link rel="enclosure" href="https://cola.workxplay.net/og-image.png" type="image/png"/>
+        <updated>2026-03-02T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[what's SEO 網路、資訊上目前頗重要的一件事 SEO(Search Engine Optimization) 中文為 搜尋引擎最佳化 那這個東西是什麼? 能吃? 能用? 能有什麼幫助呢? 簡單說明 SEO... 如上圖所示, 在Google 搜尋iphone6s, 所得到的搜尋結果......]]></summary>
+        <content type="html"><![CDATA[what's SEO 網路、資訊上目前頗重要的一件事 SEO(Search Engine Optimization) 中文為 搜尋引擎最佳化 那這個東西是什麼? 能吃? 能用? 能有什麼幫助呢? 簡單說明 SEO... 如上圖所示, 在Google 搜尋iphone6s, 所得到的搜尋結果... 這樣的搜尋結果排序內容, 就被稱為 SEO 使用者所用的關鍵字在Google得到的排序結果...]]></content>
+        <author>
+            <name>Cola</name>
+            <uri>https://cola.workxplay.net</uri>
+        </author>
+        <category label="SEO"/>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Youtube 影片的 SEO，展開影片建立逐字稿]]></title>
+        <id>https://cola.workxplay.net/youtube-video-transcript-for-seo.html</id>
+        <link href="https://cola.workxplay.net/youtube-video-transcript-for-seo.html"/>
+        <link rel="enclosure" href="https://cola.workxplay.net/og-image.png" type="image/png"/>
+        <updated>2026-03-02T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[Youtube 影片的 SEO，展開影片建立逐字稿 影片該怎麼做好 SEO 呢? 除了設定好 Youtube 影片設定與基本資訊之外，還有個特別的方法增加影片的曝光度。 其實方法很簡單... 而且這個方式也不侷限在 Youtube, Vimeo 這類型的影音平台，主要目的在於影片的再利用! Youtube SEO...]]></summary>
+        <content type="html"><![CDATA[Youtube 影片的 SEO，展開影片建立逐字稿 影片該怎麼做好 SEO 呢? 除了設定好 Youtube 影片設定與基本資訊之外，還有個特別的方法增加影片的曝光度。 其實方法很簡單... 而且這個方式也不侷限在 Youtube, Vimeo 這類型的影音平台，主要目的在於影片的再利用! Youtube SEO 其實講 Youtube 影片的 SEO 有點言過其實。 單純的 Youtube...]]></content>
+        <author>
+            <name>Cola</name>
+            <uri>https://cola.workxplay.net</uri>
+        </author>
+    </entry>
+</feed>
